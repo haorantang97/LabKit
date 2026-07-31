@@ -12,7 +12,7 @@
 
 [![License](https://img.shields.io/badge/license-CC0-blue.svg?style=flat-square)](LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](CONTRIBUTING.md)
-[![Last Updated](https://img.shields.io/badge/updated-Jun%202026-blue.svg?style=flat-square)]()
+[![Last Updated](https://img.shields.io/badge/updated-Jul%202026-blue.svg?style=flat-square)]()
 
 > Take a working AI rule file from local draft to a published GitHub repo.
 
@@ -48,13 +48,15 @@ flowchart LR
     C --> D[scaffold-repo-files]
     D --> E[create-visual-assets]
     E --> F[publish-to-github]
+    E -. optional .-> T[translate-readme]
+    T -.-> F
     F --> G([live repo])
     G -. optional .-> H[submit-to-directories]
     H -.-> I([awesome-list PRs])
 
     classDef step fill:#0f172a,color:#f8fafc,stroke:#475569,stroke-width:1px;
     classDef io fill:#f1f5f9,color:#0f172a,stroke:#94a3b8,stroke-width:1px;
-    class B,C,D,E,F,H step;
+    class B,C,D,E,F,H,T step;
     class A,G,I io;
 ```
 
@@ -69,7 +71,8 @@ flowchart LR
 - **[polish-rule-content](skills/polish-rule-content/SKILL.md)** — Rewrites the description with the five-segment method, restructures the body, applies the de-AI checklist
 - **[write-readme](skills/write-readme/SKILL.md)** — Writes README.md with banner placeholder, badges, multi-platform install commands, and content list
 - **[scaffold-repo-files](skills/scaffold-repo-files/SKILL.md)** — Creates LICENSE, CONTRIBUTING.md, .github/PULL_REQUEST_TEMPLATE.md, and the directory structure
-- **[create-visual-assets](skills/create-visual-assets/SKILL.md)** — Generates assets/banner.svg, banner-dark.svg, and the three standard badges
+- **[create-visual-assets](skills/create-visual-assets/SKILL.md)** — Generates assets/banner.svg, banner-dark.svg, and the three standard badges; first run asks once for your image style
+- **[translate-readme](skills/translate-readme/SKILL.md)** — Translates the finished README into a second language with a language switcher; code blocks stay verbatim
 - **[publish-to-github](skills/publish-to-github/SKILL.md)** — Runs git init, the initial commit, gh repo create, and sets topics on the live repo
 - **[submit-to-directories](skills/submit-to-directories/SKILL.md)** — Submits the live repo to awesome-lists via the fork → PR flow
 

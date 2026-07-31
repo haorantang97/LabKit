@@ -12,7 +12,7 @@
 
 [![License](https://img.shields.io/badge/license-CC0-blue.svg?style=flat-square)](LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](CONTRIBUTING.md)
-[![Last Updated](https://img.shields.io/badge/updated-Jun%202026-blue.svg?style=flat-square)]()
+[![Last Updated](https://img.shields.io/badge/updated-Jul%202026-blue.svg?style=flat-square)]()
 
 > 把一个跑通的 AI 规则文件，从本地草稿做成 GitHub 上发布质量的 repo。
 
@@ -48,13 +48,15 @@ flowchart LR
     C --> D[scaffold-repo-files]
     D --> E[create-visual-assets]
     E --> F[publish-to-github]
+    E -. optional .-> T[translate-readme]
+    T -.-> F
     F --> G([live repo])
     G -. optional .-> H[submit-to-directories]
     H -.-> I([awesome-list PRs])
 
     classDef step fill:#0f172a,color:#f8fafc,stroke:#475569,stroke-width:1px;
     classDef io fill:#f1f5f9,color:#0f172a,stroke:#94a3b8,stroke-width:1px;
-    class B,C,D,E,F,H step;
+    class B,C,D,E,F,H,T step;
     class A,G,I io;
 ```
 
@@ -69,7 +71,8 @@ flowchart LR
 - **[polish-rule-content](skills/polish-rule-content/SKILL.md)** — 用五段式重写 description，重构正文，跑去 AI 味检查清单
 - **[write-readme](skills/write-readme/SKILL.md)** — 写 README.md，含 banner 占位、徽章、多平台安装命令、内容清单
 - **[scaffold-repo-files](skills/scaffold-repo-files/SKILL.md)** — 生成 LICENSE、CONTRIBUTING.md、.github/PULL_REQUEST_TEMPLATE.md 和目录结构
-- **[create-visual-assets](skills/create-visual-assets/SKILL.md)** — 生成 assets/banner.svg、banner-dark.svg 和三个标配徽章
+- **[create-visual-assets](skills/create-visual-assets/SKILL.md)** — 生成 assets/banner.svg、banner-dark.svg 和三个标配徽章；首次运行会问一次你的图片风格
+- **[translate-readme](skills/translate-readme/SKILL.md)** — 把定稿的 README 翻译成第二语言并加语言切换行；代码块保持原样
 - **[publish-to-github](skills/publish-to-github/SKILL.md)** — 跑 git init、首次提交、gh repo create，并给仓库设 Topics
 - **[submit-to-directories](skills/submit-to-directories/SKILL.md)** — 走 fork → PR 流程把仓库提交到 awesome-list
 
