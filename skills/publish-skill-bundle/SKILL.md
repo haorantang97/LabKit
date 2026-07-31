@@ -13,6 +13,7 @@ polish-rule-content      →  cleaned SKILL.md / .cursorrules / AGENTS.md
 write-readme             →  README.md
 scaffold-repo-files      →  LICENSE, CONTRIBUTING.md, .github/
 create-visual-assets     →  assets/banner.svg, banner-dark.svg, badges
+translate-readme         →  README.zh-CN.md + language switcher (optional)
 publish-to-github        →  live GitHub repo
 submit-to-directories    →  awesome-list PRs (optional)
 ```
@@ -47,7 +48,17 @@ Input: repo type (single-skill / collection / awesome-list) and the chosen licen
 
 Input: repo name and tagline from the README. Output: `assets/banner.svg`, `assets/banner-dark.svg`, the `<picture>` embed snippet, and the badge markdown row.
 
+On its first run in a project this sub-skill asks one style question: whether the user has an image-style skill to load, wants to describe a style, or takes the default (white background, black text). The answer is saved to `assets/STYLE.md` and never asked again. Let it ask; do not answer on the user's behalf.
+
 Drop the embed snippet and badge row into the README placeholders. After this step the README has no unfilled `{PLACEHOLDER}` tokens.
+
+---
+
+## translate-readme (optional)
+
+Input: the finalized README.md and a target language. Output: `README.{lang}.md` plus the language switcher line in both files.
+
+Runs after `create-visual-assets` so the translation captures the final README, and before `publish-to-github` so both language files land in the initial commit. Skip when the repo targets a single-language audience.
 
 ---
 
@@ -67,12 +78,24 @@ Submit to one directory first. Wait for the merge, then submit to the next.
 
 ---
 
+## Hard gates
+
+Two checks block `publish-to-github`. No inference lifts them; only an explicit user statement in the current conversation does.
+
+1. **Banner gate.** `assets/banner.svg` and `assets/banner-dark.svg` exist and the README embeds them. The user not mentioning visuals is not an opt-out; run `create-visual-assets` with the default style. Only "I don't want a banner" said outright waives this.
+2. **Placeholder gate.** Zero `{PLACEHOLDER}` tokens in README.md and any translated README.
+
+If either gate fails, route back to the producing step before touching git.
+
+---
+
 ## When to skip steps
 
 - Rule file already clean → skip `polish-rule-content`
 - User already wrote the README → skip `write-readme`
 - Going to be a private gist, not a repo → skip `scaffold-repo-files`, `publish-to-github`, `submit-to-directories`
-- User has no visual preference → skip `create-visual-assets` (defaults are fine)
+- User has no visual preference → `create-visual-assets` still runs, with the default style
+- Repo targets a single-language audience → skip `translate-readme`
 - User does not want awesome-list visibility → skip `submit-to-directories`
 
 If the repo has additional steps beyond these (forked variant, custom pipeline), insert them in the order that matches the dependency: anything that produces a file consumed by `write-readme` runs before it; anything that needs the live repo URL runs after `publish-to-github`.
@@ -86,6 +109,9 @@ This skill is an orchestrator. It does not write any file itself; it routes to t
 
 **Running `publish-to-github` before `create-visual-assets` finishes.**
 A README with `{REPO_NAME}` placeholders pushed to GitHub looks unfinished. The visual assets and badge row have to be in place first so the README has no unfilled tokens.
+
+**Translating before the README is final.**
+`translate-readme` runs last among the content steps. A translation made from a draft has to be redone after every README edit.
 
 **Calling several sub-skills in a single tool call.**
 Each sub-skill has its own information-gathering step. Call them sequentially, let each one ask its own questions, and only move forward when its output is finalized.
