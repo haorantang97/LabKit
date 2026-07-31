@@ -1,12 +1,44 @@
 ---
 name: create-visual-assets
-description: "Use this skill when the user needs visual assets for their AI skill or rule repository: banner images and badge code. This includes generating a light-mode SVG banner, a dark-mode SVG banner, the HTML embed snippet with automatic dark/light switching, and the badge markdown row for license, PRs Welcome, and last-updated. Trigger when the user says 'make a banner', 'I need a logo for my repo', 'create assets', 'design the repo header', 'give me the badges', or 'my README has a banner placeholder that needs filling'. Also trigger when the README has already been written with a placeholder but the actual SVG files haven't been created yet. Do NOT trigger for complex logo design, brand identity systems, or any asset that requires raster images, photos, or design software — only SVG banners and badge code are in scope."
+description: "Use this skill when the user needs visual assets for their AI skill or rule repository: hero banner images and badge code. This includes generating a light-mode SVG banner, a dark-mode SVG banner, the HTML embed snippet with automatic dark/light switching, and the badge markdown row for license, PRs Welcome, and last-updated. Trigger when the user says 'make a banner', 'make a hero image', 'I need a logo for my repo', 'create assets', 'design the repo header', 'give me the badges', or 'my README has a banner placeholder that needs filling'. Also trigger when the README has already been written with a placeholder but the actual SVG files haven't been created yet. Do NOT trigger for complex logo design, brand identity systems, or any asset that requires raster images, photos, or design software — only SVG banners and badge code are in scope."
 license: MIT
 ---
 
 ## Quick Start
 
-Generate `assets/banner-dark.svg` and `assets/banner.svg` using the default color scheme. Substitute `{REPO_NAME}` and `{TAGLINE}` in the templates below, leave everything else as-is. Then output the README embed snippet from Phase 3.
+First run in a project: complete Phase 0 (one question about style). Then generate `assets/banner-dark.svg` and `assets/banner.svg` using the resolved style. Substitute `{REPO_NAME}` and `{TAGLINE}` in the templates below, leave everything else as-is. Then output the README embed snippet from Phase 3.
+
+If `assets/STYLE.md` already exists, skip Phase 0 and use the style recorded there.
+
+---
+
+## Phase 0: Style setup (first use only)
+
+Before generating anything, check whether `assets/STYLE.md` exists in the project. If it does, read it and go to Phase 1. If not, ask the user exactly one question:
+
+> Do you have an image-style skill or style guide you normally use for visuals?
+> 1. Yes, I'll paste or upload it
+> 2. No, but I can describe the style I want in a sentence
+> 3. No preference, use the default (white background, black text)
+
+Handle each answer:
+
+**Option 1 (user provides a style skill).** Read the provided skill or guide and extract only what applies to a text banner: background color, text colors, font preference, corner radius, any decorative elements expressible in SVG. Apply these to the templates in Phase 2. Two things never change regardless of the style skill: the 700×175 dimensions and the dual dark/light output.
+
+**Option 2 (verbal description).** Map the description to concrete values. "Warm and minimal" becomes the Warm dark palette; "tech blue" becomes Deep blue; a named color becomes the background with a computed high-contrast text color (contrast ratio at least 4.5:1). Confirm the mapping in one line before generating.
+
+**Option 3 or no answer.** Use the default: light banner `#ffffff` background with `#111111` title text, dark banner `#0a0a0a` background with `#f5f5f5` title text.
+
+Then write the resolved choice to `assets/STYLE.md` so later runs skip this phase:
+
+```markdown
+# Banner style
+
+Source: {user style skill | verbal description | default}
+Dark BG: {hex}  Title: {hex}  Subtitle: {hex}
+Light BG: {hex}  Title: {hex}  Subtitle: {hex}
+Notes: {anything extracted from the user's style skill}
+```
 
 ---
 
@@ -16,11 +48,13 @@ Generate `assets/banner-dark.svg` and `assets/banner.svg` using the default colo
 |---|---|
 | Repo / skill name | Required — ask if missing |
 | One-line tagline | Required — ask if missing |
-| Primary color (dark banner bg) | `#0f172a` |
-| Accent color (title text) | `#f8fafc` |
-| Subtitle color | `#94a3b8` |
-
-If the user has no color preference, use the defaults.
+| Style | From `assets/STYLE.md` (Phase 0) |
+| Dark banner bg | `#0a0a0a` |
+| Dark banner title | `#f5f5f5` |
+| Dark banner subtitle | `#a3a3a3` |
+| Light banner bg | `#ffffff` |
+| Light banner title | `#111111` |
+| Light banner subtitle | `#525252` |
 
 ---
 
@@ -46,24 +80,29 @@ Write these as actual files to `assets/banner.svg` and `assets/banner-dark.svg`.
 **Light banner** (`assets/banner.svg`):
 ```svg
 <svg width="700" height="175" xmlns="http://www.w3.org/2000/svg">
-  <rect width="700" height="175" fill="#ffffff" rx="8"/>
+  <rect width="700" height="175" fill="{LIGHT_BG}" rx="8"/>
   <text x="350" y="82"
         font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
-        font-size="38" font-weight="700" fill="#0f172a"
+        font-size="38" font-weight="700" fill="{LIGHT_TITLE}"
         text-anchor="middle" dominant-baseline="middle">{REPO_NAME}</text>
   <text x="350" y="128"
         font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
-        font-size="15" fill="#475569"
+        font-size="15" fill="{LIGHT_SUBTITLE}"
         text-anchor="middle">{TAGLINE}</text>
 </svg>
 ```
 
-Substitutions:
-- `{DARK_BG}` → dark background color (default `#0f172a`)
-- `{TITLE_COLOR}` → title text on dark banner (default `#f8fafc`)
-- `{SUBTITLE_COLOR}` → tagline on dark banner (default `#94a3b8`)
+Substitutions (values come from `assets/STYLE.md`; defaults shown are the mono theme):
+- `{DARK_BG}` → dark banner background (default `#0a0a0a`)
+- `{TITLE_COLOR}` → title text on dark banner (default `#f5f5f5`)
+- `{SUBTITLE_COLOR}` → tagline on dark banner (default `#a3a3a3`)
+- `{LIGHT_BG}` → light banner background (default `#ffffff`)
+- `{LIGHT_TITLE}` → title text on light banner (default `#111111`)
+- `{LIGHT_SUBTITLE}` → tagline on light banner (default `#525252`)
 - `{REPO_NAME}` → repo or skill name, title-cased
 - `{TAGLINE}` → one-line tagline; keep under 60 characters or it overflows at 700px width
+
+If the user's style skill defines decorative SVG elements (gradient, border, pattern), insert them between the `<rect>` and the first `<text>`. Keep total file size under 10KB.
 
 ---
 
@@ -120,7 +159,8 @@ Never exceed 6 badges total.
 
 | Theme | Dark BG | Title | Subtitle | Light BG | Light Title |
 |---|---|---|---|---|---|
-| Default (slate) | `#0f172a` | `#f8fafc` | `#94a3b8` | `#ffffff` | `#0f172a` |
+| Default (mono) | `#0a0a0a` | `#f5f5f5` | `#a3a3a3` | `#ffffff` | `#111111` |
+| Slate | `#0f172a` | `#f8fafc` | `#94a3b8` | `#ffffff` | `#0f172a` |
 | Neutral gray | `#18181b` | `#fafafa` | `#a1a1aa` | `#fafafa` | `#18181b` |
 | Deep blue | `#0c1a3a` | `#e2e8f0` | `#7ea5d4` | `#f0f4ff` | `#0c1a3a` |
 | Forest | `#0f1f14` | `#d1fae5` | `#6ee7b7` | `#f0fdf4` | `#0f1f14` |
@@ -144,3 +184,9 @@ SVG text does not wrap. A tagline over 60 characters overflows the banner width 
 
 **Using PNG for banners that contain only text and shapes.**
 SVG is resolution-independent, renders sharply on all screens, and produces files under 2KB. Use PNG only for banners that contain photos or complex illustrations.
+
+**Re-asking the style question on every run.**
+Phase 0 runs once per project. If `assets/STYLE.md` exists, read it and generate. Asking again on the second banner tells the user their earlier answer was thrown away.
+
+**Copying a style skill's rules wholesale into the banner.**
+A style skill written for social media covers layouts, photo treatment, and typography scales that do not apply to a 700×175 text banner. Extract colors, font, and simple decorative elements only; drop the rest.
