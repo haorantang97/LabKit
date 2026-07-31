@@ -26,12 +26,14 @@ Confirm all of these before running any git commands:
 - [ ] `README.md` exists with no unfilled `{PLACEHOLDER}` tokens
 - [ ] `LICENSE` file exists
 - [ ] Rule file exists (SKILL.md / .cursorrules / .windsurfrules / AGENTS.md)
-- [ ] `assets/banner.svg` and `assets/banner-dark.svg` exist (or README has no banner reference)
+- [ ] **Banner gate**: `assets/banner.svg` and `assets/banner-dark.svg` exist AND the README embeds them
 - [ ] `.gitignore` exists (see template below)
 - [ ] Repo name is decided (kebab-case, no spaces)
 - [ ] GitHub username is known
 
 If anything is missing, stop and complete it first.
+
+The banner gate is hard. The only thing that waives it is the user explicitly saying in the current conversation that they want no banner. A missing banner file, a skipped upstream step, or a README with no banner reference does NOT count as opting out; in those cases run create-visual-assets (default style takes under a minute), add the embed snippet to the README, then return here.
 
 ---
 
@@ -221,6 +223,9 @@ GitHub defaults new repos to `main`. If the local branch is `master`, run `git b
 
 **Not reviewing `git status` before the first commit.**
 A stray `git add .` can accidentally stage secrets, build artifacts, or system files. Always check `git status` output before committing.
+
+**Publishing without a banner because an upstream step got skipped.**
+"The README has no banner reference" is a symptom of a skipped step, not permission to publish without one. Silence from the user is not an opt-out. Generate the default banner and embed it, or get an explicit "no banner" from the user before pushing.
 
 **Pasting an access token into a chat or agent conversation.**
 Tokens belong in environment variables or a keychain. An agent that needs one should read `$GITHUB_TOKEN` from the environment; a token that has passed through a conversation transcript should be treated as leaked and revoked.
