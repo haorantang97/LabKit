@@ -9,7 +9,7 @@
 ```bash
 git clone https://github.com/haorantang97/open-loops.git
 mkdir -p ~/.codex/skills/open-loops
-cp open-loops/SKILL.md ~/.codex/skills/open-loops/SKILL.md
+cp -R open-loops/SKILL.md open-loops/references ~/.codex/skills/open-loops/
 ```
 
 重新开启一个 Codex 任务，让新任务加载这个 Skill。
@@ -20,19 +20,19 @@ cp open-loops/SKILL.md ~/.codex/skills/open-loops/SKILL.md
 
 ```bash
 mkdir -p ~/.claude/skills/open-loops
-cp SKILL.md ~/.claude/skills/open-loops/SKILL.md
+cp -R SKILL.md references ~/.claude/skills/open-loops/
 ```
 
 **OpenClaw**
 
 ```bash
 mkdir -p ~/.agents/skills/open-loops
-cp SKILL.md ~/.agents/skills/open-loops/SKILL.md
+cp -R SKILL.md references ~/.agents/skills/open-loops/
 ```
 
 **Cowork / claude.ai**
 
-在设置的 Capabilities 页面上传 `SKILL.md`。
+在设置的 Capabilities 页面上传完整技能目录（`SKILL.md` 和 `references/`）。
 
 ## 它解决什么
 
@@ -55,7 +55,9 @@ cp SKILL.md ~/.agents/skills/open-loops/SKILL.md
 
 ## 仓库内容
 
-- `SKILL.md`：完整的 Open Loops 单文件 Skill
+- `SKILL.md`：常驻流程和宿主集成规则
+- `references/audit-protocol.md`：生产审查员必须读取的语义协议
+- `references/eval-cases.md`：仅在修改 Skill 时使用的回归标准
 
 ## 使用边界
 
