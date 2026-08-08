@@ -9,7 +9,7 @@
 ```bash
 git clone https://github.com/haorantang97/open-loops.git
 mkdir -p ~/.codex/skills/open-loops
-cp open-loops/SKILL.md ~/.codex/skills/open-loops/SKILL.md
+cp -R open-loops/SKILL.md open-loops/references ~/.codex/skills/open-loops/
 ```
 
 重新开启一个 Codex 任务，让新任务加载这个 Skill。
@@ -20,41 +20,45 @@ cp open-loops/SKILL.md ~/.codex/skills/open-loops/SKILL.md
 
 ```bash
 mkdir -p ~/.claude/skills/open-loops
-cp SKILL.md ~/.claude/skills/open-loops/SKILL.md
+cp -R SKILL.md references ~/.claude/skills/open-loops/
 ```
 
 **OpenClaw**
 
 ```bash
 mkdir -p ~/.agents/skills/open-loops
-cp SKILL.md ~/.agents/skills/open-loops/SKILL.md
+cp -R SKILL.md references ~/.agents/skills/open-loops/
 ```
 
 **Cowork / claude.ai**
 
-在设置的 Capabilities 页面上传 `SKILL.md`。
+在设置的 Capabilities 页面上传完整技能目录（`SKILL.md` 和 `references/`）。
 
 ## 它解决什么
 
-长对话里的遗漏通常不会发出声音：AI 可能漏答用户的问题，用户也可能没有接住 AI 已经提出的风险；AI 还可能在没有确认时替用户选定方案。Open Loops 把逐字会话存档交给一个没有参与主对话的独立子 agent，让它只检查四类信息断点，并维护一份可对账的未闭环清单。
+长对话里的遗漏通常不会发出声音：AI 可能漏答用户的问题，用户也可能只接住 AI 回答中的部分内容；AI 还可能在没有确认时替用户选定方案。Open Loops 把逐字会话存档交给一个没有参与主对话的独立子 agent，让它逐项检查四类信息断点，并维护一份可对账的未闭环清单。
 
-它只追踪“用户有没有看见并表态”，不追踪任务是否已经完成。用户一旦接住某个信息点并下达指令，该条就离开清单。
+它追踪“用户是否明确接住每个需要回应的独立实质内容”，不追踪任务是否已经完成，也不把范围限制在执行项目。研究问答、学习、咨询、分析诊断、写作反馈、创意讨论与开发执行使用同一套判据。接受、反对、质疑、搁置、转入别处或无歧义地整组确认后，该条就离开清单。
 
 ## 功能
 
 - 找出用户提出但 AI 没有实质回答的信息点
-- 找出 AI 已经提出、用户却没有接住的风险或分支
+- 找出 AI 已经提出、用户却没有逐项接住的独立实质内容，包括执行点、建议点、知识点、判断、限定、风险与分支
 - 标记 AI 未经确认代替用户做出的选择
 - 标记 AI 本该提问却自行决定的岔路
 - 启用后持续逐轮运行，直到用户明确暂停或停止
 - 每轮先核销已经被后续答案解决的旧条目，再检查新增掉点
 - 把 Open Loops 自身的调试、状态查询与发布讨论隔离在业务项目账外
+- 把同一份状态卡注册为宿主输出物；无法挂载时交付可点击文件地址
 - 首次接入时从原始会话记录重建历史清单
-- 稳态运行时只报告本轮新增项，没有新增则保持静默
+- 新遗漏只进入状态卡，不逐条打断对话
+- 未闭环从 10 条及以下跨到 11 条及以上时提醒一次；持续超限不重复，降回阈值后重新布防
 
 ## 仓库内容
 
-- `SKILL.md`：完整的 Open Loops 单文件 Skill
+- `SKILL.md`：常驻流程和宿主集成规则
+- `references/audit-protocol.md`：生产审查员必须读取的语义协议
+- `references/eval-cases.md`：仅在修改 Skill 时使用的回归标准
 
 ## 使用边界
 
