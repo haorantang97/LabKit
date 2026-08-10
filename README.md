@@ -1,3 +1,11 @@
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/banner-dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset="assets/banner.svg">
+    <img width="700" alt="Open Loops" src="assets/banner.svg">
+  </picture>
+</p>
+
 # Open Loops
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](LICENSE) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](CONTRIBUTING.md) [![Last Updated](https://img.shields.io/badge/updated-Aug%202026-blue.svg?style=flat-square)]()
@@ -55,6 +63,9 @@ cp SKILL.md ~/.agents/skills/open-loops/SKILL.md
 ## 仓库内容
 
 - `SKILL.md`：完整的 Open Loops 单文件 Skill
+- `assets/banner.svg`：浅色界面横幅
+- `assets/banner-dark.svg`：深色界面横幅
+- `assets/STYLE.md`：横幅配色与样式来源
 
 ## 使用边界
 
