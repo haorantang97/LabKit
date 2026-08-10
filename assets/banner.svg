@@ -1,0 +1,13 @@
+<svg width="700" height="175" viewBox="0 0 700 175" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Open Loops</title>
+  <desc id="desc">让独立审查员找回长对话中被遗漏、默认或越权决定的信息点。</desc>
+  <rect width="700" height="175" fill="#ffffff" rx="8"/>
+  <text x="350" y="82"
+        font-family="Arial"
+        font-size="38" font-weight="700" fill="#111111"
+        text-anchor="middle" dominant-baseline="middle">Open Loops</text>
+  <text x="350" y="128"
+        font-family="Arial"
+        font-size="15" fill="#525252"
+        text-anchor="middle">让独立审查员找回长对话中被遗漏、默认或越权决定的信息点</text>
+</svg>
