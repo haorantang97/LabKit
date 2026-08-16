@@ -10,7 +10,7 @@
 
 [English](README.md) | **中文**
 
-[![License](https://img.shields.io/badge/license-CC0-blue.svg?style=flat-square)](LICENSE)
+[![License](https://img.shields.io/badge/license-PolyForm%20Noncommercial%201.0.0-blue.svg?style=flat-square)](LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](CONTRIBUTING.md)
 [![Last Updated](https://img.shields.io/badge/updated-Jul%202026-blue.svg?style=flat-square)]()
 
@@ -80,4 +80,4 @@ reading-plan-mentor/
 
 ## 许可
 
-CC0 1.0 Universal — 见 [LICENSE](LICENSE)。
+PolyForm Noncommercial License 1.0.0 — 见 [LICENSE](LICENSE)。

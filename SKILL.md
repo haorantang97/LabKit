@@ -10,7 +10,7 @@ description: >-
   Use whenever a user wants to design or run a multi-day/multi-week reading plan, a daily
   reading guide, a read-along companion, or wants a booklist turned into a paced schedule
   with recurring deliveries — even if they don't say "skill" or "daily email".
-license: CC0-1.0
+license: PolyForm-Noncommercial-1.0.0
 ---
 
 # Reading Plan Mentor｜长期阅读计划 · 导师陪读
