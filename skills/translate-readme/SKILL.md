@@ -1,7 +1,7 @@
 ---
 name: translate-readme
 description: "Use this skill when the user wants a bilingual or multilingual README for their AI skill or rule repository. This includes translating README.md into a second language as a separate file (README.zh-CN.md, README.ja.md), adding the language switcher line to the top of both files, and keeping the two versions in sync after edits. Trigger when the user says 'add a Chinese README', 'make my repo bilingual', 'translate the README', 'add 中文 docs', 'I want English and Chinese versions', or 'add a language toggle'. Also trigger when the repo targets a bilingual audience and the README exists in only one language. Do NOT trigger for translating the rule file or SKILL.md content itself (rule files stay in one language so agent behavior is predictable), or for writing the original README from scratch (that is write-readme), or when no README exists yet."
-license: MIT
+license: PolyForm-Noncommercial-1.0.0
 ---
 
 ## Quick Start

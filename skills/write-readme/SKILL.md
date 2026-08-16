@@ -1,7 +1,7 @@
 ---
 name: write-readme
 description: "Use this skill when the user needs a README.md written for their AI skill or rule repository. This includes writing the first-screen section (banner image placeholder, badge row, one-line value statement), multi-platform installation commands, a what-it-does prose section, a features or skills list, contributing section, and license footer. Trigger when the user says 'write a README', 'create the README for my repo', 'I need a README for my skill', 'document this rule', or 'help me write the GitHub page for this'. Also trigger when the user has a finished rule file and wants to package it for GitHub but hasn't written the README yet. Do NOT trigger for editing an existing README (edit the file directly), for writing CONTRIBUTING.md or LICENSE (that is scaffold-repo-files), or for generating banner images (that is create-visual-assets)."
-license: MIT
+license: PolyForm-Noncommercial-1.0.0
 ---
 
 ## Quick Start

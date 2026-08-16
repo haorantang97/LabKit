@@ -1,7 +1,7 @@
 ---
 name: publish-skill-bundle
 description: "Use this skill when the user has a working AI rule or skill file and wants to take it from local draft to a published GitHub repository, end to end. This is the orchestrator that routes through the publishing pipeline sub-skills in order. Trigger when the user says 'I have a skill, help me publish it', 'turn my prompt into a GitHub repo', 'publish my Cursor rule', 'put this skill on GitHub end to end', 'walk me through publishing this', or 'I have a working SKILL.md and don't know what to do next'. Also trigger when the user has a single rule file in hand and says any phrase that implies the full publishing path. Do NOT trigger when the user only wants one step of the pipeline (call that sub-skill directly), or when the rule file does not exist yet (writing from scratch is out of scope), or when the repo is already live on GitHub and only needs a single follow-up action like submitting to a directory."
-license: CC0-1.0
+license: PolyForm-Noncommercial-1.0.0
 ---
 
 ## Quick Start

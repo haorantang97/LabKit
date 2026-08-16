@@ -1,7 +1,7 @@
 ---
 name: polish-rule-content
 description: "Use this skill when the user has an existing AI rule or skill file that works but needs quality improvement before publishing. This includes rewriting the description/trigger field using the five-segment method, restructuring content into Quick Start + core sections + Common Mistakes, removing AI-sounding language, adding quantified constraints, and ensuring the file follows progressive disclosure architecture. Trigger when the user says things like 'clean up my skill', 'improve this rule file', 'polish my SKILL.md', 'make this publishable', 'my description is bad', or 'prepare this for GitHub'. Also trigger when the user shows you a rule file and asks what's wrong with it. Do NOT trigger for creating a rule file from scratch with no existing content, or for changes to files other than the rule file itself (README, CONTRIBUTING, etc.)."
-license: MIT
+license: PolyForm-Noncommercial-1.0.0
 ---
 
 ## Quick Start

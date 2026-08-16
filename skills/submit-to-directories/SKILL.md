@@ -1,7 +1,7 @@
 ---
 name: submit-to-directories
 description: "Use this skill when the user wants to submit their published AI skill or rule repository to community directories and awesome-lists to increase visibility. This includes identifying which directories accept the repo's format, formatting the entry correctly per each directory's CONTRIBUTING.md, and walking through the fork → add entry → open PR process. Trigger when the user says 'submit to awesome list', 'how do I get my skill listed', 'add to the community directory', 'submit a PR to awesome-cursorrules', 'how do people find my skill', or 'promote my repo'. Also trigger right after the repo has been published and the user asks what to do next. Do NOT trigger before the repo is live on GitHub — the repo URL must exist before submitting anywhere. Do NOT trigger for the Claude Plugin Marketplace submission process, which requires a separate .claude-plugin/marketplace.json configuration."
-license: MIT
+license: PolyForm-Noncommercial-1.0.0
 ---
 
 ## Quick Start

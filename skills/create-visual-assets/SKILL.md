@@ -1,7 +1,7 @@
 ---
 name: create-visual-assets
 description: "Use this skill when the user needs visual assets for their AI skill or rule repository: hero banner images and badge code. This includes generating a light-mode SVG banner, a dark-mode SVG banner, the HTML embed snippet with automatic dark/light switching, and the badge markdown row for license, PRs Welcome, and last-updated. Trigger when the user says 'make a banner', 'make a hero image', 'I need a logo for my repo', 'create assets', 'design the repo header', 'give me the badges', or 'my README has a banner placeholder that needs filling'. Also trigger when the README has already been written with a placeholder but the actual SVG files haven't been created yet. Do NOT trigger for complex logo design, brand identity systems, or any asset that requires raster images, photos, or design software — only SVG banners and badge code are in scope."
-license: MIT
+license: PolyForm-Noncommercial-1.0.0
 ---
 
 ## Quick Start

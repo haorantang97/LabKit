@@ -70,7 +70,7 @@ if [ -z "$(git log --oneline 2>/dev/null)" ]; then
 
 - 6 atomic skills covering the publish-to-GitHub pipeline
 - 1 orchestrator skill (publish-skill-bundle)
-- README, CONTRIBUTING, CC0 LICENSE, banner SVGs
+- README, CONTRIBUTING, PolyForm Noncommercial LICENSE, banner SVGs
 - Platform-agnostic SKILL.md format (Claude Code, Cursor, Windsurf, Copilot, AGENTS.md)
 - Bilingual docs (English / 中文)"
   echo "✓ Initial commit created"
@@ -129,4 +129,4 @@ echo "  - README renders, banner shows"
 echo "  - Toggle GitHub theme to verify dark-mode banner"
 echo "  - English / 中文 language switcher works"
 echo "  - Topics are set"
-echo "  - LICENSE shows as CC0-1.0 in the sidebar"
+echo "  - LICENSE shows as PolyForm-Noncommercial-1.0.0 in the sidebar"

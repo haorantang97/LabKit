@@ -1,7 +1,7 @@
 ---
 name: scaffold-repo-files
 description: "Use this skill when the user needs to create the supporting files for a GitHub repository beyond the rule file itself and the README. This includes choosing and writing the LICENSE file, writing CONTRIBUTING.md with submission format and quality gates, creating .github/PULL_REQUEST_TEMPLATE.md, setting up the correct directory structure, and creating optional files like CHANGELOG.md and SECURITY.md. Trigger when the user says 'set up my repo files', 'what other files do I need', 'create a CONTRIBUTING file', 'scaffold the repo structure', 'set up the directory layout', or 'I have the skill and README, what's next'. Also trigger when the user is about to publish and asks what supporting files a proper repo should have. Do NOT trigger for writing the README itself (that is write-readme), for creating banner images (that is create-visual-assets), or for the git and GitHub operations (that is publish-to-github)."
-license: MIT
+license: PolyForm-Noncommercial-1.0.0
 ---
 
 ## Quick Start

@@ -10,7 +10,7 @@
 
 **English** | [中文](README.zh-CN.md)
 
-[![License](https://img.shields.io/badge/license-CC0-blue.svg?style=flat-square)](LICENSE)
+[![License](https://img.shields.io/badge/license-PolyForm%20Noncommercial%201.0.0-blue.svg?style=flat-square)](LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](CONTRIBUTING.md)
 [![Last Updated](https://img.shields.io/badge/updated-Jul%202026-blue.svg?style=flat-square)]()
 
@@ -88,7 +88,7 @@ YAML front matter (`name`, `description`, `license`) followed by markdown:
 ---
 name: skill-name
 description: "Five-segment trigger description. See skills/polish-rule-content."
-license: CC0-1.0
+license: PolyForm-Noncommercial-1.0.0
 ---
 
 ## Quick Start
@@ -101,4 +101,4 @@ See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## License
 
-CC0 1.0 Universal. See [LICENSE](LICENSE).
+PolyForm Noncommercial License 1.0.0. See [LICENSE](LICENSE).
