@@ -8,6 +8,7 @@ description: |
   直到用户明确暂停或停止，不要求每轮重新点名。不要用于单轮编号问答、普通任务进度追踪，或用户
   已经明确看见但暂缓执行的事项。仅检查、调试、修改或发布 Open Loops 本身的轮次属于维护通道：
   可以使用本 skill 排障，但不得写进业务项目的原文存档或未闭环清单。
+license: PolyForm-Noncommercial-1.0.0
 ---
 
 # Open Loops
