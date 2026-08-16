@@ -73,7 +73,7 @@ git commit -m "feat: initial release of {skill-name}
 
 - {rule-file}: {one-line description}
 - README: install instructions and usage
-- LICENSE: {MIT|CC0}"
+- LICENSE: PolyForm Noncommercial 1.0.0 (unless the user explicitly chose another license)"
 ```
 
 Commit message rules:

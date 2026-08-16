@@ -129,13 +129,13 @@ The `<picture>` tag serves the dark or light version depending on the viewer's t
 Place directly after the `# Title` heading:
 
 ```markdown
-[![License](https://img.shields.io/badge/license-{LICENSE}-blue.svg?style=flat-square)](LICENSE)
+[![License](https://img.shields.io/badge/license-PolyForm%20Noncommercial%201.0.0-blue.svg?style=flat-square)](LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](CONTRIBUTING.md)
 [![Last Updated](https://img.shields.io/badge/updated-{MON%20YYYY}-blue.svg?style=flat-square)]()
 ```
 
 Fill:
-- `{LICENSE}` → `MIT` or `CC0` (no spaces)
+- Use the PolyForm Noncommercial 1.0.0 badge by default. If the user explicitly chose another license, URL-encode its label and use that instead.
 - `{MON%20YYYY}` → current month and year, URL-encoded, e.g., `Jun%202026`
 
 **Optional badges** (add only if applicable):

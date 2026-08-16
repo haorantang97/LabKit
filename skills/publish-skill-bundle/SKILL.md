@@ -6,7 +6,7 @@ license: PolyForm-Noncommercial-1.0.0
 
 ## Quick Start
 
-Ask the user for one thing: the path to their existing rule file. Then call the sub-skills below in order, letting each one finish before invoking the next.
+Ask the user for one thing: the path to their existing rule file. Use PolyForm Noncommercial License 1.0.0 as the default for the whole original skill repository; only ask about licensing when the user explicitly requests a different license. Then call the sub-skills below in order, letting each one finish before invoking the next.
 
 ```
 polish-rule-content      →  cleaned SKILL.md / .cursorrules / AGENTS.md
@@ -40,7 +40,7 @@ The README's one-liner becomes the GitHub repo description later, and the awesom
 
 ## scaffold-repo-files
 
-Input: repo type (single-skill / collection / awesome-list) and the chosen license. Output: `LICENSE`, `CONTRIBUTING.md`, `.github/PULL_REQUEST_TEMPLATE.md`, and the directory layout.
+Input: repo type (single-skill / collection / awesome-list) and the default PolyForm Noncommercial 1.0.0 license unless the user explicitly chose an override. Output: `LICENSE`, `CONTRIBUTING.md`, `.github/PULL_REQUEST_TEMPLATE.md`, and the directory layout.
 
 ---
 

@@ -6,7 +6,7 @@ license: PolyForm-Noncommercial-1.0.0
 
 ## Quick Start
 
-Ask for two things if not already provided: repo name and a one-line value statement. Then write sections in this order: first screen → install commands → what it does → content list → footer. Don't ask for anything else upfront; fill gaps with reasonable defaults.
+Ask for two things if not already provided: repo name and a one-line value statement. Then write sections in this order: first screen → install commands → what it does → content list → footer. Use PolyForm Noncommercial License 1.0.0 by default; do not ask about licensing unless the user explicitly wants a different license.
 
 ---
 
@@ -18,7 +18,7 @@ Ask for two things if not already provided: repo name and a one-line value state
 | Platform(s) | Ask — determines install commands |
 | One-line value statement | Ask — cannot be invented reliably |
 | GitHub username | Ask |
-| License type | MIT (code/tools) or CC0 (pure content) |
+| License type | PolyForm Noncommercial 1.0.0 by default; ask only for an explicit override |
 | Repo type | single-skill / collection / awesome-list |
 
 Do not ask more than two questions at once. If the skill file is already available, read it to extract most of this.
@@ -40,7 +40,7 @@ Everything above the fold. Must contain: banner placeholder, badge row, title, o
 
 # {Repo Name}
 
-[![License](https://img.shields.io/badge/license-{MIT|CC0}-blue.svg?style=flat-square)](LICENSE)
+[![License](https://img.shields.io/badge/license-PolyForm%20Noncommercial%201.0.0-blue.svg?style=flat-square)](LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](CONTRIBUTING.md)
 [![Last Updated](https://img.shields.io/badge/updated-{Mon YYYY}-blue.svg?style=flat-square)]()
 
@@ -151,7 +151,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## License
 
-{MIT | CC0 1.0 Universal} — see [LICENSE](LICENSE).
+PolyForm Noncommercial License 1.0.0 — see [LICENSE](LICENSE).
 ```
 
 If CONTRIBUTING.md doesn't exist yet, write: `Pull requests are welcome. Please open an issue first to discuss what you'd like to change.`
