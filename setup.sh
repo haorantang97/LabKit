@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
-# One-shot publisher for the `LabKit` repo.
+# One-shot publisher for the `SKILL-SKILL` repo.
 # Run: ./setup.sh
 
 set -euo pipefail
 
-REPO_NAME="LabKit"
-REPO_DESC="A personal collection of reusable agent skills, publishing workflows, and everyday tools."
+REPO_NAME="SKILL-SKILL"
+REPO_DESC="From local draft to a published GitHub repo, in six atomic skills. Platform-agnostic."
 
 cd "$(dirname "$0")"
 
@@ -66,13 +66,13 @@ fi
 if [ -z "$(git log --oneline 2>/dev/null)" ]; then
   echo "→ Creating initial commit..."
   git add .
-  git commit -q -m "feat: release LabKit
+  git commit -q -m "feat: initial release of SKILL SKILL
 
-  - publishing pipeline skills
-  - everyday toolbox and integration skills
-  - README, CONTRIBUTING, PolyForm Noncommercial LICENSE, banner SVGs
-  - Platform-agnostic SKILL.md format (Claude Code, Cursor, Windsurf, Copilot, AGENTS.md)
-  - Bilingual docs (English / 中文)"
+- 6 atomic skills covering the publish-to-GitHub pipeline
+- 1 orchestrator skill (publish-skill-bundle)
+- README, CONTRIBUTING, PolyForm Noncommercial LICENSE, banner SVGs
+- Platform-agnostic SKILL.md format (Claude Code, Cursor, Windsurf, Copilot, AGENTS.md)
+- Bilingual docs (English / 中文)"
   echo "✓ Initial commit created"
 else
   echo "✓ Repo already has commits, skipping initial commit"

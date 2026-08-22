@@ -1,4 +1,0 @@
-interface:
-  display_name: "截图卡片自动排版"
-  short_description: "识别私信与评论截图，裁切隐私信息并生成3:4黑底居中卡片"
-  default_prompt: "使用 $screenshot-card-composer 把这些私信或评论截图整理成3:4黑底居中卡片，并隐藏提问者信息。"
