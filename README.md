@@ -76,6 +76,13 @@ flowchart LR
 - **[publish-to-github](skills/publish-to-github/SKILL.md)** — Runs git init, the initial commit, gh repo create, and sets topics on the live repo
 - **[submit-to-directories](skills/submit-to-directories/SKILL.md)** — Submits the live repo to awesome-lists via the fork → PR flow
 
+### General-purpose skills
+
+- **[open-loops](skills/open-loops/SKILL.md)** — Audits long conversations for unanswered, unacknowledged, or assistant-decided information points
+- **[reading-plan-mentor](skills/reading-plan-mentor/SKILL.md)** — Turns a book list into a paced, long-term reading plan with daily guidance and continuity
+
+These two skills are also maintained in their standalone repositories: [open-loops](https://github.com/haorantang97/open-loops) and [reading-plan-mentor](https://github.com/haorantang97/reading-plan-mentor).
+
 ## File format
 
 ```

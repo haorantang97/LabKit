@@ -76,6 +76,13 @@ flowchart LR
 - **[publish-to-github](skills/publish-to-github/SKILL.md)** — 跑 git init、首次提交、gh repo create，并给仓库设 Topics
 - **[submit-to-directories](skills/submit-to-directories/SKILL.md)** — 走 fork → PR 流程把仓库提交到 awesome-list
 
+### 通用工作型 Skill
+
+- **[open-loops](skills/open-loops/SKILL.md)** — 审计长对话里未回答、未确认，或被 Agent 擅自决定的信息点
+- **[reading-plan-mentor](skills/reading-plan-mentor/SKILL.md)** — 把书单变成有节奏、可持续、带每日导读与连续性的长期阅读计划
+
+这两个 skill 也继续保留在独立仓库中：[open-loops](https://github.com/haorantang97/open-loops) 和 [reading-plan-mentor](https://github.com/haorantang97/reading-plan-mentor)。
+
 ## 文件格式
 
 ```
