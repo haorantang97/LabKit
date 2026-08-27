@@ -6,6 +6,8 @@
   </picture>
 </p>
 
+> **Archived repository:** The maintained copy now lives in [`LabKit/skills/reading-plan-mentor`](https://github.com/haorantang97/LabKit/tree/main/skills/reading-plan-mentor). This repository is kept for its history and existing stars.
+
 # Reading Plan Mentor
 
 **English** | [中文](README.zh-CN.md)

@@ -6,6 +6,8 @@
   </picture>
 </p>
 
+> **已归档仓库：** 当前维护版本已迁移到 [`LabKit/skills/reading-plan-mentor`](https://github.com/haorantang97/LabKit/tree/main/skills/reading-plan-mentor)。本仓库保留原有历史和 stars。
+
 # Reading Plan Mentor｜导师陪读
 
 [English](README.md) | **中文**
