@@ -2,11 +2,11 @@
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="assets/banner-dark.svg">
     <source media="(prefers-color-scheme: light)" srcset="assets/banner.svg">
-    <img width="700" alt="SKILL SKILL" src="assets/banner.svg">
+    <img width="700" alt="LabKit" src="assets/banner.svg">
   </picture>
 </p>
 
-# SKILL SKILL
+# LabKit
 
 **English** | [中文](README.zh-CN.md)
 
@@ -19,11 +19,13 @@
 ## Install
 
 ```bash
-git clone https://github.com/haorantang97/SKILL-SKILL.git
-cd SKILL-SKILL
+git clone https://github.com/haorantang97/LabKit.git
+cd LabKit
 ```
 
-Each `SKILL.md` is plain markdown with YAML front matter. Drop it into whichever agent you use:
+LabKit exposes three top-level skills. `skill-skill` is one complete publishing toolkit; its pipeline modules live under `skills/skill-skill/modules/` and are not separate top-level skills.
+
+Each top-level `SKILL.md` is plain markdown with YAML front matter. Drop the one you want into whichever agent you use:
 
 | Agent | Where to put it |
 |---|---|
@@ -33,50 +35,15 @@ Each `SKILL.md` is plain markdown with YAML front matter. Drop it into whichever
 | GitHub Copilot | `cp skills/{name}/SKILL.md ~/your-project/.github/copilot-instructions.md` |
 | Codex / AGENTS.md | `cp skills/{name}/SKILL.md ~/your-project/AGENTS.md` |
 
-Skills are independent. Install only the ones you want.
+The three top-level skills are independent. Install only the ones you want.
 
 ## What it does
 
-This bundle splits the publish-to-GitHub workflow into independent skills, one per step. Run them in order through the orchestrator, or call any single one when you only need that part.
-
-## Flow
-
-```mermaid
-flowchart LR
-    A([your rule file]) --> B[polish-rule-content]
-    B --> C[write-readme]
-    C --> D[scaffold-repo-files]
-    D --> E[create-visual-assets]
-    E --> F[publish-to-github]
-    E -. optional .-> T[translate-readme]
-    T -.-> F
-    F --> G([live repo])
-    G -. optional .-> H[submit-to-directories]
-    H -.-> I([awesome-list PRs])
-
-    classDef step fill:#0f172a,color:#f8fafc,stroke:#475569,stroke-width:1px;
-    classDef io fill:#f1f5f9,color:#0f172a,stroke:#94a3b8,stroke-width:1px;
-    class B,C,D,E,F,H,T step;
-    class A,G,I io;
-```
+LabKit is a small collection of three original personal skills. `skill-skill` is the publishing toolkit; `open-loops` and `reading-plan-mentor` are standalone daily-use tools.
 
 ## Skills
 
-### Orchestrator
-
-- **[publish-skill-bundle](skills/publish-skill-bundle/SKILL.md)** — Routes through the pipeline in order; the entry point when you have a rule file and want to publish end to end
-
-### Pipeline
-
-- **[polish-rule-content](skills/polish-rule-content/SKILL.md)** — Rewrites the description with the five-segment method, restructures the body, applies the de-AI checklist
-- **[write-readme](skills/write-readme/SKILL.md)** — Writes README.md with banner placeholder, badges, multi-platform install commands, and content list
-- **[scaffold-repo-files](skills/scaffold-repo-files/SKILL.md)** — Creates LICENSE, CONTRIBUTING.md, .github/PULL_REQUEST_TEMPLATE.md, and the directory structure
-- **[create-visual-assets](skills/create-visual-assets/SKILL.md)** — Generates assets/banner.svg, banner-dark.svg, and the three standard badges; first run asks once for your image style
-- **[translate-readme](skills/translate-readme/SKILL.md)** — Translates the finished README into a second language with a language switcher; code blocks stay verbatim
-- **[publish-to-github](skills/publish-to-github/SKILL.md)** — Runs git init, the initial commit, gh repo create, and sets topics on the live repo
-- **[submit-to-directories](skills/submit-to-directories/SKILL.md)** — Submits the live repo to awesome-lists via the fork → PR flow
-
-### General-purpose skills
+- **[skill-skill](skills/skill-skill/SKILL.md)** — Packages a working AI rule or skill and guides it through publication as a GitHub repository
 
 - **[open-loops](skills/open-loops/SKILL.md)** — Audits long conversations for unanswered, unacknowledged, or assistant-decided information points
 - **[reading-plan-mentor](skills/reading-plan-mentor/SKILL.md)** — Turns a book list into a paced, long-term reading plan with daily guidance and continuity
@@ -94,7 +61,7 @@ YAML front matter (`name`, `description`, `license`) followed by markdown:
 ```yaml
 ---
 name: skill-name
-description: "Five-segment trigger description. See skills/polish-rule-content."
+description: "Use when the skill's triggering conditions match the user's request."
 license: PolyForm-Noncommercial-1.0.0
 ---
 

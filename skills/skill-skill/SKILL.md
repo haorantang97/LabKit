@@ -1,12 +1,12 @@
 ---
-name: publish-skill-bundle
-description: "Use this skill when the user has a working AI rule or skill file and wants to take it from local draft to a published GitHub repository, end to end. This is the orchestrator that routes through the publishing pipeline sub-skills in order. Trigger when the user says 'I have a skill, help me publish it', 'turn my prompt into a GitHub repo', 'publish my Cursor rule', 'put this skill on GitHub end to end', 'walk me through publishing this', or 'I have a working SKILL.md and don't know what to do next'. Also trigger when the user has a single rule file in hand and says any phrase that implies the full publishing path. Do NOT trigger when the user only wants one step of the pipeline (call that sub-skill directly), or when the rule file does not exist yet (writing from scratch is out of scope), or when the repo is already live on GitHub and only needs a single follow-up action like submitting to a directory."
+name: skill-skill
+description: "Use this skill when the user has a working AI rule or skill file and wants to package and publish it as a GitHub repository end to end. Trigger when the user says 'I have a skill, help me publish it', 'turn my prompt into a GitHub repo', 'publish my Cursor rule', 'put this skill on GitHub end to end', 'walk me through publishing this', or 'I have a working SKILL.md and don't know what to do next'. Do NOT trigger when the user only wants to write a new skill from scratch, or when a live repo only needs a single follow-up action such as directory submission."
 license: PolyForm-Noncommercial-1.0.0
 ---
 
 ## Quick Start
 
-Ask the user for one thing: the path to their existing rule file. Use PolyForm Noncommercial License 1.0.0 as the default for the whole original skill repository; only ask about licensing when the user explicitly requests a different license. Then call the sub-skills below in order, letting each one finish before invoking the next.
+Ask the user for one thing: the path to their existing rule file. Use PolyForm Noncommercial License 1.0.0 as the default for the whole original skill repository; only ask about licensing when the user explicitly requests a different license. This is one public skill bundle. Its pipeline modules live under `modules/` and are internal implementation details; read the relevant module when a step is needed, then continue through the bundle in order.
 
 ```
 polish-rule-content      →  cleaned SKILL.md / .cursorrules / AGENTS.md

@@ -2,16 +2,18 @@
 
 [English](CONTRIBUTING.md) | **中文**
 
-这个仓库收"把规则文件发到 GitHub"这条流水线上的 skill。PR 在这个范围内的都欢迎。
+这个仓库收三个顶层 skill。`skill-skill` 发布工具箱内部可以有流水线模块，但这些模块不作为独立的顶层入口展示。符合这个范围的 PR 都欢迎。
 
 ## 文件格式
 
-每个 skill 都按这个结构：
+每个顶层 skill 都按这个结构：
 
 ```
-skills/{skill-name}/
+skills/{top-level-skill-name}/
   └── SKILL.md
 ```
+
+`skill-skill` 的内部模块放在 `skills/skill-skill/modules/` 下。
 
 `SKILL.md` 是带 YAML front matter 的 markdown，含 `name`、`description`、`license` 三个字段，再加正文。
 
@@ -22,7 +24,7 @@ skills/{skill-name}/
 - 覆盖一个现有 skill 没处理的发布步骤
 - description 用五段式（主触发、正向枚举、口语化触发词、边界扩展、负样本）
 - 含 Quick Start 节，含至少两条 Common Mistakes
-- 通过 `skills/polish-rule-content/SKILL.md` 里的去 AI 味清单
+- 通过 `skills/skill-skill/modules/polish-rule-content/SKILL.md` 里的去 AI 味清单
 - 至少在一个 agent 上测过再提
 
 ## 质量门槛
@@ -49,7 +51,7 @@ skills/{skill-name}/
 ## 流程
 
 1. Fork 这个仓库
-2. 在 `skills/{skill-name}/SKILL.md` 加你的 skill，在流水线 skill 里按字母序插
+2. 新的独立 skill 放到 `skills/{skill-name}/SKILL.md`；发布工具的内部模块放到 `skills/skill-skill/modules/{module-name}/SKILL.md`
 3. 在 README 的 "Skills" 节加一条链接
 4. 按上面的标题格式开 PR
 

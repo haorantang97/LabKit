@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
-# One-shot publisher for the `SKILL-SKILL` repo.
+# One-shot publisher for the `LabKit` repo.
 # Run: ./setup.sh
 
 set -euo pipefail
 
-REPO_NAME="SKILL-SKILL"
-REPO_DESC="From local draft to a published GitHub repo, in six atomic skills. Platform-agnostic."
+REPO_NAME="LabKit"
+REPO_DESC="A personal collection of original AI skills, including a skill publishing toolkit."
 
 cd "$(dirname "$0")"
 
@@ -66,10 +66,10 @@ fi
 if [ -z "$(git log --oneline 2>/dev/null)" ]; then
   echo "→ Creating initial commit..."
   git add .
-  git commit -q -m "feat: initial release of SKILL SKILL
+  git commit -q -m "feat: initial release of LabKit
 
-- 6 atomic skills covering the publish-to-GitHub pipeline
-- 1 orchestrator skill (publish-skill-bundle)
+- 3 top-level skills
+- 1 publishing toolkit with internal pipeline modules
 - README, CONTRIBUTING, PolyForm Noncommercial LICENSE, banner SVGs
 - Platform-agnostic SKILL.md format (Claude Code, Cursor, Windsurf, Copilot, AGENTS.md)
 - Bilingual docs (English / 中文)"
