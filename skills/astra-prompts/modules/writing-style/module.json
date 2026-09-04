@@ -1,0 +1,20 @@
+{
+  "id": "writing-style",
+  "title": "Personality and writing style",
+  "priority": 30,
+  "patterns": [
+    "少点套话",
+    "简洁一点",
+    "别写那么长",
+    "减少术语",
+    "不要AI味",
+    "less jargon",
+    "less verbose",
+    "write concisely",
+    "cut the (?:fluff|jargon)"
+  ],
+  "exclude": [],
+  "source": "https://developers.openai.com/api/docs/guides/latest-model#personality-and-writing-style",
+  "verified_at": "2026-09-05",
+  "kind": "verbatim-official-prompt-blocks"
+}

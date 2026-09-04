@@ -1,0 +1,12 @@
+{
+  "model": "gpt-6-astra",
+  "verified_at": "2026-09-05",
+  "source": "https://developers.openai.com/api/docs/guides/latest-model#prompting-best-practices",
+  "sha256": {
+    "modules/delegation/prompt.md": "074bcaeec96b8e3a0ceedc23a71ca9dbb2122b7c851ed17f924fee2afa3b43d0",
+    "modules/initiative/prompt.md": "4fd1dbed8b554586c34bb6da820c292f73ef8ad40809e73f006ac146cc2ac222",
+    "modules/instruction-following/prompt.md": "8d6d0d84be6709422ef77508cfb055c02653f118ce542e4d87650d9371aed72d",
+    "modules/testing/prompt.md": "e93e27f843da90c0d58fca389d542df1c8e63479c883fc801acb0ba0217508f6",
+    "modules/writing-style/prompt.md": "5b83f57368d5239a9655bebb420c26dbaf801e83a63eff83c429a50c90110cac"
+  }
+}

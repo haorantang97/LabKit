@@ -2,7 +2,7 @@
 
 [English](CONTRIBUTING.md) | **中文**
 
-这个仓库收三个顶层 skill。`skill-skill` 发布工具箱内部可以有流水线模块，但这些模块不作为独立的顶层入口展示。符合这个范围的 PR 都欢迎。
+这个仓库收四个顶层 skill。发布和行为工具箱内部可以有模块，但这些模块不作为独立的顶层入口展示。符合这个范围的 PR 都欢迎。
 
 ## 文件格式
 
@@ -21,7 +21,7 @@ skills/{top-level-skill-name}/
 
 提交的 skill 必须：
 
-- 覆盖一个现有 skill 没处理的发布步骤
+- 解决一个现有 skill 没覆盖的发布、日常工作或 Agent 行为需求
 - description 用五段式（主触发、正向枚举、口语化触发词、边界扩展、负样本）
 - 含 Quick Start 节，含至少两条 Common Mistakes
 - 通过 `skills/skill-skill/modules/polish-rule-content/SKILL.md` 里的去 AI 味清单

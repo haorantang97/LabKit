@@ -1,0 +1,25 @@
+{
+  "id": "initiative",
+  "title": "Initiative and follow-through",
+  "priority": 10,
+  "patterns": [
+    "不要只给计划",
+    "别再问我",
+    "直接动手",
+    "继续完成",
+    "stop asking",
+    "finish the task",
+    "carry (?:this|it) through"
+  ],
+  "exclude": [
+    "只(?:做|给|要)?(?:个)?(?:计划|方案|分析)",
+    "先别(?:执行|改|动)",
+    "不要(?:执行|修改)",
+    "\\bplan only\\b",
+    "\\bdo not (?:execute|edit|change)\\b",
+    "\\bdon't (?:execute|edit|change)\\b"
+  ],
+  "source": "https://developers.openai.com/api/docs/guides/latest-model#initiative-and-follow-through",
+  "verified_at": "2026-09-05",
+  "kind": "verbatim-official-prompt-blocks"
+}

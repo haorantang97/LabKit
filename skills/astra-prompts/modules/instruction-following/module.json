@@ -1,0 +1,14 @@
+{
+  "id": "instruction-following",
+  "title": "Instruction following",
+  "priority": 20,
+  "patterns": [
+    "(?:skill|技能|AGENTS\\.md).{0,25}(?:冲突|卡住|阻塞|暂停)",
+    "(?:conflicting|blocked by|stuck on).{0,30}(?:skill|instructions?)",
+    "(?:skill|instructions?).{0,25}(?:conflict|block)"
+  ],
+  "exclude": [],
+  "source": "https://developers.openai.com/api/docs/guides/latest-model#instruction-following",
+  "verified_at": "2026-09-05",
+  "kind": "verbatim-official-prompt-blocks"
+}

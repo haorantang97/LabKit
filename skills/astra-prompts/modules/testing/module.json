@@ -1,0 +1,18 @@
+{
+  "id": "testing",
+  "title": "Testing and verification",
+  "priority": 40,
+  "patterns": [
+    "别反复跑测试",
+    "不要重复测试",
+    "测试适量",
+    "避免过度测试",
+    "stop (?:repeating|rerunning) tests",
+    "avoid (?:redundant|excessive) tests",
+    "proportionate testing"
+  ],
+  "exclude": [],
+  "source": "https://developers.openai.com/api/docs/guides/latest-model#testing-and-verification",
+  "verified_at": "2026-09-05",
+  "kind": "verbatim-official-prompt-blocks"
+}

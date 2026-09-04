@@ -12,9 +12,11 @@
 
 [![License](https://img.shields.io/badge/license-PolyForm%20Noncommercial%201.0.0-blue.svg?style=flat-square)](LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](CONTRIBUTING.md)
-[![Last Updated](https://img.shields.io/badge/updated-Jul%202026-blue.svg?style=flat-square)]()
+[![Last Updated](https://img.shields.io/badge/updated-Sep%202026-blue.svg?style=flat-square)](https://github.com/haorantang97/LabKit/commits/main)
 
-> Take a working AI rule file from local draft to a published GitHub repo.
+> Reusable agent skills for publishing, everyday work, and configurable Astra behavior.
+
+**New: [Astra Prompts](skills/astra-prompts/README.md)** packages five official GPT-6 Astra prompt modules with individual switches, an optional Codex prompt hook, and a read-only configuration audit. [中文介绍](skills/astra-prompts/README.zh-CN.md)
 
 ## Install
 
@@ -23,25 +25,26 @@ git clone https://github.com/haorantang97/LabKit.git
 cd LabKit
 ```
 
-LabKit exposes three top-level skills. `skill-skill` is one complete publishing toolkit; its pipeline modules live under `skills/skill-skill/modules/` and are not separate top-level skills.
+LabKit exposes four top-level skills. `skill-skill` is one complete publishing toolkit; its pipeline modules live under `skills/skill-skill/modules/` and are not separate top-level skills. Astra's behavior modules are also internal to one skill.
 
-Each top-level `SKILL.md` is plain markdown with YAML front matter. Drop the one you want into whichever agent you use:
+Each top-level skill has a `SKILL.md` entrypoint. Install the **complete folder**, including any scripts and references. For Codex, copy the chosen skill into your project's skill directory:
 
-| Agent | Where to put it |
-|---|---|
-| Claude Code | `cp -r skills/* ~/.claude/skills/` |
-| Cursor | `cp skills/{name}/SKILL.md ~/your-project/.cursor/rules/{name}.mdc` |
-| Windsurf | `cat skills/{name}/SKILL.md >> ~/your-project/.windsurfrules` |
-| GitHub Copilot | `cp skills/{name}/SKILL.md ~/your-project/.github/copilot-instructions.md` |
-| Codex / AGENTS.md | `cp skills/{name}/SKILL.md ~/your-project/AGENTS.md` |
+```bash
+mkdir -p /path/to/project/.agents/skills
+cp -R skills/astra-prompts /path/to/project/.agents/skills/
+```
 
-The three top-level skills are independent. Install only the ones you want.
+Use `~/.agents/skills/` for user-wide Codex discovery. Check existing installations before copying to preserve customizations. For other hosts, follow their skill installation instructions and retain referenced files; copying `SKILL.md` over `AGENTS.md` loses resources and can overwrite project rules. Optional hooks have their own host-specific setup.
+
+The four top-level skills are independent. Install only the ones you want.
 
 ## What it does
 
-LabKit is a small collection of three original personal skills. `skill-skill` is the publishing toolkit; `open-loops` and `reading-plan-mentor` are standalone daily-use tools.
+LabKit is a small collection of four skills. `skill-skill` is the publishing toolkit; `open-loops` and `reading-plan-mentor` are daily-use tools. `astra-prompts` combines attributed official prompt blocks with modular routing and optional setup tools.
 
 ## Skills
+
+- **[astra-prompts](skills/astra-prompts/README.md)** — Applies selected Astra behavior guidance; includes configurable modules, an optional Codex hook, and a separate one-time audit workflow
 
 - **[skill-skill](skills/skill-skill/SKILL.md)** — Packages a working AI rule or skill and guides it through publication as a GitHub repository
 

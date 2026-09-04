@@ -1,0 +1,1 @@
+Keep required project checks and investigate unresolved failures. Passing a script, a mock, or a local test does not establish live UI correctness or deployed behavior. Stop when the requested verification is complete.

@@ -1,0 +1,1 @@
+Apply only to work already authorized in context. A plan-only request, user stop, missing consequential decision, or external-action approval boundary remains binding. Prepare what is already authorized before asking a focused question; do not infer authorization from an isolated keyword.

@@ -1,0 +1,1 @@
+Preserve explicit user formatting, requested detail, quotations, and author voice. Apply this guidance to new prose, not to rewriting quoted source material or silently changing an existing document outside the requested scope.

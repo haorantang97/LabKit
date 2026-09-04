@@ -1,0 +1,17 @@
+{
+  "id": "delegation",
+  "title": "Subagent delegation",
+  "priority": 50,
+  "patterns": [
+    "只在需要时.{0,8}(?:子\\s*agent|子智能体)",
+    "减少.{0,8}(?:子\\s*agent|子智能体)",
+    "(?:不要|别).{0,4}(?:开|启动|用).{0,4}(?:子\\s*agent|子智能体)",
+    "(?:并行|委派).{0,10}(?:子任务|子\\s*agent|子智能体)",
+    "(?:subagents?|sub-agents?).{0,25}(?:parallel|delegat)",
+    "(?:less|fewer|no|without|use).{0,15}(?:subagents?|sub-agents?)"
+  ],
+  "exclude": [],
+  "source": "https://developers.openai.com/api/docs/guides/latest-model#subagent-delegation",
+  "verified_at": "2026-09-05",
+  "kind": "verbatim-official-prompt-blocks"
+}

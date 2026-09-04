@@ -2,7 +2,7 @@
 
 **English** | [中文](CONTRIBUTING.zh-CN.md)
 
-This repo collects three top-level skills. The `skill-skill` publishing toolkit may contain internal pipeline modules, but those modules are not separate top-level entries. PRs that fit this scope are welcome.
+This repo collects four top-level skills. Publishing and behavior toolkits may contain internal modules, but those modules are not separate top-level entries. PRs that fit this scope are welcome.
 
 ## Entry Format
 
@@ -21,7 +21,7 @@ Internal modules for `skill-skill` belong under `skills/skill-skill/modules/`.
 
 Submissions must:
 
-- Cover a step in the publishing pipeline that existing skills do not already handle
+- Serve a distinct publishing, daily-work, or agent-behavior need that existing skills do not already handle
 - Use the five-segment description method (main trigger, positive enumeration, colloquial triggers, edge case expansion, negative samples)
 - Include a Quick Start section and a Common Mistakes section with at least two items
 - Pass the de-AI checklist in `skills/skill-skill/modules/polish-rule-content/SKILL.md`

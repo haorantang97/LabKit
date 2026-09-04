@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "models": ["gpt-6-astra"],
+  "max_modules": 3,
+  "max_context_chars": 12000,
+  "modules": {
+    "initiative": {"enabled": true, "guard": true},
+    "instruction-following": {"enabled": true, "guard": true},
+    "writing-style": {"enabled": true, "guard": true},
+    "testing": {"enabled": true, "guard": true},
+    "delegation": {"enabled": false, "guard": true}
+  }
+}
