@@ -4,13 +4,13 @@ The default experience is a [first-use conversation](onboarding.md), installatio
 
 ## Desktop-first setup
 
-Users can ask their agent to install Welcome to AGI for their client and project; the agent runs the commands below when tools permit. A user does not need to operate a terminal for rules mode. The client loads a short persistent instruction; the current model reads module metadata and selects useful guidance for ordinary tasks.
+Users can ask their agent to install Super Astra for their client and project; the agent runs the commands below when tools permit. A user does not need to operate a terminal for rules mode. The client loads a short persistent instruction; the current model reads module metadata and selects useful guidance for ordinary tasks.
 
 From a LabKit checkout, Python 3.10+ (scripts tested on macOS/Linux):
 
 ```bash
-python3 skills/welcome-to-agi/scripts/install.py --host codex --surface desktop --project /path/to/project
-python3 skills/welcome-to-agi/scripts/install.py --host codex --surface desktop --project /path/to/project --apply
+python3 skills/super-astra/scripts/install.py --host codex --surface desktop --project /path/to/project
+python3 skills/super-astra/scripts/install.py --host codex --surface desktop --project /path/to/project --apply
 ```
 
 The first command previews paths; the second installs and initializes. Auto mode selects **hook registration for Codex on macOS/Linux**, with runtime capability, trust and delivery still to verify. Other known local hosts use rules. Pass `--mode rules` when the user selects that fallback; missing trust never triggers an automatic switch. Use `--user` instead of `--project PATH` for user scope. No other skills or instructions are cleaned.
@@ -20,19 +20,19 @@ After the first-use choices, add `--disable-module ID` for each module the user 
 Other project hosts use the same entrypoint:
 
 ```bash
-python3 skills/welcome-to-agi/scripts/install.py --host claude-code --surface desktop --project /path/to/project --apply
-python3 skills/welcome-to-agi/scripts/install.py --host cursor --surface desktop --project /path/to/project --apply
+python3 skills/super-astra/scripts/install.py --host claude-code --surface desktop --project /path/to/project --apply
+python3 skills/super-astra/scripts/install.py --host cursor --surface desktop --project /path/to/project --apply
 ```
 
-Codex and Cursor packages go into `.agents/skills/welcome-to-agi`; Claude Code uses `.claude/skills/welcome-to-agi`. Cursor integration relies on the generated rule's explicit paths, not a claim about skill autodiscovery. Existing skill destinations are never overwritten; initialize that copy or review an upgrade preserving its config. Unknown clients default to manual, visibly reporting that automatic routing is absent. `--host auto` uses limited runtime hints, not installed binary discovery; pass the actual host whenever known.
+Codex and Cursor packages go into `.agents/skills/super-astra`; Claude Code uses `.claude/skills/super-astra`. Cursor integration relies on the generated rule's explicit paths, not a claim about skill autodiscovery. Existing skill destinations are never overwritten; initialize that copy or review an upgrade preserving its config. Unknown clients default to manual, visibly reporting that automatic routing is absent. `--host auto` uses limited runtime hints, not installed binary discovery; pass the actual host whenever known.
 
 ## Already downloaded / first invocation
 
 Run from the actual installed copy with the host and scope:
 
 ```bash
-python3 /installed/welcome-to-agi/scripts/initialize.py --host codex --surface desktop --project /path/to/project
-python3 /installed/welcome-to-agi/scripts/initialize.py --host codex --surface desktop --project /path/to/project --apply
+python3 /installed/super-astra/scripts/initialize.py --host codex --surface desktop --project /path/to/project
+python3 /installed/super-astra/scripts/initialize.py --host codex --surface desktop --project /path/to/project --apply
 ```
 
 Before applying setup, use the same host/scope with `--onboarding` for read-only module and hook facts, including when an existing Welcome hook would otherwise block rules setup. This option does not audit other Skills and cannot be combined with `--apply`, `--remove`, or `--export`. Follow [onboarding.md](onboarding.md) to ask the remaining choices. Direct installation commands perform file setup and emit the onboarding facts; they do not conduct the conversation or mean the optional review was completed.
@@ -110,9 +110,11 @@ Each `modules/<id>/` contains `module.json`, `prompt.md`, and `guard.md`. Edit `
 
 Delegation is available in new installs because ordinary tasks may benefit from it. The guard still requires independent bounded work, useful coordination tradeoffs, available tools, and authorization. A no-agent request means no spawning. Plan sessions omit initiative and delegation: programmatically in hook mode, by the routing instructions in rules mode.
 
-## Upgrade from astra-prompts
+## Upgrade from welcome-to-agi or astra-prompts
 
-The new name is `welcome-to-agi`. Preserve customized configuration and modules, and remove the old discoverable entry after backing it up outside skill discovery directories. Do not install two competing copies. `setup_hook.py` recognizes the old `LabKit Astra Prompts v1` registration and replaces it with one current handler in the same JSON file. If the hook lives in another source, migrate that source explicitly too. Review/trust the updated definition again.
+For the current rename, follow [rename.md](rename.md). Existing installations are not renamed automatically; retain their working paths until an authorized migration preserves customizations and updates registrations.
+
+The new name is `super-astra`. Preserve customized configuration and modules, and remove the old discoverable entry after backing it up outside skill discovery directories. Do not install two competing copies. `setup_hook.py` recognizes the old `LabKit Astra Prompts v1` registration and replaces it with one current handler in the same JSON file. If the hook lives in another source, migrate that source explicitly too. Review/trust the updated definition again.
 
 The new default enables delegation as a candidate; retaining an older explicit disabled setting is supported. Select `routing: semantic` to get ordinary-task routing. Official prompt bodies are unchanged.
 

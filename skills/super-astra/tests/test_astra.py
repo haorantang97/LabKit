@@ -235,7 +235,7 @@ class SetupTests(unittest.TestCase):
             self.assertFalse(project.exists())
             result = subprocess.run(command + ["--apply"], capture_output=True, text=True)
             self.assertEqual(result.returncode, 0, result.stderr)
-            installed = project / ".agents/skills/welcome-to-agi"
+            installed = project / ".agents/skills/super-astra"
             self.assertTrue((installed / "SKILL.md").exists())
             self.assertTrue((project / ".codex/hooks.json").exists())
             self.assertIn('"hook_registered": true', result.stdout)

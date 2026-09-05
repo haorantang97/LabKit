@@ -110,7 +110,7 @@ def main():
             rule_plan = hosts.plan("codex", args.surface, "rules", owner, user)
             rule_path = Path(rule_plan["rules_file"])
             if not args.remove and rule_path.exists() and setup_rules.BEGIN in rule_path.read_text(encoding="utf-8"):
-                raise ValueError("existing Welcome to AGI rule found; remove it with --mode rules --remove --apply before switching to hooks")
+                raise ValueError("existing Super Astra rule found; remove it with --mode rules --remove --apply before switching to hooks")
             result = subprocess.run([sys.executable, str(ROOT / "scripts/setup_hook.py"),
                                      "--hooks", str(target), "--config", str(config)] +
                                     (["--remove"] if args.remove else []) + (["--apply"] if args.apply else []))
@@ -128,7 +128,7 @@ def main():
             if hook_path and hook_path.exists() and not args.remove:
                 old = status(hook_path, config)
                 if old.get("matching_registrations", 0):
-                    raise ValueError("existing Welcome to AGI hook found at " + str(hook_path) +
+                    raise ValueError("existing Super Astra hook found at " + str(hook_path) +
                                      "; remove it with --hooks PATH --remove --apply before switching to rules")
             state.update(setup_rules.manage(target, config, selected["rule_format"], args.apply, args.remove))
             state["next_step"] = ("Start a fresh task in the actual client. Check the active instruction source, "
@@ -157,7 +157,7 @@ def main():
         print(json.dumps(state, ensure_ascii=False, indent=2))
         return 0
     except (OSError, ValueError, TypeError, KeyError) as error:
-        parser.exit(1, "welcome-to-agi initialization: " + str(error) + "\n")
+        parser.exit(1, "super-astra initialization: " + str(error) + "\n")
 
 
 if __name__ == "__main__":

@@ -11,7 +11,7 @@ python3 scripts/install.py --host hermes --surface cli --project /actual/project
 python3 scripts/install.py --host hermes --surface cli --project /actual/project --apply
 ```
 
-Project mode stores the complete bundle in `/actual/project/.hermes/skills/welcome-to-agi` and adds a scoped entry to the selected project context file. That project-local bundle is loaded through explicit rule paths; this does **not** claim Hermes automatically indexes that directory as a skill catalog. The adapter preserves an existing `.hermes.md`, `HERMES.md`, `AGENTS.override.md`, `AGENTS.md`, `CLAUDE.md` or `.cursorrules` by appending only its own block to the first nonempty candidate. With no candidate it uses AGENTS.md. If existing Cursor modules would be masked, it asks for an explicit target. Ancestor context, host version and actual startup CWD still need inspection; pass `--rules-file PATH` for the verified active file when needed.
+Project mode stores the complete bundle in `/actual/project/.hermes/skills/super-astra` and adds a scoped entry to the selected project context file. That project-local bundle is loaded through explicit rule paths; this does **not** claim Hermes automatically indexes that directory as a skill catalog. The adapter preserves an existing `.hermes.md`, `HERMES.md`, `AGENTS.override.md`, `AGENTS.md`, `CLAUDE.md` or `.cursorrules` by appending only its own block to the first nonempty candidate. With no candidate it uses AGENTS.md. If existing Cursor modules would be masked, it asks for an explicit target. Ancestor context, host version and actual startup CWD still need inspection; pass `--rules-file PATH` for the verified active file when needed.
 
 For catalog installation, `--host hermes --user` copies into `$HERMES_HOME/skills` (default `~/.hermes/skills`). It defaults to manual activation because there is no assumed global AGENTS.md. Supply `--rules-file /actual/project/AGENTS.md --mode rules` only after confirming that file is loaded. Do not write routing instructions into SOUL.md automatically or claim a home-directory AGENTS.md affects every project. Existing installations are preserved; upgrades keep custom config/modules.
 
@@ -26,7 +26,7 @@ python3 scripts/install.py --host openclaw --surface cli --project /actual/agent
 python3 scripts/install.py --host openclaw --surface cli --project /actual/agent-workspace --apply
 ```
 
-The bundle goes into `<workspace>/skills/welcome-to-agi`; a scoped routing entry goes into `<workspace>/AGENTS.md`. Existing instructions are preserved and backed up. User scope stores shared skill files under `$OPENCLAW_STATE_DIR/skills` (default `~/.openclaw/skills`) and defaults to manual activation. A shared skill directory is not a shared AGENTS.md; each intended workspace needs its own verified rule entry. Do not overwrite SOUL.md, USER.md, memory or Gateway settings.
+The bundle goes into `<workspace>/skills/super-astra`; a scoped routing entry goes into `<workspace>/AGENTS.md`. Existing instructions are preserved and backed up. User scope stores shared skill files under `$OPENCLAW_STATE_DIR/skills` (default `~/.openclaw/skills`) and defaults to manual activation. A shared skill directory is not a shared AGENTS.md; each intended workspace needs its own verified rule entry. Do not overwrite SOUL.md, USER.md, memory or Gateway settings.
 
 Sources checked 2026-09-05: [OpenClaw workspace files](https://docs.openclaw.ai/concepts/agent-workspace) and [Skills locations](https://docs.openclaw.ai/tools/skills).
 

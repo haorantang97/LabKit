@@ -16,7 +16,7 @@
 
 > 可复用的 Agent 工具：发布 skill、处理日常任务、按需调整 Astra 行为。
 
-**新增：[Welcome to AGI](skills/welcome-to-agi/README.zh-CN.md)**。五类官方提示词独立开关，对普通任务按需加载。首次引导列出模块与 Hook 状态，询问模块取舍、是否检查 Skills 冲突以及接入方式。[初始化引导](skills/welcome-to-agi/references/onboarding.md)。[客户端引导](skills/welcome-to-agi/references/hosts.md)。[English](skills/welcome-to-agi/README.md)
+**新增：[Super Astra](skills/super-astra/README.zh-CN.md)**。五类官方提示词独立开关，对普通任务按需加载。首次引导列出模块与 Hook 状态，询问模块取舍、是否检查 Skills 冲突以及接入方式。[初始化引导](skills/super-astra/references/onboarding.md)。[客户端引导](skills/super-astra/references/hosts.md)。[English](skills/super-astra/README.md)
 
 ## 安装
 
@@ -30,20 +30,20 @@ LabKit 对外有四个顶层 skill。`skill-skill` 是一整套完整的发布�
 每个顶层 skill 都有 `SKILL.md` 入口。安装时复制**完整文件夹**，保留脚本和引用文件。例如，在 Codex 中安装到目标项目：
 
 ```bash
-python3 skills/welcome-to-agi/scripts/install.py --host codex --surface desktop --project /path/to/project --apply
+python3 skills/super-astra/scripts/install.py --host codex --surface desktop --project /path/to/project --apply
 ```
 
-希望全局安装，将 `--project /path/to/project` 换成 `--user`。此命令在 Codex macOS/Linux 默认注册 Hook，随后需完成 `/hooks` 信任和实际客户端验证；用户选择常驻规则时添加 `--mode rules`。复制前先检查已有安装，保留自定义配置。其他宿主按其 skill 安装方式配置，并保留引用文件；不要把 `SKILL.md` 覆盖到项目 `AGENTS.md`，以免丢失资源或覆盖原有规则。Welcome to AGI 另有 Hermes、OpenClaw 规则适配；Claude Code、Cursor 作为附加格式适配，模型可用性另行确认。详见[客户端引导](skills/welcome-to-agi/references/hosts.md)。
+希望全局安装，将 `--project /path/to/project` 换成 `--user`。此命令在 Codex macOS/Linux 默认注册 Hook，随后需完成 `/hooks` 信任和实际客户端验证；用户选择常驻规则时添加 `--mode rules`。复制前先检查已有安装，保留自定义配置。其他宿主按其 skill 安装方式配置，并保留引用文件；不要把 `SKILL.md` 覆盖到项目 `AGENTS.md`，以免丢失资源或覆盖原有规则。Super Astra 另有 Hermes、OpenClaw 规则适配；Claude Code、Cursor 作为附加格式适配，模型可用性另行确认。详见[客户端引导](skills/super-astra/references/hosts.md)。
 
 四个顶层 skill 相互独立，只装需要的即可。
 
 ## 这是什么
 
-LabKit 收录四个 skill。`skill-skill` 是发布工具箱，`open-loops` 和 `reading-plan-mentor` 是日常工具；`welcome-to-agi` 将有来源标注的官方提示词与模块路由、可选初始化工具组合起来。
+LabKit 收录四个 skill。`skill-skill` 是发布工具箱，`open-loops` 和 `reading-plan-mentor` 是日常工具；`super-astra` 将有来源标注的官方提示词与模块路由、可选初始化工具组合起来。
 
 ## Skill 清单
 
-- **[welcome-to-agi](skills/welcome-to-agi/README.zh-CN.md)** — 普通任务提交后自动提供场景判断入口，按需加载官方提示模块；带初始化引导和独立配置审计
+- **[super-astra](skills/super-astra/README.zh-CN.md)** — 普通任务提交后自动提供场景判断入口，按需加载官方提示模块；带初始化引导和独立配置审计
 
 - **[skill-skill](skills/skill-skill/SKILL.md)** — 把一个跑通的 AI 规则或 skill 打包，并引导完成 GitHub 发布
 

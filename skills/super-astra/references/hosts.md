@@ -4,7 +4,7 @@
 
 桌面端可以直接对 Agent 说：
 
-> 安装 LabKit 的 welcome-to-agi，并完成初始化。我使用的是【客户端名称】，用于【当前项目／所有本地项目】。请优先检查 Hook 能力并引导完成信任和验证；请替我执行安装步骤，保留原有配置，并说明还需要在这个客户端里验证什么。
+> 安装 LabKit 的 super-astra，并完成初始化。我使用的是【客户端名称】，用于【当前项目／所有本地项目】。请优先检查 Hook 能力并引导完成信任和验证；请替我执行安装步骤，保留原有配置，并说明还需要在这个客户端里验证什么。
 
 Agent 能执行本地命令时，由它运行安装器。用户只需要补充无法识别的客户端和作用范围，以及完成宿主要求的人机确认。安装器不操作 GUI；如果 Agent 只有聊天能力，使用下方手动包。下载文件本身不会自动运行初始化。
 
@@ -20,7 +20,7 @@ Agent 能执行本地命令时，由它运行安装器。用户只需要补充�
 | Hermes 项目 | 常驻规则 | 已有项目上下文文件；无既有文件时用 AGENTS.md | 后端实际工作目录、上下文优先级、所选模型；[专门引导](hermes-openclaw.md) |
 | OpenClaw Agent 工作区 | 常驻规则 | `<workspace>/AGENTS.md`，包位于 `<workspace>/skills` | 当前 Agent 的真实 workspace、profile、所选模型；[专门引导](hermes-openclaw.md) |
 | Claude Code Desktop、CLI | 常驻规则 | 项目 `CLAUDE.md`；用户 `~/.claude/CLAUDE.md` | 当前 Code 项目及权限；不代表普通 Claude 聊天或 Cowork 已适配 |
-| Cursor 项目 Agent | Always Apply 项目规则 | `.cursor/rules/welcome-to-agi.mdc` | 当前项目的规则面板与 Agent 会话 |
+| Cursor 项目 Agent | Always Apply 项目规则 | `.cursor/rules/super-astra.mdc` | 当前项目的规则面板与 Agent 会话 |
 | Cursor 用户级 | 手动模式 | 不猜测或改写应用内部设置库 | 可将生成的入口粘贴到 User Rules；需验证本机路径可读 |
 | 其他可读文件的本地 Agent | 显式指定常驻规则文件 | `--host generic --mode rules --rules-file PATH` | 该客户端确实自动加载此文件；本工具不替它添加加载能力 |
 | 普通桌面聊天、网页、云端或无法读本地文件 | 手动提示词包 | `--mode manual --export PATH` | 把文件附到会话；自动跨对话生效不受保证 |

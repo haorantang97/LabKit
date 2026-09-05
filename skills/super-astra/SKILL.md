@@ -1,16 +1,18 @@
 ---
-name: welcome-to-agi
-description: "Initialize Welcome to AGI and select useful Astra guidance for ordinary task assignments, implementation, research, writing, questions, and follow-ups. Use when installing or first invoking the skill, when the host router supplies its catalog, or when a user asks to adjust agent behavior. Select modules by task intent before working; no complaint or keyword is required. Simple requests can use no modules. Do not turn ordinary tasks into configuration audits."
+name: super-astra
+description: "Initialize Super Astra and select useful Astra guidance for ordinary task assignments, implementation, research, writing, questions, and follow-ups. Use when installing or first invoking the skill, when the host router supplies its catalog, or when a user asks to adjust agent behavior. Select modules by task intent before working; no complaint or keyword is required. Simple requests can use no modules. Do not turn ordinary tasks into configuration audits."
 license: PolyForm-Noncommercial-1.0.0
 ---
 
-# Welcome to AGI
+# Super Astra
 
 The guidance targets Astra; the host supplies the entrypoint and tools. Confirm the actual model separately from the client name. Hermes/OpenClaw setup uses [hermes-openclaw.md](references/hermes-openclaw.md). Claude Code/Cursor rule-format adapters do not establish Astra availability or equivalent results on other models. Never silently change models or providers during installation.
 
 ## Quick Start and first use
 
-`$welcome-to-agi 帮我实现这个功能，并验证结果。`
+Previously named `welcome-to-agi` (Welcome to AGI). For an existing installation under that name, follow [rename.md](references/rename.md) before installing a second copy; preserve config and review changed hook trust.
+
+`$super-astra 帮我实现这个功能，并验证结果。`
 
 For an installation, upgrade, initialization or setup-adjustment request, read [onboarding.md](references/onboarding.md), even if a router/rule marker is already present. Present the module switches and current hook facts, then ask together about unwanted modules, an optional Skills/instruction audit, and routing changes. Do not silently skip this conversation because registration already exists. Honor choices already supplied by the user.
 

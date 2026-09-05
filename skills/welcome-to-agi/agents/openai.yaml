@@ -1,6 +1,0 @@
-interface:
-  display_name: "Welcome to AGI"
-  short_description: "Route ordinary tasks through modular Astra guidance"
-  default_prompt: "Use $welcome-to-agi to initialize if needed, select relevant guidance, and complete my task."
-policy:
-  allow_implicit_invocation: true

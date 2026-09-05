@@ -98,7 +98,7 @@ class OnboardingTests(unittest.TestCase):
             self.assertFalse(project.exists())
             result = self.run_script("install.py", *args, "--apply")
             self.assertEqual(result.returncode, 0, result.stderr)
-            installed = project / ".agents/skills/welcome-to-agi"
+            installed = project / ".agents/skills/super-astra"
             config = json.loads((installed / "config.json").read_text())
             self.assertFalse(config["modules"]["delegation"]["enabled"])
             self.assertTrue(config["modules"]["delegation"]["guard"])

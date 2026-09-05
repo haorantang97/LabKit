@@ -1,0 +1,6 @@
+interface:
+  display_name: "Super Astra"
+  short_description: "Route ordinary tasks through modular Astra guidance"
+  default_prompt: "Use $super-astra to initialize if needed, select relevant guidance, and complete my task."
+policy:
+  allow_implicit_invocation: true

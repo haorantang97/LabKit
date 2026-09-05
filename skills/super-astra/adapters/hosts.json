@@ -30,7 +30,7 @@
   },
   "cursor": {
     "skill_dir": ".agents/skills",
-    "project_rule": ".cursor/rules/welcome-to-agi.mdc",
+    "project_rule": ".cursor/rules/super-astra.mdc",
     "user_rule": null,
     "format": "cursor",
     "hook_adapter": false

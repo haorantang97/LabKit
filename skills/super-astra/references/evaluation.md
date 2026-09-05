@@ -3,12 +3,16 @@
 Run from the LabKit root:
 
 ```bash
-python3 -m unittest discover -s skills/welcome-to-agi/tests -v
+python3 -m unittest discover -s skills/super-astra/tests -v
 ```
 
 The suite checks ordinary-message catalog delivery without keyword gating; disabled/plan modules; no user-message promotion; router size/error behavior; original official snapshots; optional legacy keyword mode; installation + initialization; old-label replacement; backups; idempotence; unrelated handlers; and read-only audit coverage.
 
 ## Host adapter update (2026-09-05)
+
+### Super Astra rename
+
+49 automated tests pass locally. The public name, skill ID, installation directory, UI metadata, documentation and CI are updated to Super Astra / super-astra. Rename checks preserve unrelated hooks, replace the old Welcome v2 label once, recognize old Cursor headers, and refuse duplicate installation beside a legacy copy. Stable internal router/rule markers and official prompt snapshots are preserved. Existing native installations are not moved or re-trusted merely by publishing this rename; see [migration](rename.md).
 
 ### Hermes and OpenClaw file adapters
 

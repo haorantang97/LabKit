@@ -1,13 +1,13 @@
-name: Welcome to AGI
+name: Super Astra
 on:
   push:
     paths:
-      - 'skills/welcome-to-agi/**'
-      - '.github/workflows/welcome-to-agi.yml'
+      - 'skills/super-astra/**'
+      - '.github/workflows/super-astra.yml'
   pull_request:
     paths:
-      - 'skills/welcome-to-agi/**'
-      - '.github/workflows/welcome-to-agi.yml'
+      - 'skills/super-astra/**'
+      - '.github/workflows/super-astra.yml'
 permissions:
   contents: read
 jobs:
@@ -21,4 +21,4 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python }}
-      - run: python -m unittest discover -s skills/welcome-to-agi/tests -v
+      - run: python -m unittest discover -s skills/super-astra/tests -v

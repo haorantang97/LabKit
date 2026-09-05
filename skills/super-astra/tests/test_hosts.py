@@ -12,9 +12,37 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 import hosts
 import setup_rules
+import setup_hook
 
 
 class HostTests(unittest.TestCase):
+    def test_rename_recognizes_old_hook_and_cursor_header(self):
+        old = setup_hook.handler(ROOT / "config.json")
+        old["statusMessage"] = "LabKit Welcome to AGI v2"
+        other = {"type": "command", "command": "echo unrelated"}
+        doc = {"hooks": {"UserPromptSubmit": [{"hooks": [old, other]}]}}
+        updated = setup_hook.update(doc, ROOT / "config.json")
+        items = [h for g in updated["hooks"]["UserPromptSubmit"] for h in g["hooks"]]
+        self.assertEqual(len(items), 2)
+        self.assertIn(other, items)
+        self.assertEqual(sum(h.get("statusMessage") == "LabKit Super Astra v1" for h in items), 1)
+        legacy = setup_rules.LEGACY_CURSOR_HEADER + setup_rules.BEGIN + "old body\n" + setup_rules.END
+        refreshed = setup_rules.transform(legacy, "new body\n", "cursor")
+        self.assertTrue(refreshed.startswith(setup_rules.CURSOR_HEADER))
+        self.assertEqual(refreshed.count(setup_rules.BEGIN), 1)
+        self.assertEqual(setup_rules.transform(legacy, "", "cursor", remove=True), setup_rules.LEGACY_CURSOR_HEADER)
+
+    def test_rename_does_not_install_beside_legacy_copy(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            project = Path(tmp)
+            old = project / ".agents/skills/welcome-to-agi"
+            old.mkdir(parents=True)
+            (old / "config.json").write_text("user customizations")
+            result = self.run_script("install.py", "--host", "codex", "--project", project, "--apply")
+            self.assertNotEqual(result.returncode, 0)
+            self.assertFalse((old.parent / "super-astra").exists())
+            self.assertEqual((old / "config.json").read_text(), "user customizations")
+
     def run_script(self, script, *args, env=None):
         return subprocess.run([sys.executable, str(ROOT / "scripts" / script), *map(str, args)],
                               capture_output=True, text=True, env=env)
@@ -51,7 +79,7 @@ class HostTests(unittest.TestCase):
 
     def test_three_project_installations_use_actual_installed_paths(self):
         for host, rule in (("codex", "AGENTS.md"), ("claude-code", "CLAUDE.md"),
-                           ("cursor", ".cursor/rules/welcome-to-agi.mdc")):
+                           ("cursor", ".cursor/rules/super-astra.mdc")):
             with self.subTest(host=host), tempfile.TemporaryDirectory(prefix="welcome 空格 ") as tmp:
                 project = Path(tmp).resolve() / "project with spaces"
                 args = ("--host", host, "--surface", "desktop", "--project", project, "--mode", "rules")
@@ -60,7 +88,7 @@ class HostTests(unittest.TestCase):
                 self.assertFalse(project.exists())
                 result = self.run_script("install.py", *args, "--apply")
                 self.assertEqual(result.returncode, 0, result.stderr)
-                installed = project / hosts.PROFILES[host]["skill_dir"] / "welcome-to-agi"
+                installed = project / hosts.PROFILES[host]["skill_dir"] / "super-astra"
                 text = (project / rule).read_text()
                 self.assertIn(str(installed), text)
                 self.assertNotIn(str(ROOT), text)
@@ -151,7 +179,7 @@ class HostTests(unittest.TestCase):
             args = ("--host", "codex", "--project", project)
             result = self.run_script("install.py", *args, "--mode", "hook", "--apply")
             self.assertEqual(result.returncode, 0, result.stderr)
-            installed = project / ".agents/skills/welcome-to-agi"
+            installed = project / ".agents/skills/super-astra"
             command = [sys.executable, str(installed / "scripts/initialize.py"), *map(str, args)]
             def run(*extra):
                 return subprocess.run(command + list(extra), capture_output=True, text=True)
@@ -201,7 +229,7 @@ class HostTests(unittest.TestCase):
                 args = ("--host", host, "--project", project)
                 result = self.run_script("install.py", *args, "--apply")
                 self.assertEqual(result.returncode, 0, result.stderr)
-                installed = project / skill_dir / "welcome-to-agi"
+                installed = project / skill_dir / "super-astra"
                 self.assertTrue((installed / "SKILL.md").exists())
                 after = (project / rule).read_bytes()
                 self.assertTrue(after.startswith(original))

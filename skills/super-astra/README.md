@@ -1,4 +1,6 @@
-# Welcome to AGI
+# Super Astra
+
+Previously **Welcome to AGI** (`welcome-to-agi`). Existing users: [rename and migration guide](references/rename.md).
 
 **English** | [中文](README.zh-CN.md)
 
@@ -15,7 +17,7 @@ The prompts target **Astra, the model**; Codex, Hermes and OpenClaw are hosts. C
 
 In a desktop agent, ask:
 
-> Install LabKit's welcome-to-agi for my current client and project. Complete initialization, preserve existing instructions, and explain what remains to verify in this client.
+> Install LabKit's super-astra for my current client and project. Complete initialization, preserve existing instructions, and explain what remains to verify in this client.
 
 The agent can run the installer for you. It checks the actual client and recommends Hook for supported Codex runtimes; **rules remain available when selected**. Missing hook trust is a pending step, not a reason to switch automatically. Copying files alone cannot execute initialization, so a downloader should follow SKILL.md.
 
@@ -36,8 +38,8 @@ First-use guidance lists the five module switches and current hook registration 
 From a LabKit checkout, preview and then apply (Python 3.10+, scripts tested on macOS/Linux):
 
 ```bash
-python3 skills/welcome-to-agi/scripts/install.py --host codex --surface desktop --project /path/to/project
-python3 skills/welcome-to-agi/scripts/install.py --host codex --surface desktop --project /path/to/project --apply
+python3 skills/super-astra/scripts/install.py --host codex --surface desktop --project /path/to/project
+python3 skills/super-astra/scripts/install.py --host codex --surface desktop --project /path/to/project --apply
 ```
 
 Use `--host claude-code` or `--host cursor` for those clients. `--user` selects user scope instead of `--project PATH`; Cursor user scope exports manually instead of editing the app settings database. Unknown hosts fall back to clearly labeled manual mode. Codex on macOS/Linux defaults to Hook registration and its separate trust review; `--mode rules` selects the persistent-rule fallback. `--skill-only` means manual mode.

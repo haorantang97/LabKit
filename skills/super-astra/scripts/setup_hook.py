@@ -13,8 +13,8 @@ import tempfile
 
 from astra import ROOT, load_config
 
-LABEL = "LabKit Welcome to AGI v2"
-OWNED_LABELS = {LABEL, "LabKit Astra Prompts v1", "LabKit Welcome to AGI v1"}
+LABEL = "LabKit Super Astra v1"
+OWNED_LABELS = {LABEL, "LabKit Astra Prompts v1", "LabKit Welcome to AGI v1", "LabKit Welcome to AGI v2"}
 
 
 def handler(config):
@@ -134,7 +134,7 @@ def main():
               "Registered; activation still requires Codex hook trust. Open /hooks in the CLI.")
         return 0
     except (OSError, ValueError, TypeError) as error:
-        parser.exit(1, "welcome-to-agi setup: " + str(error) + "\n")
+        parser.exit(1, "super-astra setup: " + str(error) + "\n")
 
 
 if __name__ == "__main__":

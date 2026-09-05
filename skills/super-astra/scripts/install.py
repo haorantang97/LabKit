@@ -35,7 +35,10 @@ def main():
             raise ValueError("--export requires manual mode")
         if args.export and (args.export.expanduser().exists() or args.export.expanduser().is_symlink()):
             raise ValueError("export destination exists; choose a new file")
-        destination = owner / selected["skill_dir"] / "welcome-to-agi"
+        destination = owner / selected["skill_dir"] / "super-astra"
+        for legacy_name in ("welcome-to-agi", "astra-prompts"):
+            if (destination.parent / legacy_name).exists():
+                raise ValueError("legacy installation found: " + legacy_name + "; follow references/rename.md before installing a second copy")
         if destination.exists():
             raise ValueError("destination exists; initialize that installed copy or review an update without overwriting customizations")
         if destination.is_symlink():
@@ -70,7 +73,7 @@ def main():
             print("Skill files installed, initialization failed; fix the reported issue and rerun installed initialize.py.", file=sys.stderr)
         return result.returncode
     except (ValueError, OSError) as error:
-        parser.exit(1, "welcome-to-agi install: " + str(error) + "\n")
+        parser.exit(1, "super-astra install: " + str(error) + "\n")
 
 
 if __name__ == "__main__":

@@ -1,4 +1,6 @@
-# Welcome to AGI
+# Super Astra
+
+原名 **Welcome to AGI**（`welcome-to-agi`）。已有安装请参考[更名迁移说明](references/rename.md)，保留自定义配置并更新原有入口。
 
 [English](README.md) | **中文**
 
@@ -14,7 +16,7 @@
 
 桌面端可以直接对 Agent 说：
 
-> 安装 LabKit 的 welcome-to-agi，用于我当前客户端和项目，并完成初始化。请检查 Hook 能力并引导完成信任和验证；请替我执行步骤，保留原有配置，说明还需要在当前客户端验证什么。
+> 安装 LabKit 的 super-astra，用于我当前客户端和项目，并完成初始化。请检查 Hook 能力并引导完成信任和验证；请替我执行步骤，保留原有配置，说明还需要在当前客户端验证什么。
 
 **支持 Hook 的 Codex 环境优先引导 Hook；常驻规则作为用户可选的兼容方案。** 缺少信任时会保留待办并引导完成，不会自动切换成 AGENTS.md。 有本地执行能力的 Agent 可以代为安装。仅复制文件无法触发初始化，下载器需继续按 SKILL.md 操作。
 
@@ -35,8 +37,8 @@
 需要命令行时，先预览再安装。Python 3.10+，脚本已在 macOS/Linux 验证：
 
 ```bash
-python3 skills/welcome-to-agi/scripts/install.py --host codex --surface desktop --project /path/to/project
-python3 skills/welcome-to-agi/scripts/install.py --host codex --surface desktop --project /path/to/project --apply
+python3 skills/super-astra/scripts/install.py --host codex --surface desktop --project /path/to/project
+python3 skills/super-astra/scripts/install.py --host codex --surface desktop --project /path/to/project --apply
 ```
 
 其他客户端换成 `--host claude-code` 或 `--host cursor`。用户级安装用 `--user` 替换 `--project PATH`；Cursor 用户级采用手动入口，不直接改内部设置数据库。未知宿主明确回退到手动模式。Codex macOS/Linux 默认注册 Hook 并引导信任；选择 `--mode rules` 则使用常驻规则；`--skill-only` 表示手动模式。

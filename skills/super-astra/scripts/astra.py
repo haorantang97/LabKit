@@ -201,9 +201,9 @@ def main():
             # A broken customization should not prevent the user from working.
             # Do not print input, paths, or potentially sensitive exception text.
             print("{}")
-            print("welcome-to-agi: skipped invalid input or configuration", file=sys.stderr)
+            print("super-astra: skipped invalid input or configuration", file=sys.stderr)
             return 0
-        parser.exit(1, "welcome-to-agi: " + str(error) + "\n")
+        parser.exit(1, "super-astra: " + str(error) + "\n")
 
 
 if __name__ == "__main__":

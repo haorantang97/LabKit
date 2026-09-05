@@ -33,7 +33,7 @@ def hook_inventory(path, config):
                     owned = item.get("statusMessage") in OWNED_LABELS
                     result["handlers"].append({
                         "event": event, "type": item.get("type"),
-                        "owner": "welcome-to-agi" if owned else "other",
+                        "owner": "super-astra" if owned else "other",
                         "label": item.get("statusMessage", "unlabelled"),
                         "definition": ("current" if item == handler(config) else "different") if owned else "not_compared",
                     })

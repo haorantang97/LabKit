@@ -1,4 +1,4 @@
-"""Manage only the Welcome to AGI block; preserve surrounding instruction bytes."""
+"""Manage only the Super Astra block; preserve surrounding instruction bytes."""
 import difflib
 import hashlib
 import json
@@ -9,13 +9,14 @@ from setup_hook import write_atomic
 
 BEGIN = "\n<!-- BEGIN LABKIT_WELCOME_TO_AGI_RULE_V1 -->\n"
 END = "<!-- END LABKIT_WELCOME_TO_AGI_RULE_V1 -->\n"
-CURSOR_HEADER = '---\ndescription: Welcome to AGI task routing\nalwaysApply: true\n---\n'
+CURSOR_HEADER = '---\ndescription: Super Astra task routing\nalwaysApply: true\n---\n'
+LEGACY_CURSOR_HEADER = '---\ndescription: Welcome to AGI task routing\nalwaysApply: true\n---\n'
 
 
 def entry(config, root=ROOT):
     # Keep metadata live: disabling/adding a module must not require reinstalling a rule.
     return (
-        "Welcome to AGI: before each ordinary task, assess useful guidance without waiting for a keyword. "
+        "Super Astra: before each ordinary task, assess useful guidance without waiting for a keyword. "
         f"If this turn already has {ROUTER_MARKER}, use that catalog and do not route twice. "
         "Otherwise read the current config file " + json.dumps(str(config.resolve()), ensure_ascii=False) +
         " and each enabled module's module.json under " + json.dumps(str(root / "modules"), ensure_ascii=False) +
@@ -39,8 +40,10 @@ def transform(original, body, fmt="markdown", remove=False):
             starts != ends or starts > 1):
         raise ValueError("ambiguous managed rule markers; inspect the file")
     if starts:
-        if fmt == "cursor" and not remove and not original.startswith(CURSOR_HEADER):
+        if fmt == "cursor" and not remove and not original.startswith((CURSOR_HEADER, LEGACY_CURSOR_HEADER)):
             raise ValueError("Cursor rule header changed; inspect Always Apply settings before updating")
+        if fmt == "cursor" and not remove and original.startswith(LEGACY_CURSOR_HEADER):
+            original = CURSOR_HEADER + original[len(LEGACY_CURSOR_HEADER):]
         start, end = original.index(BEGIN), original.index(END)
         if end < start:
             raise ValueError("reversed managed rule markers")
@@ -98,7 +101,7 @@ def manage(path, config, fmt="markdown", apply=False, remove=False):
 
 def manual_pack(config):
     settings = load_config(config)
-    text = ("# Welcome to AGI — portable manual pack\n\n"
+    text = ("# Super Astra — portable manual pack\n\n"
             "Use this pack for tasks in this conversation. Select zero to " + str(settings["max_modules"]) +
             " useful modules by intent; a simple request may need none. Read selected sections below. "
             "Preserve the original task, output format, permissions, plan-only scope and delegation restrictions. "

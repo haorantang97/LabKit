@@ -16,7 +16,7 @@
 
 > Reusable agent skills for publishing, everyday work, and configurable Astra behavior.
 
-**New: [Welcome to AGI](skills/welcome-to-agi/README.md)** packages five official GPT-6 Astra prompt modules with individual switches and ordinary-task semantic routing. First-use guidance presents module/hook status and asks about module changes, an optional Skills conflict check and routing preferences. [Initialization guide](skills/welcome-to-agi/references/onboarding.md). [Host guide](skills/welcome-to-agi/references/hosts.md). [中文介绍](skills/welcome-to-agi/README.zh-CN.md)
+**New: [Super Astra](skills/super-astra/README.md)** packages five official GPT-6 Astra prompt modules with individual switches and ordinary-task semantic routing. First-use guidance presents module/hook status and asks about module changes, an optional Skills conflict check and routing preferences. [Initialization guide](skills/super-astra/references/onboarding.md). [Host guide](skills/super-astra/references/hosts.md). [中文介绍](skills/super-astra/README.zh-CN.md)
 
 ## Install
 
@@ -27,23 +27,23 @@ cd LabKit
 
 LabKit exposes four top-level skills. `skill-skill` is one complete publishing toolkit; its pipeline modules live under `skills/skill-skill/modules/` and are not separate top-level skills. Astra's behavior modules are also internal to one skill.
 
-Each top-level skill has a `SKILL.md` entrypoint. Install the **complete folder**, including any scripts and references. For Welcome to AGI in a local Codex project:
+Each top-level skill has a `SKILL.md` entrypoint. Install the **complete folder**, including any scripts and references. For Super Astra in a local Codex project:
 
 ```bash
-python3 skills/welcome-to-agi/scripts/install.py --host codex --surface desktop --project /path/to/project --apply
+python3 skills/super-astra/scripts/install.py --host codex --surface desktop --project /path/to/project --apply
 ```
 
-Use `--user` instead of `--project` for user-wide installation. For Codex macOS/Linux this example registers a Hook, then requires `/hooks` trust and actual-client verification; add `--mode rules` for the user-selected fallback. Check existing installations before copying to preserve customizations. For other hosts, follow their skill installation instructions and retain referenced files; copying `SKILL.md` over `AGENTS.md` loses resources and can overwrite project rules. Welcome to AGI also provides Hermes/OpenClaw rule adapters and additional Claude Code/Cursor format adapters; model availability is separate. See its [host guide](skills/welcome-to-agi/references/hosts.md).
+Use `--user` instead of `--project` for user-wide installation. For Codex macOS/Linux this example registers a Hook, then requires `/hooks` trust and actual-client verification; add `--mode rules` for the user-selected fallback. Check existing installations before copying to preserve customizations. For other hosts, follow their skill installation instructions and retain referenced files; copying `SKILL.md` over `AGENTS.md` loses resources and can overwrite project rules. Super Astra also provides Hermes/OpenClaw rule adapters and additional Claude Code/Cursor format adapters; model availability is separate. See its [host guide](skills/super-astra/references/hosts.md).
 
 The four top-level skills are independent. Install only the ones you want.
 
 ## What it does
 
-LabKit is a small collection of four skills. `skill-skill` is the publishing toolkit; `open-loops` and `reading-plan-mentor` are daily-use tools. `welcome-to-agi` combines attributed official prompt blocks with modular routing and optional setup tools.
+LabKit is a small collection of four skills. `skill-skill` is the publishing toolkit; `open-loops` and `reading-plan-mentor` are daily-use tools. `super-astra` combines attributed official prompt blocks with modular routing and optional setup tools.
 
 ## Skills
 
-- **[welcome-to-agi](skills/welcome-to-agi/README.md)** — Routes ordinary tasks through selected official guidance; includes modular prompts, host-aware initialization, and optional configuration audit
+- **[super-astra](skills/super-astra/README.md)** — Routes ordinary tasks through selected official guidance; includes modular prompts, host-aware initialization, and optional configuration audit
 
 - **[skill-skill](skills/skill-skill/SKILL.md)** — Packages a working AI rule or skill and guides it through publication as a GitHub repository
 
