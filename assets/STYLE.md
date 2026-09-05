@@ -1,13 +1,13 @@
 # LabKit visual direction
 
-User-selected reference: Personal-Ontology, especially its light/dark hero at commit 6463052751 (2026-08-23). The user explicitly requested the same visual style on 2026-09-05 after rejecting an independently designed toolbox hero.
+Approved on 2026-09-05: the original titanium L and violet-glass K hero generated for LabKit. This supersedes the earlier copied Personal-Ontology motif and the rejected flat toolbox design.
 
-Match the reference closely: transparent background, layered blocks and linked nodes on the left, English name plus purple Chinese name on the right, followed by two quiet descriptive lines. Preserve the reference's composition, spacing, font scale and purple/gray palette. Do not introduce a physical toolbox icon, teal palette, rounded background card or a new brand system without a new request.
+Identity: an architectural LK monogram made from interlocking titanium and violet glass, photographed against dark graphite. Original geometry, controlled violet refraction, crisp white title and restrained supporting type. Keep the approved artwork as-is; do not reinterpret approval as permission to redesign it.
 
-Identity: the title is LabKit / 日常工具箱. The four public skills remain super-astra, skill-skill, open-loops and reading-plan-mentor; internal modules are not extra catalogue entries. The shared abstract motif is a family visual, not a count of public tools.
+Current hero: assets/hero-lk.png, 2172 × 724. Both README editions use this same intentionally dark artwork with responsive display width. It is a photographic composition, so a single dark canvas works in both GitHub themes; do not auto-invert it or force a light variant. Visible text: LabKit / Tools for thoughtful agents. / LAB 305 / INDEPENDENT TOOLS.
 
-Assets: 1100 × 230 responsive transparent SVGs, displayed at up to 860 px. Light colors: #1f2330, #7c3aed, #3f4454, #d8d2f0, #e5e7eb; dark colors: #e8eaf2, #a78bfa, #c3c7d4, #4d4470, #3a3f4d. Amber node as in the reference. Font stack and sizes 52/22/17 follow Personal-Ontology.
+The collection has four public tools; the LK mark is its own identity, not a component count. Preserve the bilingual README content and factual catalogue.
 
-Language: preserve English README.md and complete README.zh-CN.md. The shared hero uses the same bilingual naming and Chinese supporting-copy treatment as the reference. Keep names, links, commands, public entries and validation claims aligned.
+Personal-Ontology remains the reference for repository completeness, typography discipline and a restrained purple family. A similar style must not duplicate another repository's logo. The accepted result uses its own LK silhouette and material treatment.
 
-Social preview: separate 1280 × 640 PNG using the same purple/gray visual family. Generating the file does not configure GitHub's social-preview setting.
+The earlier social-preview asset is separate and has not been configured in GitHub settings. Hero publication does not imply social-preview configuration.

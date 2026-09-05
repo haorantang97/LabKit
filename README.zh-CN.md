@@ -1,9 +1,6 @@
 <div align="center">
 
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/banner-dark.svg">
-  <img src="assets/banner.svg" alt="LabKit — 面向日常 Agent 工作的可复用 Skills" width="860">
-</picture>
+<img src="assets/hero-lk.png" alt="LabKit — Tools for thoughtful agents. Titanium L and violet-glass K." width="1000">
 
 [English](README.md) · **中文**
 
