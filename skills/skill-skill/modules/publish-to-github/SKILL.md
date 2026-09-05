@@ -13,7 +13,7 @@ git init && git add . && git commit -m "feat: initial release of {name}"
 gh repo create {username}/{repo} --public --description "{tagline}" --source=. --push
 ```
 
-Then set Topics on the repo page (Phase 3). Done.
+First complete the presentation pre-flight below and follow the repository workflow. After publication, set relevant metadata and verify the live page; a successful push alone is not completion.
 
 If `gh` is not installed, follow the manual path in Phase 2. No usable git at all (sandboxed agent, browser-only session)? Use Phase 2b.
 
@@ -21,19 +21,21 @@ If `gh` is not installed, follow the manual path in Phase 2. No usable git at al
 
 ## Pre-flight checklist
 
-Confirm all of these before running any git commands:
+Read [the repository presentation standard](../../references/repository-presentation.md). Before publication, confirm its acceptance checks and the following:
 
 - [ ] `README.md` exists with no unfilled `{PLACEHOLDER}` tokens
 - [ ] `LICENSE` file exists
 - [ ] Rule file exists (SKILL.md / .cursorrules / .windsurfrules / AGENTS.md)
-- [ ] **Banner gate**: `assets/banner.svg` and `assets/banner-dark.svg` exist AND the README embeds them
+- [ ] **Identity and visual gate**: the hero names the repository (not a child skill), appropriate light/dark assets render correctly, and the assembled README has been visually inspected
 - [ ] `.gitignore` exists (see template below)
-- [ ] Repo name is decided (kebab-case, no spaces)
+- [ ] Repository identity is decided; preserve the existing name and remote
 - [ ] GitHub username is known
 
 If anything is missing, stop and complete it first.
 
-The banner gate is hard. The only thing that waives it is the user explicitly saying in the current conversation that they want no banner. A missing banner file, a skipped upstream step, or a README with no banner reference does NOT count as opting out; in those cases run create-visual-assets (default style takes under a minute), add the embed snippet to the README, then return here.
+Read image text, check stale branding and real catalogue counts, validate navigation and both language editions, and keep badge claims within actual evidence. Apply user-specified omissions and scope. A supplied reference already answers the style question. Repair missing assets through create-visual-assets; do not substitute a generic text template for the requested standard.
+
+For an existing repository, inspect its current branch, pending changes and contribution rules. Publish only the authorized change. Prefer an ordinary commit or the required PR flow; do not initialize another repository, rename branches or rewrite history as part of decoration.
 
 ---
 
@@ -166,29 +168,7 @@ When fixing a repo that was published wrong or half-published, do not delete and
 
 ## Phase 3: Configure GitHub metadata
 
-Do this on the repo page immediately after pushing. Topics directly affect search ranking.
-
-Click the gear icon next to "About" and add:
-
-```
-# Platform (pick what matches your rule file format)
-cursor, cursorrules, cursor-ai         ← Cursor
-windsurf, windsurf-ai, windsurfrules  ← Windsurf
-claude, claude-code, claude-skills    ← Claude
-agents-md, ai-agents                  ← AGENTS.md
-github-copilot                        ← Copilot
-
-# Always include
-ai, llm, rules
-
-# For collection repos
-awesome, awesome-list
-
-# Domain tags (add as applicable)
-security, typescript, python, react...
-```
-
-Aim for 6–12 topics. Fewer than 5 hurts search visibility; more than 15 dilutes relevance.
+Verify the About description and select topics that reflect actual capability and supported hosts. Preserve existing relevant metadata. Do not add awesome/awesome-list solely because this is a collection, or claim an arbitrary number of topics improves ranking. If a social card is in scope, use the generated image and confirm the setting separately from the asset's existence.
 
 ---
 
@@ -200,8 +180,9 @@ gh repo view --web    # or open https://github.com/{username}/{repo-name}
 ```
 
 Check:
-- [ ] README renders correctly with no broken images
-- [ ] Dark mode banner works (toggle GitHub theme in Settings)
+- [ ] Default-branch content matches the intended change, not merely a pushed feature branch
+- [ ] README renders correctly with no broken images, stale image text, clipping or incorrect catalogue entries
+- [ ] Both theme assets work; inspect using a scoped preview or browser theme emulation without changing the user's global preference
 - [ ] Topics are set
 - [ ] Description is set
 
@@ -216,7 +197,7 @@ The git log is visible on GitHub. "feat: initial release of {name}" takes 5 extr
 Checking "Add a README" on GitHub when you already have local content creates a diverged history. git will refuse to push. Always create an empty GitHub repo when local files are ready.
 
 **Forgetting to set Topics before announcing the repo.**
-Topics are the primary way GitHub search surfaces repos. A repo with no topics is invisible to most discovery paths. Set them immediately after pushing.
+Topics help readers understand the repository. Verify relevance and the About description without adding unsupported ranking claims.
 
 **Pushing to `master` instead of `main`.**
 GitHub defaults new repos to `main`. If the local branch is `master`, run `git branch -M main` before pushing.

@@ -1,0 +1,18 @@
+{
+  "checked_on": "2026-09-05",
+  "mode": "adapted guidance; helpers remain in official installation",
+  "sources": [
+    {
+      "path": "<official-system-skills>/skill-creator/SKILL.md",
+      "sha256": "6656e54755638e8efcf275a472b9672eaa8a9a1b9e59dc210e275b03b59e1e66"
+    },
+    {
+      "path": "<official-system-skills>/skill-creator/references/openai_yaml.md",
+      "sha256": "ffac39318e408108141d40f820968e59f70434a891694f9bf1d25be8237b150c"
+    },
+    {
+      "path": "<official-system-skills>/skill-installer/SKILL.md",
+      "sha256": "d68b77e5bbb34dedab89d134da52855f140fc4b4299b80104f534e3b9e98f8ee"
+    }
+  ]
+}
