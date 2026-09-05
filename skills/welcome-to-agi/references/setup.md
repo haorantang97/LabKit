@@ -43,6 +43,8 @@ For ordinary tasks without setup authorization, offer initialization once while 
 
 ## Capabilities and fallbacks
 
+Hermes and OpenClaw have explicit rule adapters: `--host hermes --project /actual/project` and `--host openclaw --project /actual/agent-workspace`. User-scope skills and workspace rules differ; read [their host guide](hermes-openclaw.md) before installation. These are file adapters, not native hook implementations or model-provider configuration.
+
 | Mode | Selection | Result |
 |---|---|---|
 | `auto` | Codex macOS/Linux: hook registration; other known local hosts: rules; cloud/unknown: manual | Hook capability, trust and delivery still need verification |

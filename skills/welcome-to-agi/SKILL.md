@@ -6,6 +6,8 @@ license: PolyForm-Noncommercial-1.0.0
 
 # Welcome to AGI
 
+The guidance targets Astra; the host supplies the entrypoint and tools. Confirm the actual model separately from the client name. Hermes/OpenClaw setup uses [hermes-openclaw.md](references/hermes-openclaw.md). Claude Code/Cursor rule-format adapters do not establish Astra availability or equivalent results on other models. Never silently change models or providers during installation.
+
 ## Quick Start and first use
 
 `$welcome-to-agi 帮我实现这个功能，并验证结果。`

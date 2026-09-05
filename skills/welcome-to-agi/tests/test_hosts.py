@@ -191,6 +191,47 @@ class HostTests(unittest.TestCase):
             setup_rules.transform(altered, "updated", "cursor")
         self.assertNotIn(setup_rules.BEGIN, setup_rules.transform(altered, "", "cursor", remove=True))
 
+    def test_hermes_and_openclaw_install_preserve_rules_and_remove_scoped_entry(self):
+        for host, rule, skill_dir in (("hermes", ".hermes.md", ".hermes/skills"),
+                                      ("openclaw", "AGENTS.md", "skills")):
+            with self.subTest(host=host), tempfile.TemporaryDirectory() as tmp:
+                project = Path(tmp).resolve()
+                original = "# Existing instructions\r\n保留原有配置。\r\n".encode()
+                (project / rule).write_bytes(original)
+                args = ("--host", host, "--project", project)
+                result = self.run_script("install.py", *args, "--apply")
+                self.assertEqual(result.returncode, 0, result.stderr)
+                installed = project / skill_dir / "welcome-to-agi"
+                self.assertTrue((installed / "SKILL.md").exists())
+                after = (project / rule).read_bytes()
+                self.assertTrue(after.startswith(original))
+                self.assertIn(str(installed).encode(), after)
+                self.assertFalse((project / ".codex").exists())
+                if host == "hermes":
+                    self.assertFalse((project / "AGENTS.md").exists())
+                result = subprocess.run([sys.executable, str(installed / "scripts/initialize.py"),
+                                         *map(str, args), "--remove", "--apply"], capture_output=True, text=True)
+                self.assertEqual(result.returncode, 0, result.stderr)
+                self.assertEqual((project / rule).read_bytes(), original)
+
+    def test_agent_homes_are_not_assumed_global_rules_or_codex_hooks(self):
+        for host, key in (("hermes", "HERMES_HOME"), ("openclaw", "OPENCLAW_STATE_DIR")):
+            plan = hosts.plan(host, "cli", "auto", Path("/fixture"), user=True,
+                              environ={key: "/profile"})
+            self.assertEqual(plan["skill_dir"], "/profile/skills")
+            self.assertEqual(plan["mode"], "manual")
+            self.assertIsNone(plan["rules_file"])
+            with self.assertRaises(ValueError):
+                hosts.plan(host, "cli", "hook", Path("/fixture"))
+        with tempfile.TemporaryDirectory() as tmp:
+            project = Path(tmp)
+            folder = project / ".cursor/rules"
+            folder.mkdir(parents=True)
+            (folder / "existing.mdc").write_text("Existing Hermes context")
+            with self.assertRaises(ValueError):
+                hosts.plan("hermes", "cli", "auto", project)
+            self.assertFalse((project / "AGENTS.md").exists())
+
 
 if __name__ == "__main__":
     unittest.main()

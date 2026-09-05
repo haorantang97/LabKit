@@ -10,6 +10,10 @@ The suite checks ordinary-message catalog delivery without keyword gating; disab
 
 ## Host adapter update (2026-09-05)
 
+### Hermes and OpenClaw file adapters
+
+47 automated tests pass locally. Added cases install and remove scoped entries in disposable Hermes/OpenClaw projects, preserve existing instruction bytes, avoid accidental Codex registration, honor HERMES_HOME/OPENCLAW_STATE_DIR skill paths, keep user scope manual without an explicit loaded rule file, and reject masking an existing Hermes Cursor-rule setup. Hermes project-local bundles use explicit paths from the routing rule; catalog discovery is only claimed for the documented profile skill directory. No native Hermes/OpenClaw sessions or Astra provider connections were executed. See [host-specific guidance and sources](hermes-openclaw.md).
+
 ### Hook-first setup and native CLI verification
 
 Codex macOS/Linux auto mode now selects Hook registration, with runtime capability, trust and delivery explicitly pending. Existing rules are not silently migrated, and missing trust never triggers an automatic fallback. Other supported local hosts retain rules mode; cloud/unknown hosts retain manual mode. The 45-test suite covers the changed default, explicit rule adapters and preservation of existing rules when auto setup encounters a conflict.

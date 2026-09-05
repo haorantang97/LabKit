@@ -15,7 +15,7 @@ import onboarding
 
 
 def installed_scope(root=ROOT):
-    if root.parent.name == "skills" and root.parent.parent.name in (".codex", ".agents", ".claude", ".cursor"):
+    if root.parent.name == "skills" and root.parent.parent.name in (".codex", ".agents", ".claude", ".cursor", ".hermes", ".openclaw"):
         owner = root.parent.parent.parent
         return owner, owner == Path.home()
     return None, False

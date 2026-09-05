@@ -8,11 +8,17 @@
 
 Agent 能执行本地命令时，由它运行安装器。用户只需要补充无法识别的客户端和作用范围，以及完成宿主要求的人机确认。安装器不操作 GUI；如果 Agent 只有聊天能力，使用下方手动包。下载文件本身不会自动运行初始化。
 
+## 模型与宿主分开确认
+
+提示词针对 Astra；Codex、Hermes、OpenClaw 等宿主负责加载指令和提供工具。先核对实际选用的模型，再配置接入。Claude Code、Cursor 的规则格式适配不等于已提供或验证 Astra，也不表示这些提示词在其他模型上效果相同。安装器不会切换模型或配置供应商。
+
 ## 当前接入范围
 
 | 客户端／环境 | 默认接入 | 写入位置 | 还需确认 |
 |---|---|---|---|
 | 本地 Codex 桌面端、CLI、IDE（macOS/Linux） | 优先检查并注册 Hook | 活跃配置层旁的 `hooks.json` | 当前宿主支持、信任及实际客户端投递；未验证时保留待办 |
+| Hermes 项目 | 常驻规则 | 已有项目上下文文件；无既有文件时用 AGENTS.md | 后端实际工作目录、上下文优先级、所选模型；[专门引导](hermes-openclaw.md) |
+| OpenClaw Agent 工作区 | 常驻规则 | `<workspace>/AGENTS.md`，包位于 `<workspace>/skills` | 当前 Agent 的真实 workspace、profile、所选模型；[专门引导](hermes-openclaw.md) |
 | Claude Code Desktop、CLI | 常驻规则 | 项目 `CLAUDE.md`；用户 `~/.claude/CLAUDE.md` | 当前 Code 项目及权限；不代表普通 Claude 聊天或 Cowork 已适配 |
 | Cursor 项目 Agent | Always Apply 项目规则 | `.cursor/rules/welcome-to-agi.mdc` | 当前项目的规则面板与 Agent 会话 |
 | Cursor 用户级 | 手动模式 | 不猜测或改写应用内部设置库 | 可将生成的入口粘贴到 User Rules；需验证本机路径可读 |
@@ -20,7 +26,7 @@ Agent 能执行本地命令时，由它运行安装器。用户只需要补充�
 | 普通桌面聊天、网页、云端或无法读本地文件 | 手动提示词包 | `--mode manual --export PATH` | 把文件附到会话；自动跨对话生效不受保证 |
 | Codex，用户选择兼容方案 | 常驻规则 | 项目 `AGENTS.md`；用户 `$CODEX_HOME/AGENTS.md` | 当前会话实际加载该文件，模块路径可读 |
 
-代码已实现这些文件生成／编辑路径，使用临时项目验证。**尚未逐一完成 Codex Desktop、Claude Code Desktop、Cursor 原生界面实测**；表格不表示所有版本都已验证可用。脚本检查使用 macOS/Linux、Python 3.10+；Windows 原生运行尚未验证，hook 安装器明确拒绝 Windows。
+代码已实现这些文件生成／编辑路径，使用临时项目验证。**Hermes、OpenClaw、Claude Code、Cursor 的原生会话仍未实测；Codex CLI 已验证 Hook 投递，桌面端仍待观察**；表格不表示所有版本都已验证可用。脚本检查使用 macOS/Linux、Python 3.10+；Windows 原生运行尚未验证，hook 安装器明确拒绝 Windows。
 
 `--host auto` 仅检查 `CODEX_THREAD_ID`、`CLAUDECODE=1` 的运行环境线索；这些也可能从父进程继承。线索冲突或缺失就选择 generic/manual，不扫描已安装软件来猜客户端。Agent 应根据真实会话选择 `--host` 和 `--surface`；有终端工具不代表用户在使用 CLI。
 

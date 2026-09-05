@@ -33,7 +33,7 @@ Each top-level skill has a `SKILL.md` entrypoint. Install the **complete folder*
 python3 skills/welcome-to-agi/scripts/install.py --host codex --surface desktop --project /path/to/project --apply
 ```
 
-Use `--user` instead of `--project` for user-wide installation. For Codex macOS/Linux this example registers a Hook, then requires `/hooks` trust and actual-client verification; add `--mode rules` for the user-selected fallback. Check existing installations before copying to preserve customizations. For other hosts, follow their skill installation instructions and retain referenced files; copying `SKILL.md` over `AGENTS.md` loses resources and can overwrite project rules. Welcome to AGI also provides Claude Code and Cursor rule adapters; see its [host guide](skills/welcome-to-agi/references/hosts.md).
+Use `--user` instead of `--project` for user-wide installation. For Codex macOS/Linux this example registers a Hook, then requires `/hooks` trust and actual-client verification; add `--mode rules` for the user-selected fallback. Check existing installations before copying to preserve customizations. For other hosts, follow their skill installation instructions and retain referenced files; copying `SKILL.md` over `AGENTS.md` loses resources and can overwrite project rules. Welcome to AGI also provides Hermes/OpenClaw rule adapters and additional Claude Code/Cursor format adapters; model availability is separate. See its [host guide](skills/welcome-to-agi/references/hosts.md).
 
 The four top-level skills are independent. Install only the ones you want.
 

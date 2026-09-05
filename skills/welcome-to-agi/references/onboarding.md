@@ -6,6 +6,8 @@ Use this flow for installation, upgrades, initialization and setup adjustments. 
 
 Identify the actual client, local/cloud runtime and user/project scope using [hosts.md](hosts.md). Read the installed config when upgrading; preserve disabled modules and custom guards. New installations ship with all five modules enabled, including delegation. Do not reset an existing user's choices to the defaults.
 
+Confirm the actual model separately: these prompts target Astra, while a host adapter only delivers files/instructions. Do not present Claude Code/Cursor format support as Astra model availability. For Hermes/OpenClaw, read [hermes-openclaw.md](hermes-openclaw.md) and identify the actual backend project/workspace and profile before choosing paths. Installation does not change their provider, credentials, model or Gateway settings.
+
 From the package or installed folder, get a read-only summary using the intended host and scope:
 
 ```bash

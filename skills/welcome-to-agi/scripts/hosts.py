@@ -44,6 +44,21 @@ def plan(host, surface, mode, owner, user=False, rules_file=None, hooks=None, en
         owner / relative if relative else None)
     if host == "codex" and user and not rules_file:
         rule_path = codex_home / "AGENTS.md"
+    skill_dir = profile.get("user_skill_dir", profile["skill_dir"]) if user else profile["skill_dir"]
+    if user and host in ("hermes", "openclaw"):
+        home_key = "HERMES_HOME" if host == "hermes" else "OPENCLAW_STATE_DIR"
+        default_home = owner / (".hermes" if host == "hermes" else ".openclaw")
+        skill_dir = str(Path(env.get(home_key, str(default_home))).expanduser().absolute() / "skills")
+    if host == "hermes" and not user and not rules_file:
+        # Reuse the active context type rather than masking existing project instructions.
+        for name in (".hermes.md", "HERMES.md", "AGENTS.override.md", "AGENTS.md", "CLAUDE.md", ".cursorrules"):
+            candidate = owner / name
+            if candidate.is_file() and candidate.read_text(encoding="utf-8").strip():
+                rule_path = candidate
+                break
+        else:
+            if any((owner / ".cursor/rules").glob("*.mdc")):
+                raise ValueError("Hermes project already uses Cursor rule modules; choose an explicit active --rules-file to avoid shadowing them")
     if hooks and mode not in ("auto", "hook"):
         raise ValueError("--hooks selects hook mode; omit it for rules/manual mode")
     if mode == "auto":
@@ -66,4 +81,4 @@ def plan(host, surface, mode, owner, user=False, rules_file=None, hooks=None, en
             "rules_file": str(rule_path) if mode == "rules" else None,
             "hooks_file": str(hook_path) if mode == "hook" else None,
             "rule_format": profile["format"],
-            "skill_dir": profile["skill_dir"], "native_delivery": "not_verified"}
+            "skill_dir": skill_dir, "native_delivery": "not_verified"}

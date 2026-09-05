@@ -33,7 +33,7 @@ LabKit 对外有四个顶层 skill。`skill-skill` 是一整套完整的发布�
 python3 skills/welcome-to-agi/scripts/install.py --host codex --surface desktop --project /path/to/project --apply
 ```
 
-希望全局安装，将 `--project /path/to/project` 换成 `--user`。此命令在 Codex macOS/Linux 默认注册 Hook，随后需完成 `/hooks` 信任和实际客户端验证；用户选择常驻规则时添加 `--mode rules`。复制前先检查已有安装，保留自定义配置。其他宿主按其 skill 安装方式配置，并保留引用文件；不要把 `SKILL.md` 覆盖到项目 `AGENTS.md`，以免丢失资源或覆盖原有规则。Welcome to AGI 另有 Claude Code、Cursor 规则适配，详见[客户端引导](skills/welcome-to-agi/references/hosts.md)。
+希望全局安装，将 `--project /path/to/project` 换成 `--user`。此命令在 Codex macOS/Linux 默认注册 Hook，随后需完成 `/hooks` 信任和实际客户端验证；用户选择常驻规则时添加 `--mode rules`。复制前先检查已有安装，保留自定义配置。其他宿主按其 skill 安装方式配置，并保留引用文件；不要把 `SKILL.md` 覆盖到项目 `AGENTS.md`，以免丢失资源或覆盖原有规则。Welcome to AGI 另有 Hermes、OpenClaw 规则适配；Claude Code、Cursor 作为附加格式适配，模型可用性另行确认。详见[客户端引导](skills/welcome-to-agi/references/hosts.md)。
 
 四个顶层 skill 相互独立，只装需要的即可。
 

@@ -6,6 +6,21 @@
     "format": "markdown",
     "hook_adapter": true
   },
+  "hermes": {
+    "skill_dir": ".hermes/skills",
+    "project_rule": "AGENTS.md",
+    "user_rule": null,
+    "format": "markdown",
+    "hook_adapter": false
+  },
+  "openclaw": {
+    "skill_dir": "skills",
+    "user_skill_dir": ".openclaw/skills",
+    "project_rule": "AGENTS.md",
+    "user_rule": null,
+    "format": "markdown",
+    "hook_adapter": false
+  },
   "claude-code": {
     "skill_dir": ".claude/skills",
     "project_rule": "CLAUDE.md",

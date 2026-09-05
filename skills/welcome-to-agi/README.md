@@ -9,6 +9,8 @@ ordinary prompt -> hook or persistent rule -> current model selects
                 -> reads selected prompts/guards -> completes the task
 ```
 
+The prompts target **Astra, the model**; Codex, Hermes and OpenClaw are hosts. Check the actual selected model before calling this an Astra setup. Claude Code/Cursor adapters provide reusable rule formats, not verified Astra availability or equivalent effects on other models.
+
 ## Install and initialize
 
 In a desktop agent, ask:
@@ -22,8 +24,10 @@ First-use guidance lists the five module switches and current hook registration 
 | Client | Implemented entrypoint |
 |---|---|
 | Local Codex desktop / CLI / IDE | Codex Hook with trust review; optional scoped AGENTS.md block |
-| Claude Code Desktop / CLI | Scoped CLAUDE.md block |
-| Cursor project Agent | Always Apply .mdc rule |
+| Hermes project | Existing project context file, or AGENTS.md; [guide](references/hermes-openclaw.md) |
+| OpenClaw Agent workspace | Workspace AGENTS.md and skills/; [guide](references/hermes-openclaw.md) |
+| Claude Code (additional format adapter) | Scoped CLAUDE.md block; model applicability separate |
+| Cursor (additional format adapter) | Always Apply .mdc rule; model applicability separate |
 | Other local file-reading agents | Explicit host-loaded rule file |
 | UI-only settings / chat / cloud | Short rule export or portable manual prompt pack |
 

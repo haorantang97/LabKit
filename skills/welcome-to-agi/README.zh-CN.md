@@ -8,6 +8,8 @@
 普通任务 → Hook／常驻规则 → 当前模型判断 → 读取所需模块 → 完成原任务
 ```
 
+这套提示词针对 **Astra 模型**。Codex、Hermes、OpenClaw 是接入宿主，需另行确认实际使用的模型。Claude Code、Cursor 保留规则格式适配，但不因此宣称 Astra 可用或其他模型效果相同。
+
 ## 安装并初始化
 
 桌面端可以直接对 Agent 说：
@@ -21,8 +23,10 @@
 | 客户端 | 已实现的接入方式 |
 |---|---|
 | 本地 Codex 桌面端／CLI／IDE | Hook 加信任验证；可选择 AGENTS.md 规则块 |
-| Claude Code Desktop／CLI | CLAUDE.md 规则块 |
-| Cursor 项目 Agent | Always Apply 项目规则 |
+| Hermes 项目 | 已有项目上下文文件，或 AGENTS.md；[专门引导](references/hermes-openclaw.md) |
+| OpenClaw Agent 工作区 | 工作区 AGENTS.md 与 skills/；[专门引导](references/hermes-openclaw.md) |
+| Claude Code（附加格式适配） | CLAUDE.md 规则块；模型适用性另行判断 |
+| Cursor（附加格式适配） | Always Apply 项目规则；模型适用性另行判断 |
 | 其他可读取本地文件的 Agent | 指定宿主已自动加载的规则文件 |
 | 只有设置界面／普通聊天／云环境 | 导出简短规则入口，或完整手动提示词包 |
 
