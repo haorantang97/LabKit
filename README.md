@@ -16,7 +16,7 @@
 
 > Reusable agent skills for publishing, everyday work, and configurable Astra behavior.
 
-**New: [Astra Prompts](skills/astra-prompts/README.md)** packages five official GPT-6 Astra prompt modules with individual switches, an optional Codex prompt hook, and a read-only configuration audit. [中文介绍](skills/astra-prompts/README.zh-CN.md)
+**New: [Welcome to AGI](skills/welcome-to-agi/README.md)** packages five official GPT-6 Astra prompt modules with individual switches, ordinary-task semantic routing, guided initialization, and a read-only configuration audit. [中文介绍](skills/welcome-to-agi/README.zh-CN.md)
 
 ## Install
 
@@ -30,21 +30,20 @@ LabKit exposes four top-level skills. `skill-skill` is one complete publishing t
 Each top-level skill has a `SKILL.md` entrypoint. Install the **complete folder**, including any scripts and references. For Codex, copy the chosen skill into your project's skill directory:
 
 ```bash
-mkdir -p /path/to/project/.agents/skills
-cp -R skills/astra-prompts /path/to/project/.agents/skills/
+python3 skills/welcome-to-agi/scripts/install.py --project /path/to/project --apply
 ```
 
-Use `~/.agents/skills/` for user-wide Codex discovery. Check existing installations before copying to preserve customizations. For other hosts, follow their skill installation instructions and retain referenced files; copying `SKILL.md` over `AGENTS.md` loses resources and can overwrite project rules. Optional hooks have their own host-specific setup.
+Use `--user` instead of `--project` for user-wide installation. Complete host trust via Codex `/hooks` after registration. Check existing installations before copying to preserve customizations. For other hosts, follow their skill installation instructions and retain referenced files; copying `SKILL.md` over `AGENTS.md` loses resources and can overwrite project rules. Optional hooks have their own host-specific setup.
 
 The four top-level skills are independent. Install only the ones you want.
 
 ## What it does
 
-LabKit is a small collection of four skills. `skill-skill` is the publishing toolkit; `open-loops` and `reading-plan-mentor` are daily-use tools. `astra-prompts` combines attributed official prompt blocks with modular routing and optional setup tools.
+LabKit is a small collection of four skills. `skill-skill` is the publishing toolkit; `open-loops` and `reading-plan-mentor` are daily-use tools. `welcome-to-agi` combines attributed official prompt blocks with modular routing and optional setup tools.
 
 ## Skills
 
-- **[astra-prompts](skills/astra-prompts/README.md)** — Applies selected Astra behavior guidance; includes configurable modules, an optional Codex hook, and a separate one-time audit workflow
+- **[welcome-to-agi](skills/welcome-to-agi/README.md)** — Routes ordinary tasks through selected official guidance; includes modular prompts, guided hook initialization, and optional configuration audit
 
 - **[skill-skill](skills/skill-skill/SKILL.md)** — Packages a working AI rule or skill and guides it through publication as a GitHub repository
 

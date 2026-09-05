@@ -16,5 +16,6 @@
   "exclude": [],
   "source": "https://developers.openai.com/api/docs/guides/latest-model#personality-and-writing-style",
   "verified_at": "2026-09-05",
-  "kind": "verbatim-official-prompt-blocks"
+  "kind": "verbatim-official-prompt-blocks",
+  "when": "Writing, explanation, summaries, or technical communication where clear prose helps. Preserve explicitly requested length, structure, source quotations, and author voice."
 }

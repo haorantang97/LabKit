@@ -12,11 +12,14 @@ sys.path.insert(0, str(ROOT / "scripts"))
 import astra
 import audit
 import setup_hook
+import initialize
 
 
 class RoutingTests(unittest.TestCase):
     def setUp(self):
         self.config = astra.load_config(ROOT / "config.json")
+        self.config["routing"] = "keyword"
+        self.config["modules"]["delegation"]["enabled"] = False
 
     def test_official_blocks_match_recorded_snapshot(self):
         snapshot = json.loads((ROOT / "references/prompt-snapshot.json").read_text())
@@ -106,6 +109,35 @@ class HookTests(unittest.TestCase):
         return subprocess.run([sys.executable, str(ROOT / "scripts/astra.py"), command,
                                *args], input=text, capture_output=True, text=True)
 
+    def test_ordinary_prompts_receive_semantic_catalog_without_keyword_gate(self):
+        for prompt in ("实现一个支持撤销的待办列表", "对比三份方案的成本", "2+2是多少？", "翻译这句话", "Thanks"):
+            with self.subTest(prompt=prompt):
+                result = astra.hook({"hook_event_name": "UserPromptSubmit", "model": "gpt-6-astra", "prompt": prompt}, self.config)
+                context = result["hookSpecificOutput"]["additionalContext"]
+                self.assertIn(astra.ROUTER_MARKER, context)
+                self.assertIn('"id": "delegation"', context)
+                self.assertIn('"id": "testing"', context)
+                self.assertNotIn(prompt, context)
+                self.assertNotIn((ROOT / "modules/initiative/prompt.md").read_text().strip(), context)
+
+    def test_semantic_catalog_excludes_disabled_and_plan_modules(self):
+        self.config["modules"]["writing-style"]["enabled"] = False
+        event = {"hook_event_name": "UserPromptSubmit", "model": "gpt-6-astra", "prompt": "构建功能", "permission_mode": "plan"}
+        context = astra.hook(event, self.config)["hookSpecificOutput"]["additionalContext"]
+        for name in ("writing-style", "delegation", "initiative"):
+            self.assertNotIn('"id": "' + name + '"', context)
+        self.assertIn('"id": "testing"', context)
+
+    def test_all_disabled_returns_no_context(self):
+        for setting in self.config["modules"].values():
+            setting["enabled"] = False
+        self.assertEqual(astra.hook({"hook_event_name": "UserPromptSubmit", "model": "gpt-6-astra", "prompt": "实现功能"}, self.config), {})
+
+    def test_semantic_cli_preview_requires_no_stdin(self):
+        result = self.run_cli("router", "")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertIn(astra.ROUTER_MARKER, json.loads(result.stdout)["guidance"])
+
     def test_hook_never_promotes_user_data(self):
         secret = "fixture-only-private-text-92317"
         event = {"hook_event_name": "UserPromptSubmit", "model": "gpt-6-astra",
@@ -122,8 +154,7 @@ class HookTests(unittest.TestCase):
         for event in (None, [], {}, {"hook_event_name": "Stop"},
                       {"hook_event_name": "UserPromptSubmit", "model": "another-model", "prompt": "少点套话"},
                       {"hook_event_name": "UserPromptSubmit", "prompt": "少点套话"},
-                      {"hook_event_name": "UserPromptSubmit", "model": "gpt-6-astra", "prompt": []},
-                      {"hook_event_name": "UserPromptSubmit", "model": "gpt-6-astra", "prompt": astra.MARKER + " 少点套话"}):
+                      {"hook_event_name": "UserPromptSubmit", "model": "gpt-6-astra", "prompt": []}):
             self.assertEqual(astra.hook(event, self.config), {})
 
     def test_malformed_and_oversize_hook_input_does_not_block(self):
@@ -173,6 +204,44 @@ class HookTests(unittest.TestCase):
 
 
 class SetupTests(unittest.TestCase):
+    def test_legacy_hook_is_replaced_without_duplication(self):
+        legacy = {"type": "command", "command": "python3 /fixture/astra-prompts/scripts/astra.py hook", "statusMessage": "LabKit Astra Prompts v1"}
+        other = {"type": "command", "command": "echo other"}
+        doc = {"hooks": {"UserPromptSubmit": [{"hooks": [legacy, other]}]}}
+        result = setup_hook.update(doc, ROOT / "config.json")
+        handlers = [h for g in result["hooks"]["UserPromptSubmit"] for h in g["hooks"]]
+        self.assertEqual(len(handlers), 2)
+        self.assertIn(other, handlers)
+        self.assertEqual(sum(h.get("statusMessage") == setup_hook.LABEL for h in handlers), 1)
+
+    def test_initialization_status_distinguishes_registration_and_trust(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "hooks.json"
+            state = initialize.status(path, ROOT / "config.json")
+            self.assertFalse(state["hook_registered"])
+            self.assertFalse(path.exists())
+            path.write_text(json.dumps(setup_hook.update({}, ROOT / "config.json")))
+            state = initialize.status(path, ROOT / "config.json")
+            self.assertTrue(state["hook_registered"])
+            self.assertEqual(state["host_trust"], "not_verified")
+            self.assertEqual(state["native_delivery"], "not_verified")
+
+    def test_installer_preview_then_installs_and_initializes(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            project = Path(tmp) / "project with spaces"
+            command = [sys.executable, str(ROOT / "scripts/install.py"), "--project", str(project)]
+            result = subprocess.run(command, capture_output=True, text=True)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertFalse(project.exists())
+            result = subprocess.run(command + ["--apply"], capture_output=True, text=True)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            installed = project / ".agents/skills/welcome-to-agi"
+            self.assertTrue((installed / "SKILL.md").exists())
+            self.assertTrue((project / ".codex/hooks.json").exists())
+            self.assertIn('"hook_registered": true', result.stdout)
+            self.assertIn('"native_delivery": "not_verified"', result.stdout)
+            result = subprocess.run(command + ["--apply"], capture_output=True, text=True)
+            self.assertNotEqual(result.returncode, 0)
     def test_removing_absent_handler_is_noop(self):
         document = {"description": "another tool owns this file"}
         self.assertEqual(setup_hook.update(document, ROOT / "config.json", remove=True), document)

@@ -1,6 +1,0 @@
-interface:
-  display_name: "Astra Prompts"
-  short_description: "Select modular Astra guidance for behavior corrections"
-  default_prompt: "Use $astra-prompts to apply the relevant Astra guidance and continue my original task."
-policy:
-  allow_implicit_invocation: true

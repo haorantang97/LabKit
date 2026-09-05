@@ -8,7 +8,7 @@ Checked on **2026-09-05**. This is a community package in LabKit, not an OpenAI 
 
 The `latest-model` URL can change models over time. Before updating, verify that the fetched page is still about GPT-6 Astra; do not silently replace prompts with guidance for a different model. Review changed prompt blocks, update hashes and dates, and run the relevant evaluation cases. There is no network fetch during normal use.
 
-**LabKit additions**, not official recommendations: scenario routing, disabled-by-default delegation, per-module guards, model filtering, output budgets, the optional installer and candidate scanner. The official delegation prompt encourages more delegation; it does not claim to reduce agent calls. The original official blocks remain separate from our adaptations so users can compare or remove the adaptations.
+**LabKit additions**, not official recommendations: ordinary-task semantic routing, bounded delegation, per-module guards, model filtering, output budgets, the optional installer and candidate scanner. The official delegation prompt encourages more delegation; it does not claim to reduce agent calls. All five modules are available in new installations; the model selects only useful ones. The original official blocks remain separate from our adaptations so users can compare or remove the adaptations.
 
 LabKit's license applies to its original code and adaptations. OpenAI remains the source of the attributed prompt excerpts; the repository license does not assert ownership or independently relicense third-party material.
 
@@ -25,4 +25,4 @@ The native CLI present during development was **0.153.0**. The hook handler and 
 
 Skill-only use needs a host that understands skills and can read this folder; semantic triggering remains the host model's choice. The standalone composer can be called from another application. Hook installation here targets Codex on macOS/Linux with Python 3.10+. No Claude Code, Cursor, Windsurf, or Windows hook adapter is claimed.
 
-No embedding model, API key, external service, transcript parser, background monitor, tool interceptor, or automatic agent delegation is part of this package. A phrase match adds guidance; it does not prove that the model exhibited a problem or guarantee changed behavior.
+The hook uses no embedding model, API key, external service, transcript parser, background monitor, or tool interceptor. It never starts agents itself; the host can delegate after selecting that module when permitted. The semantic hook supplies a catalog for the current model to assess each ordinary task. It does not itself classify intent or guarantee changed behavior.

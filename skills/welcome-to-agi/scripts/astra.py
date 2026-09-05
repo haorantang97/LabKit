@@ -8,6 +8,7 @@ import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 MARKER = "LABKIT_ASTRA_GUIDANCE_V1"
+ROUTER_MARKER = "LABKIT_WELCOME_TO_AGI_ROUTER_V2"
 MAX_INPUT_BYTES = 262144
 HEADER = (
     MARKER + "\n"
@@ -34,6 +35,8 @@ def load_config(path):
         raise ValueError("config must be an object")
     if type(config.get("version")) is not int or config["version"] != 1:
         raise ValueError("unsupported config version")
+    if config.get("routing", "semantic") not in ("semantic", "keyword"):
+        raise ValueError("routing must be semantic or keyword")
     for key, low, high in (("max_modules", 1, 20), ("max_context_chars", 512, 20000)):
         value = config.get(key)
         if type(value) is not int or not low <= value <= high:
@@ -119,6 +122,32 @@ def render(names, config, root=ROOT):
     return (output if included else ""), included
 
 
+def router_context(config, root=ROOT, plan=False):
+    """Give the current model the small catalog, not a second model or a regex verdict."""
+    entries = []
+    for name, setting in config["modules"].items():
+        if not setting["enabled"] or (plan and name in ("initiative", "delegation")):
+            continue
+        meta, folder = load_module(name, root)
+        when = meta.get("when")
+        if not isinstance(when, str) or not when.strip():
+            raise ValueError("semantic module needs a when description: " + name)
+        entry = {"id": name, "when": when, "prompt_file": str(folder / "prompt.md")}
+        if setting["guard"]:
+            entry["guard_file"] = str(folder / "guard.md")
+        entries.append(entry)
+    if not entries:
+        return ""
+    instruction = (root / "references/router.md").read_text(encoding="utf-8").strip()
+    context = (ROUTER_MARKER + "\n" + instruction + "\n\n" +
+               "Maximum selected modules: " + str(config["max_modules"]) + "\n" +
+               "Available modules for this turn (trusted local catalog):\n" +
+               json.dumps(entries, ensure_ascii=False, indent=2))
+    if len(context) > config["max_context_chars"]:
+        raise ValueError("router catalog exceeds context budget; reduce modules or descriptions")
+    return context
+
+
 def hook(event, config, root=ROOT):
     if not isinstance(event, dict) or event.get("hook_event_name") != "UserPromptSubmit":
         return {}
@@ -126,8 +155,12 @@ def hook(event, config, root=ROOT):
     if event.get("model") not in config["models"]:
         return {}
     prompt = event.get("prompt")
-    if not isinstance(prompt, str) or not prompt.strip() or MARKER in prompt:
+    if not isinstance(prompt, str) or not prompt.strip():
         return {}
+    if config.get("routing", "semantic") == "semantic":
+        guidance = router_context(config, root, event.get("permission_mode") == "plan")
+        return ({"hookSpecificOutput": {"hookEventName": "UserPromptSubmit",
+                 "additionalContext": guidance}} if guidance else {})
     names = select(prompt, config, root)
     if event.get("permission_mode") == "plan":
         names = [n for n in names if n not in ("initiative", "delegation")]
@@ -141,16 +174,18 @@ def hook(event, config, root=ROOT):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("command", choices=("route", "compose", "hook"))
+    parser.add_argument("command", choices=("route", "compose", "hook", "router"))
     parser.add_argument("--config", type=Path, default=ROOT / "config.json")
     parser.add_argument("--modules", help="comma-separated enabled IDs; compose only")
     args = parser.parse_args()
     try:
         config = load_config(args.config)
-        raw = read_input()
+        raw = "" if args.command == "router" else read_input()
         if args.modules and args.command != "compose":
             raise ValueError("--modules is only supported for compose")
-        if args.command == "hook":
+        if args.command == "router":
+            result = {"guidance": router_context(config), "selection": "performed by current host model"}
+        elif args.command == "hook":
             result = hook(json.loads(raw), config)
         else:
             names = args.modules.split(",") if args.modules else select(raw, config)
@@ -166,9 +201,9 @@ def main():
             # A broken customization should not prevent the user from working.
             # Do not print input, paths, or potentially sensitive exception text.
             print("{}")
-            print("astra-prompts: skipped invalid input or configuration", file=sys.stderr)
+            print("welcome-to-agi: skipped invalid input or configuration", file=sys.stderr)
             return 0
-        parser.exit(1, "astra-prompts: " + str(error) + "\n")
+        parser.exit(1, "welcome-to-agi: " + str(error) + "\n")
 
 
 if __name__ == "__main__":

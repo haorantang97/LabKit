@@ -16,7 +16,7 @@
 
 > 可复用的 Agent 工具：发布 skill、处理日常任务、按需调整 Astra 行为。
 
-**新增：[Astra Prompts](skills/astra-prompts/README.zh-CN.md)**。把五类官方提示词拆成可独立开关的模块，提供可选 Codex prompt hook，以及只读配置审计工具。[English](skills/astra-prompts/README.md)
+**新增：[Welcome to AGI](skills/welcome-to-agi/README.zh-CN.md)**。把五类官方提示词拆成可独立开关的模块，在普通任务提交时做语义路由，提供初始化引导和只读配置审计工具。[English](skills/welcome-to-agi/README.md)
 
 ## 安装
 
@@ -30,21 +30,20 @@ LabKit 对外有四个顶层 skill。`skill-skill` 是一整套完整的发布�
 每个顶层 skill 都有 `SKILL.md` 入口。安装时复制**完整文件夹**，保留脚本和引用文件。例如，在 Codex 中安装到目标项目：
 
 ```bash
-mkdir -p /path/to/project/.agents/skills
-cp -R skills/astra-prompts /path/to/project/.agents/skills/
+python3 skills/welcome-to-agi/scripts/install.py --project /path/to/project --apply
 ```
 
-希望所有项目都能发现它，可以放进 `~/.agents/skills/`。复制前先检查已有安装，保留自定义配置。其他宿主按其 skill 安装方式配置，并保留引用文件；不要把 `SKILL.md` 覆盖到项目 `AGENTS.md`，以免丢失资源或覆盖原有规则。可选 hook 另有对应宿主的安装步骤。
+希望全局安装，将 `--project /path/to/project` 换成 `--user`。注册后在 Codex 的 `/hooks` 中完成信任。复制前先检查已有安装，保留自定义配置。其他宿主按其 skill 安装方式配置，并保留引用文件；不要把 `SKILL.md` 覆盖到项目 `AGENTS.md`，以免丢失资源或覆盖原有规则。可选 hook 另有对应宿主的安装步骤。
 
 四个顶层 skill 相互独立，只装需要的即可。
 
 ## 这是什么
 
-LabKit 收录四个 skill。`skill-skill` 是发布工具箱，`open-loops` 和 `reading-plan-mentor` 是日常工具；`astra-prompts` 将有来源标注的官方提示词与模块路由、可选初始化工具组合起来。
+LabKit 收录四个 skill。`skill-skill` 是发布工具箱，`open-loops` 和 `reading-plan-mentor` 是日常工具；`welcome-to-agi` 将有来源标注的官方提示词与模块路由、可选初始化工具组合起来。
 
 ## Skill 清单
 
-- **[astra-prompts](skills/astra-prompts/README.zh-CN.md)** — 按场景应用 Astra 提示词，提供独立模块开关、可选 Codex hook 和单独的一次性配置审计流程
+- **[welcome-to-agi](skills/welcome-to-agi/README.zh-CN.md)** — 普通任务提交后自动提供场景判断入口，按需加载官方提示模块；带初始化引导和独立配置审计
 
 - **[skill-skill](skills/skill-skill/SKILL.md)** — 把一个跑通的 AI 规则或 skill 打包，并引导完成 GitHub 发布
 

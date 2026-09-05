@@ -10,5 +10,6 @@
   "exclude": [],
   "source": "https://developers.openai.com/api/docs/guides/latest-model#instruction-following",
   "verified_at": "2026-09-05",
-  "kind": "verbatim-official-prompt-blocks"
+  "kind": "verbatim-official-prompt-blocks",
+  "when": "Tasks governed by multiple instruction files, or an observed conflict/approval pause requiring identification of the actual applicable rule. Do not audit unrelated skills."
 }

@@ -14,5 +14,6 @@
   "exclude": [],
   "source": "https://developers.openai.com/api/docs/guides/latest-model#testing-and-verification",
   "verified_at": "2026-09-05",
-  "kind": "verbatim-official-prompt-blocks"
+  "kind": "verbatim-official-prompt-blocks",
+  "when": "Code changes and other work that needs verification. Choose proportional meaningful checks; keep required checks and investigate unresolved failures."
 }

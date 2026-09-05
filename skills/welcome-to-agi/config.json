@@ -1,5 +1,6 @@
 {
   "version": 1,
+  "routing": "semantic",
   "models": ["gpt-6-astra"],
   "max_modules": 3,
   "max_context_chars": 12000,
@@ -8,6 +9,6 @@
     "instruction-following": {"enabled": true, "guard": true},
     "writing-style": {"enabled": true, "guard": true},
     "testing": {"enabled": true, "guard": true},
-    "delegation": {"enabled": false, "guard": true}
+    "delegation": {"enabled": true, "guard": true}
   }
 }

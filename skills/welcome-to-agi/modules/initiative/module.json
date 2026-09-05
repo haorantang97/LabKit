@@ -21,5 +21,6 @@
   ],
   "source": "https://developers.openai.com/api/docs/guides/latest-model#initiative-and-follow-through",
   "verified_at": "2026-09-05",
-  "kind": "verbatim-official-prompt-blocks"
+  "kind": "verbatim-official-prompt-blocks",
+  "when": "Multi-step task assignments, implementations, fixes, or investigations that require following through on authorized work. Skip for simple factual answers, plan-only requests, and explicit stops."
 }

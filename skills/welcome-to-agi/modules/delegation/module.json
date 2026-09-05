@@ -13,5 +13,6 @@
   "exclude": [],
   "source": "https://developers.openai.com/api/docs/guides/latest-model#subagent-delegation",
   "verified_at": "2026-09-05",
-  "kind": "verbatim-official-prompt-blocks"
+  "kind": "verbatim-official-prompt-blocks",
+  "when": "Complex tasks containing independent bounded deliverables where parallel work can improve time or quality. No delegation for trivial tasks, no-agent instructions, or unavailable/unauthorized collaboration tools."
 }
