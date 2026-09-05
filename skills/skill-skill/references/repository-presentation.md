@@ -24,7 +24,7 @@ Positioning can explain a real tradeoff. Do not invent competitors' deficiencies
 
 ## Make the visuals specific
 
-Create a recognizable motif derived from the product's work. Choose typography, palette, spacing and a sensible hierarchy. The Personal-Ontology benchmark uses layered blocks and linked nodes. When the user asks for the same style, preserve the reference composition, motif language, palette, typography and spacing while adapting the repository name and claims. Do not replace that request with an independently invented identity. Without an explicit same-style request, choose a motif appropriate to the product; no icon or palette is universal.
+Create a recognizable motif derived from the product's work. Choose typography, palette, spacing and a sensible hierarchy. The Personal-Ontology benchmark uses layered blocks and linked nodes. When the user asks for the same style, preserve the reference composition principles, palette, typography and spacing while creating a distinct mark and adapting the repository name and claims. Do not replace that request with an independently invented identity. Without an explicit same-style request, choose a motif appropriate to the product; no icon or palette is universal.
 
 Use light and dark variants, a responsive viewBox for SVG, accessible labels, and a working image fallback. Use native SVG for text and simple vector graphics. Use an appropriate image skill/tool for raster illustration. Choose dimensions to fit the composition; 700 × 175 is not an invariant. A white rectangle with a renamed title is not the default level of finish.
 
@@ -59,3 +59,5 @@ The user requested on 2026-09-05 that future repository work match Personal-Onto
 The demonstrated LabKit failure was a collection hero still saying SKILL SKILL after the public repository became a multi-tool collection. The repair is identity and rendered-page verification, not a global ban on mentioning the child skill.
 
 A subsequent user correction rejected a newly invented LabKit toolbox hero and asked for the same style as Personal-Ontology. A named visual reference can specify both quality and appearance; establish this distinction from the actual wording and preserve the requested fidelity.
+
+The user subsequently rejected the identical Personal-Ontology icon and approved an original titanium L / violet-glass K hero. Preserve the reference's visual qualities without copying its logo or signature silhouette. Follow the latest approved design; earlier preferences are not permanent constraints. An intentionally dark photographic hero may use one asset in both page themes when inspected and explicitly approved; do not force an artificial light variant.
