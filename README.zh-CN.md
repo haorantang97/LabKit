@@ -16,7 +16,7 @@
 
 > 可复用的 Agent 工具：发布 skill、处理日常任务、按需调整 Astra 行为。
 
-**新增：[Welcome to AGI](skills/welcome-to-agi/README.zh-CN.md)**。把五类官方提示词拆成可独立开关的模块，在普通任务提交时做语义路由，提供初始化引导和只读配置审计工具。[English](skills/welcome-to-agi/README.md)
+**新增：[Welcome to AGI](skills/welcome-to-agi/README.zh-CN.md)**。把五类官方提示词拆成可独立开关的模块，对普通任务做语义路由，支持桌面端常驻规则、可选 Codex hooks 和手动提示词包。[客户端引导](skills/welcome-to-agi/references/hosts.md)。[English](skills/welcome-to-agi/README.md)
 
 ## 安装
 
@@ -30,10 +30,10 @@ LabKit 对外有四个顶层 skill。`skill-skill` 是一整套完整的发布�
 每个顶层 skill 都有 `SKILL.md` 入口。安装时复制**完整文件夹**，保留脚本和引用文件。例如，在 Codex 中安装到目标项目：
 
 ```bash
-python3 skills/welcome-to-agi/scripts/install.py --project /path/to/project --apply
+python3 skills/welcome-to-agi/scripts/install.py --host codex --surface desktop --project /path/to/project --apply
 ```
 
-希望全局安装，将 `--project /path/to/project` 换成 `--user`。注册后在 Codex 的 `/hooks` 中完成信任。复制前先检查已有安装，保留自定义配置。其他宿主按其 skill 安装方式配置，并保留引用文件；不要把 `SKILL.md` 覆盖到项目 `AGENTS.md`，以免丢失资源或覆盖原有规则。可选 hook 另有对应宿主的安装步骤。
+希望全局安装，将 `--project /path/to/project` 换成 `--user`。此命令默认初始化常驻规则；只有显式选择 hook 模式才需要 `/hooks` 信任。复制前先检查已有安装，保留自定义配置。其他宿主按其 skill 安装方式配置，并保留引用文件；不要把 `SKILL.md` 覆盖到项目 `AGENTS.md`，以免丢失资源或覆盖原有规则。Welcome to AGI 另有 Claude Code、Cursor 规则适配，详见[客户端引导](skills/welcome-to-agi/references/hosts.md)。
 
 四个顶层 skill 相互独立，只装需要的即可。
 

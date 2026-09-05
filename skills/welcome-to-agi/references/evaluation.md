@@ -8,6 +8,12 @@ python3 -m unittest discover -s skills/welcome-to-agi/tests -v
 
 The suite checks ordinary-message catalog delivery without keyword gating; disabled/plan modules; no user-message promotion; router size/error behavior; original official snapshots; optional legacy keyword mode; installation + initialization; old-label replacement; backups; idempotence; unrelated handlers; and read-only audit coverage.
 
+## Host adapter update (2026-09-05)
+
+39 automated tests pass locally. Added coverage includes real installer subprocesses for Codex, Claude Code and Cursor project profiles; preview without writes; generated references to the installed folder (including Unicode/spaced paths); repeated initialization; exact preservation of surrounding CRLF/UTF-8 instructions; backups and scoped removal after later user edits; override/symlink/marker conflicts; changed Cursor activation metadata; unknown/conflicting host detection; CODEX_HOME paths; cloud/manual fallback; hook/rule migration; removal with broken config; and portable/manual UI exports.
+
+These tests execute file adapters in temporary projects, not the named desktop applications. Codex Desktop, Claude Code Desktop and Cursor native loading and ordinary-task execution remain **not verified** for this update. Use the [actual-client checks](hosts.md#在实际使用的客户端验证) and record source loading, module reads and deliverables before making a native compatibility claim. There is no extra model evaluation in this update; the v2 trial below remains historical evidence for the shared routing instructions.
+
 ## Version 2 independent model trial
 
 An independent agent received the actual generated router context and ordinary requests, without expected module choices:
@@ -24,11 +30,11 @@ The trial found stale v1 setup/evaluation descriptions (keyword gating, delegati
 
 ## First-use cases
 
-- Installed through the integrated installer: files and registration must complete, followed by clear host-trust instructions.
+- Installed through the integrated installer: report host/surface and selected mode; complete files and the chosen registration. Rules lead to actual-client loading checks; hooks add the separate trust step; manual explicitly reports no automatic entrypoint.
 - Manually copied and explicitly invoked: the skill inspects initialization status and guides setup instead of only saying “available next turn.”
 - Normal task without persistent-setup authorization: complete it in manual mode while offering the setup choice once.
 - User chooses skill-only or declines: honor that choice, do not repeatedly ask within the conversation.
-- Registered hook provides the router marker: follow the catalog directly, without repeating onboarding.
+- Registered hook provides the router marker or a persistent rule is already loaded: follow its routing entry without repeating onboarding.
 
 ## Native Codex smoke test after trust
 

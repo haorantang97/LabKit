@@ -229,7 +229,7 @@ class SetupTests(unittest.TestCase):
     def test_installer_preview_then_installs_and_initializes(self):
         with tempfile.TemporaryDirectory() as tmp:
             project = Path(tmp) / "project with spaces"
-            command = [sys.executable, str(ROOT / "scripts/install.py"), "--project", str(project)]
+            command = [sys.executable, str(ROOT / "scripts/install.py"), "--host", "codex", "--mode", "hook", "--project", str(project)]
             result = subprocess.run(command, capture_output=True, text=True)
             self.assertEqual(result.returncode, 0, result.stderr)
             self.assertFalse(project.exists())

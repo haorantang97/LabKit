@@ -16,7 +16,7 @@
 
 > Reusable agent skills for publishing, everyday work, and configurable Astra behavior.
 
-**New: [Welcome to AGI](skills/welcome-to-agi/README.md)** packages five official GPT-6 Astra prompt modules with individual switches, ordinary-task semantic routing, guided initialization, and a read-only configuration audit. [中文介绍](skills/welcome-to-agi/README.zh-CN.md)
+**New: [Welcome to AGI](skills/welcome-to-agi/README.md)** packages five official GPT-6 Astra prompt modules with individual switches, ordinary-task semantic routing, desktop setup via persistent rules, optional Codex hooks, and manual exports. [Host guide](skills/welcome-to-agi/references/hosts.md). [中文介绍](skills/welcome-to-agi/README.zh-CN.md)
 
 ## Install
 
@@ -27,13 +27,13 @@ cd LabKit
 
 LabKit exposes four top-level skills. `skill-skill` is one complete publishing toolkit; its pipeline modules live under `skills/skill-skill/modules/` and are not separate top-level skills. Astra's behavior modules are also internal to one skill.
 
-Each top-level skill has a `SKILL.md` entrypoint. Install the **complete folder**, including any scripts and references. For Codex, copy the chosen skill into your project's skill directory:
+Each top-level skill has a `SKILL.md` entrypoint. Install the **complete folder**, including any scripts and references. For Welcome to AGI in a local Codex project:
 
 ```bash
-python3 skills/welcome-to-agi/scripts/install.py --project /path/to/project --apply
+python3 skills/welcome-to-agi/scripts/install.py --host codex --surface desktop --project /path/to/project --apply
 ```
 
-Use `--user` instead of `--project` for user-wide installation. Complete host trust via Codex `/hooks` after registration. Check existing installations before copying to preserve customizations. For other hosts, follow their skill installation instructions and retain referenced files; copying `SKILL.md` over `AGENTS.md` loses resources and can overwrite project rules. Optional hooks have their own host-specific setup.
+Use `--user` instead of `--project` for user-wide installation. This example initializes a persistent rule; `/hooks` trust is only needed if you explicitly select hook mode. Check existing installations before copying to preserve customizations. For other hosts, follow their skill installation instructions and retain referenced files; copying `SKILL.md` over `AGENTS.md` loses resources and can overwrite project rules. Welcome to AGI also provides Claude Code and Cursor rule adapters; see its [host guide](skills/welcome-to-agi/references/hosts.md).
 
 The four top-level skills are independent. Install only the ones you want.
 
@@ -43,7 +43,7 @@ LabKit is a small collection of four skills. `skill-skill` is the publishing too
 
 ## Skills
 
-- **[welcome-to-agi](skills/welcome-to-agi/README.md)** — Routes ordinary tasks through selected official guidance; includes modular prompts, guided hook initialization, and optional configuration audit
+- **[welcome-to-agi](skills/welcome-to-agi/README.md)** — Routes ordinary tasks through selected official guidance; includes modular prompts, host-aware initialization, and optional configuration audit
 
 - **[skill-skill](skills/skill-skill/SKILL.md)** — Packages a working AI rule or skill and guides it through publication as a GitHub repository
 

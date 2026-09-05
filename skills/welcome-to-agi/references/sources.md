@@ -20,9 +20,16 @@ LabKit's license applies to its original code and adaptations. OpenAI remains th
 | [Hooks](https://learn.chatgpt.com/docs/hooks) | Current Codex hook configuration, trust, model/event input, `UserPromptSubmit` and extra developer context |
 | [UserPromptSubmit](https://learn.chatgpt.com/docs/hooks#userpromptsubmit) | `prompt` input and `hookSpecificOutput.additionalContext` output; event `matcher` is ignored |
 | [Review and trust hooks](https://learn.chatgpt.com/docs/hooks#review-and-trust-hooks) | Non-managed definitions must be reviewed/trusted; installation is not activation |
+| [Codex AGENTS.md](https://learn.chatgpt.com/docs/agent-configuration/agents-md) | Global/project instruction discovery, override precedence, context limits, new-session loading |
+| [Developer settings](https://learn.chatgpt.com/docs/developer-settings) | Shared local Codex agent configuration across desktop, CLI and IDE; cloud environment distinction |
+| [Claude Code memory](https://code.claude.com/docs/en/memory) | User/project CLAUDE.md instruction paths and loading |
+| [Claude Code Desktop](https://code.claude.com/docs/en/desktop) | Desktop and CLI share the underlying engine and CLAUDE.md project context |
+| [Cursor rules](https://prod.cursor.com/docs/rules) | Project .mdc files and alwaysApply frontmatter |
 
 The native CLI present during development was **0.153.0**. The hook handler and registration shape were exercised locally with event fixtures and generated commands. A separately trusted native Codex hook session was **not** run as part of this release, so this version is a development reference, not a verified minimum supported version. Use `/hooks` to check support on the actual host. Managed configurations and older versions may differ.
 
 Skill-only use needs a host that understands skills and can read this folder; semantic triggering remains the host model's choice. The standalone composer can be called from another application. Hook installation here targets Codex on macOS/Linux with Python 3.10+. No Claude Code, Cursor, Windsurf, or Windows hook adapter is claimed.
+
+The current package also implements scoped persistent-rule adapters for Codex, Claude Code and Cursor projects, explicit custom rule files, and manual exports. Rule file editing is tested; native desktop loading and routing remain unverified for those clients. The compatibility table and client-specific verification steps are in [hosts.md](hosts.md). Prompt applicability on other models is not established by transport compatibility.
 
 The hook uses no embedding model, API key, external service, transcript parser, background monitor, or tool interceptor. It never starts agents itself; the host can delegate after selecting that module when permitted. The semantic hook supplies a catalog for the current model to assess each ordinary task. It does not itself classify intent or guarantee changed behavior.

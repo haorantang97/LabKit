@@ -2,30 +2,38 @@
 
 [English](README.md) | **中文**
 
-普通任务提交后，由当前 Codex 判断需要哪些指导，再读取对应的官方 Astra 提示词并执行任务。无需先抱怨，也无需额外模型 API 或向量库。
+普通任务提交后，由当前 Agent 判断需要哪些指导，再读取对应的官方 Astra 提示词并执行任务。无需先抱怨，也无需额外模型 API 或向量库。
 
 ```text
-普通任务 → Hook 加入场景目录 → Codex 判断 → 读取所需模块 → 完成原任务
+普通任务 → 常驻规则／可选 Hook → 当前模型判断 → 读取所需模块 → 完成原任务
 ```
 
 ## 安装并初始化
 
-在 LabKit 仓库目录执行，第一条预览，第二条安装并注册 hook：
+桌面端可以直接对 Agent 说：
+
+> 安装 LabKit 的 welcome-to-agi，用于我当前客户端和项目，并完成初始化。优先使用常驻规则；请替我执行步骤，保留原有配置，说明还需要在当前客户端验证什么。
+
+**无 hooks 也能接入，不必先去终端操作。** 有本地执行能力的 Agent 可以代为安装。仅复制文件无法触发初始化，下载器需继续按 SKILL.md 操作。
+
+| 客户端 | 已实现的接入方式 |
+|---|---|
+| 本地 Codex 桌面端／CLI／IDE | AGENTS.md 规则块；另可选择 hooks |
+| Claude Code Desktop／CLI | CLAUDE.md 规则块 |
+| Cursor 项目 Agent | Always Apply 项目规则 |
+| 其他可读取本地文件的 Agent | 指定宿主已自动加载的规则文件 |
+| 只有设置界面／普通聊天／云环境 | 导出简短规则入口，或完整手动提示词包 |
+
+[各客户端详细引导、限制与实际生效检查](references/hosts.md)
+
+需要命令行时，先预览再安装。Python 3.10+，脚本已在 macOS/Linux 验证：
 
 ```bash
-python3 skills/welcome-to-agi/scripts/install.py --user
-python3 skills/welcome-to-agi/scripts/install.py --user --apply
+python3 skills/welcome-to-agi/scripts/install.py --host codex --surface desktop --project /path/to/project
+python3 skills/welcome-to-agi/scripts/install.py --host codex --surface desktop --project /path/to/project --apply
 ```
 
-只用于一个项目时，把 `--user` 换成 `--project /path/to/project`。需要 Python 3.10+，安装器目前支持 macOS/Linux。
-
-**最后在 Codex CLI 的 `/hooks` 中审阅并信任该 hook。** 安装程序会分别报告文件安装、hook 注册和未验证的宿主状态，不会把写入成功当成已启用。
-
-也可以让 Agent 操作：
-
-> 安装 LabKit 的 welcome-to-agi，并按它的 SKILL.md 完成初始化，告诉我还剩哪些宿主操作。
-
-已通过其他窗口下载的用户：首次显式调用 `$welcome-to-agi` 会引导初始化。单纯复制文件没有自动执行能力；标准安装入口已把下载后的安装与初始化连起来。
+其他客户端换成 `--host claude-code` 或 `--host cursor`。用户级安装用 `--user` 替换 `--project PATH`；Cursor 用户级采用手动入口，不直接改内部设置数据库。未知宿主明确回退到手动模式。只有显式选择 `--mode hook` 才需要 Codex 的 hook 信任流程；`--skill-only` 表示手动模式。
 
 ## 普通任务也能识别
 
@@ -34,7 +42,7 @@ python3 skills/welcome-to-agi/scripts/install.py --user --apply
 - “写一份说明”：判断是否需要写作指导。
 - 简单计算或事实问题：可以不加载任何模块，直接回答。
 
-这些是选择场景的说明，不是固定关键词匹配结果。Hook 每次只补充简短目录；语义判断由正在处理任务的 Codex 完成。无法保证模型每次判断正确。
+这些是选择场景的说明，不是固定关键词匹配结果。常驻规则要求模型每个任务读取最新配置和场景描述；Hook 在提交事件中补充目录。前者依赖指令遵循，后者有程序入口，两者的语义判断都由当前模型完成。手动包会包含全部启用模块，占用更多上下文，配置变更后需重新导出。
 
 ## 五个模块，分别改造
 
@@ -53,7 +61,8 @@ python3 skills/welcome-to-agi/scripts/install.py --user --apply
 ## 初始化与工具
 
 - `install.py`：安装完整 skill，并衔接初始化。
-- `initialize.py`：检查已安装版本，注册 hook，给出信任与生效检查步骤。
+- `initialize.py`：按客户端初始化规则／hook、检查状态、撤销注册及导出手动包。
+- `adapters/hosts.json`：独立的宿主适配配置，便于增减改造。
 - `astra.py router`：预览每次提交时补充的判断入口。
 - `astra.py compose`：单独生成选中模块，保留原 prompt。
 - `audit.py`：可选的一次性只读配置审计，不自动清理其他技能。
@@ -62,8 +71,8 @@ python3 skills/welcome-to-agi/scripts/install.py --user --apply
 
 ## 验证与边界
 
-默认适配 Codex 的 `UserPromptSubmit`，模型默认限定为 `gpt-6-astra`。规则和模块可以移植；其他宿主需要相应的接入方式。
+默认按宿主选择常驻规则或手动方式。可选的 Codex hook 用 `gpt-6-astra` 过滤事件；常驻规则在其他模型中使用时需判断适用性，不会切换模型或增加工具能力。
 
-[测试记录](references/evaluation.md)区分脚本检查、模型实际选模块的试用，以及原生 hook 投递验证。普通 skill 的隐式选择不是每次提交事件的保证；希望自动路由需要完成 hook 初始化和宿主信任。
+[测试记录](references/evaluation.md)区分脚本检查、模型实际选模块的试用，以及原生 hook 投递验证。已验证文件适配器的安装、更新、撤销和导出；尚未逐一完成各桌面客户端原生加载与执行实测。规则已写入不等于客户端已经加载。
 
 官方提示词来自 [OpenAI Astra 指南](https://developers.openai.com/api/docs/guides/latest-model#prompting-best-practices)，核验于 2026-09-05。模块路由和初始化是 LabKit 的设计，详见[来源](references/sources.md)。原创代码沿用 [PolyForm Noncommercial 许可](../../LICENSE)。

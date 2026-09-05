@@ -1,0 +1,30 @@
+{
+  "codex": {
+    "skill_dir": ".agents/skills",
+    "project_rule": "AGENTS.md",
+    "user_rule": ".codex/AGENTS.md",
+    "format": "markdown",
+    "hook_adapter": true
+  },
+  "claude-code": {
+    "skill_dir": ".claude/skills",
+    "project_rule": "CLAUDE.md",
+    "user_rule": ".claude/CLAUDE.md",
+    "format": "markdown",
+    "hook_adapter": false
+  },
+  "cursor": {
+    "skill_dir": ".agents/skills",
+    "project_rule": ".cursor/rules/welcome-to-agi.mdc",
+    "user_rule": null,
+    "format": "cursor",
+    "hook_adapter": false
+  },
+  "generic": {
+    "skill_dir": ".agents/skills",
+    "project_rule": null,
+    "user_rule": null,
+    "format": "markdown",
+    "hook_adapter": false
+  }
+}

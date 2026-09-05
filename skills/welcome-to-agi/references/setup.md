@@ -1,68 +1,91 @@
 # Installation and first-use initialization
 
-The default experience is **install + initialize**, not “files downloaded, available next turn.” The installer and first-use skill instructions guide setup. Copying files alone cannot execute a lifecycle callback: an agent doing a manual download must read SKILL.md and run the installed initializer, or use the integrated installer below.
+The default experience is install + choose an appropriate entrypoint. Copying files alone cannot execute a callback: an agent downloading this package must read SKILL.md and complete authorized initialization. See [the desktop and host guide](hosts.md) before choosing paths.
 
-## One installation entrypoint
+## Desktop-first setup
 
-From a LabKit checkout, on macOS/Linux with Python 3.10+:
+Users can ask their agent to install Welcome to AGI for their client and project; the agent runs the commands below when tools permit. A user does not need to operate a terminal for rules mode. The client loads a short persistent instruction; the current model reads module metadata and selects useful guidance for ordinary tasks.
 
-```bash
-python3 skills/welcome-to-agi/scripts/install.py --user
-python3 skills/welcome-to-agi/scripts/install.py --user --apply
-```
-
-The first command previews paths and configuration. The second installs the complete folder under `~/.agents/skills/welcome-to-agi` and registers the user-level Codex hook. To limit it to one project:
+From a LabKit checkout, Python 3.10+ (scripts tested on macOS/Linux):
 
 ```bash
-python3 skills/welcome-to-agi/scripts/install.py --project /path/to/project --apply
+python3 skills/welcome-to-agi/scripts/install.py --host codex --surface desktop --project /path/to/project
+python3 skills/welcome-to-agi/scripts/install.py --host codex --surface desktop --project /path/to/project --apply
 ```
 
-The project skill goes under `.agents/skills`, with its hook under `.codex/hooks.json`. `--skill-only` explicitly selects manual use. Existing installations are never overwritten by this installer; initialize the installed copy or review an upgrade that preserves customizations.
+The first command previews paths; the second installs and initializes. Auto mode prefers **rules** for known local hosts. This is a change from the old unconditional hook default. Use `--user` instead of `--project PATH` for user scope. No other skills or instructions are cleaned.
+
+Other project hosts use the same entrypoint:
+
+```bash
+python3 skills/welcome-to-agi/scripts/install.py --host claude-code --surface desktop --project /path/to/project --apply
+python3 skills/welcome-to-agi/scripts/install.py --host cursor --surface desktop --project /path/to/project --apply
+```
+
+Codex and Cursor packages go into `.agents/skills/welcome-to-agi`; Claude Code uses `.claude/skills/welcome-to-agi`. Cursor integration relies on the generated rule's explicit paths, not a claim about skill autodiscovery. Existing skill destinations are never overwritten; initialize that copy or review an upgrade preserving its config. Unknown clients default to manual, visibly reporting that automatic routing is absent. `--host auto` uses limited runtime hints, not installed binary discovery; pass the actual host whenever known.
 
 ## Already downloaded / first invocation
 
-Locate the actual installed folder. Run its `scripts/initialize.py` first. It infers a hook target only from standard `.agents/skills` or `.codex/skills` locations; use `--hooks` in a source checkout or custom layout.
+Run from the actual installed copy with the host and scope:
 
 ```bash
-python3 /installed/welcome-to-agi/scripts/initialize.py
-python3 /installed/welcome-to-agi/scripts/initialize.py --apply
+python3 /installed/welcome-to-agi/scripts/initialize.py --host codex --surface desktop --project /path/to/project
+python3 /installed/welcome-to-agi/scripts/initialize.py --host codex --surface desktop --project /path/to/project --apply
 ```
 
-For an explicit target:
+Without `--apply`, rules/hook changes are shown as a diff and not written. Standard installed directories allow scope inference; source checkouts and custom layouts need explicit scope or target. Use `--user` to select the active Codex profile's AGENTS.md when CODEX_HOME is nondefault. Rule writes preserve surrounding bytes, back up previous contents, and update only one marked block. Damaged markers, symlinks and shadowed Codex targets produce an actionable error.
+
+For ordinary tasks without setup authorization, offer initialization once while continuing manually; honor declined setup. An install request authorizes our scoped registration, not unrelated configuration cleanup or bypassing host permissions.
+
+## Capabilities and fallbacks
+
+| Mode | Selection | Result |
+|---|---|---|
+| `auto` | Rules for a known local host/scope; otherwise manual | No assumption that a desktop user uses CLI |
+| `rules` | Codex, Claude Code, Cursor project; or explicit custom file | Persistent entry, model-driven per-task assessment |
+| `hook` | Explicit Codex selection, macOS/Linux | UserPromptSubmit entry, separate trust required |
+| `manual` / `--skill-only` | Any host | No registration; explicit use or portable export |
+
+For an agent with a known always-loaded file but no built-in adapter:
 
 ```bash
-python3 /installed/welcome-to-agi/scripts/initialize.py --hooks /path/to/project/.codex/hooks.json --apply
+python3 scripts/initialize.py --host generic --mode rules --rules-file /path/to/host-instructions.md --apply
 ```
 
-An agent handling installation should explain the detected scope and enabled modules, complete authorized registration, and surface the remaining host-trust step. Do not silently leave initialization for the user to discover. For a normal task without setup authorization, offer initialization once while continuing in manual mode. Respect a user's request to skip setup.
+The file must actually be loaded by the host. Writing an arbitrary file cannot make a closed application read it. If settings are UI-only, export a short entry and paste it into that client's persistent instructions; verify the file paths remain readable. Cursor user scope defaults to manual rather than modifying its internal settings database:
 
-The status report separates:
-
-- `skill_installed`: files can be read.
-- `adapter_probe`: the catalog can be generated locally.
-- `hook_registered`: exactly one current handler exists in the inspected file.
-- `host_trust` and `native_delivery`: remain `not_verified` until separately observed in the host.
-
-No local flag is treated as evidence of native activation. Inspect other active hook sources and inline `[hooks]` before registration; Codex loads all matching sources. The scripts manage only the named JSON file and preserve unrelated handlers. Inline TOML is not automatically migrated.
-
-## Review trust and check delivery
-
-Codex requires review/trust of non-managed hooks. Open `/hooks` in the CLI, review the installed definition, and trust it there. A trusted project is also required for project hooks. Changed definitions can require re-review. Do not edit trust storage or bypass review. Installation authorization does not override a managed restriction.
-
-After trust, submit an ordinary task, such as “implement a function and verify it.” Inspect hook diagnostics for delivery, then verify the selected module files are read and the original task is completed. Record what was actually observed; an adapter probe is not a native end-to-end test. New sessions may be needed after configuration changes.
-
-## Runtime architecture
-
-```text
-ordinary user message
-  -> UserPromptSubmit
-  -> short routing instructions + enabled module descriptions/paths
-  -> current Codex chooses zero or more modules by task intent
-  -> reads selected official prompts and configured guards
-  -> executes the original task
+```bash
+python3 scripts/initialize.py --host cursor --user --mode manual --export /path/to/local-rule.txt --export-format entry --apply
 ```
 
-The hook runs on each valid submission for a configured model, including simple questions. It does not wait for keywords or complaints. A simple task may select no modules. The hook never echoes the original user text into developer context. It does not call another model, embed messages, inspect transcripts, or start agents. The current model performs the semantic selection and can still make mistakes.
+This entry contains local paths. It is for a client that can read the installed folder; use the default portable `pack` format for a chat client without that ability. Exporting an entry does not apply it to GUI settings automatically.
+
+For chat/cloud clients without local file access:
+
+```bash
+python3 scripts/initialize.py --host generic --surface cloud --mode manual --export /path/to/welcome-prompt-pack.md
+python3 scripts/initialize.py --host generic --surface cloud --mode manual --export /path/to/welcome-prompt-pack.md --apply
+```
+
+Attach that self-contained Markdown pack to the actual conversation and ask the model to use relevant sections while completing tasks. The export includes all enabled module bodies (more context than dynamic loading), no machine-specific file paths, and no automatic persistence promise. Re-export after config edits. Installing the pack does not provide missing tools or change the model. An existing export is not overwritten.
+
+## Optional Codex hook
+
+```bash
+python3 scripts/initialize.py --host codex --mode hook --project /path/to/project --apply
+# Equivalent explicit target (backward compatible):
+python3 scripts/initialize.py --hooks /path/to/project/.codex/hooks.json --apply
+```
+
+Use Codex CLI `/hooks` to review/trust the exact definition in the SAME runtime/profile as the actual client. Shared agent configuration is documented, but CLI registration/trust alone does not establish desktop delivery. Desktop users can use rules without this step. Project hooks also need project trust; changed definitions may require review again. Never edit trust storage or bypass review.
+
+The hook handles valid UserPromptSubmit events for configured models, supplies a short catalog, and leaves semantic selection to the current model. It does not copy user text into developer context, call another classifier, read transcripts, or launch agents. Unknown models skip. Errors fail open with no guidance so the original task can continue.
+
+## Status and actual-client verification
+
+Status distinguishes `host`/`host_evidence`, `surface`, selected `mode`, exact target, `skill_installed`, `adapter_probe`, `rules_registered`/`hook_registered`, `host_trust` and `native_delivery`. Trust is not applicable for rules/manual; hook trust remains unverified. `native_delivery` remains `not_verified` because local file checks cannot observe your client.
+
+Follow [hosts.md](hosts.md#在实际使用的客户端验证): start a fresh conversation in the real desktop/CLI client, inspect loaded sources, submit an ordinary task without naming this skill, and observe module reads and the delivered result. A passing script test is not a native host test. Scope, active profile, remote runtime, context limits and overrides can affect loading.
 
 ## Configuration and modular editing
 
@@ -77,7 +100,7 @@ The hook runs on each valid submission for a configured model, including simple 
 
 Each `modules/<id>/` contains `module.json`, `prompt.md`, and `guard.md`. Edit `when` for semantic routing; `patterns` and `exclude` only affect keyword mode. Add the module to `config.json` or remove its entry to extend/shrink the skill without editing engine code. Original official prompts and custom conditions remain separate.
 
-Delegation is available in new installs because ordinary tasks may benefit from it. The guard still requires independent bounded work, useful coordination tradeoffs, available tools, and authorization. A no-agent request means no spawning. Plan sessions omit initiative and delegation from the catalog.
+Delegation is available in new installs because ordinary tasks may benefit from it. The guard still requires independent bounded work, useful coordination tradeoffs, available tools, and authorization. A no-agent request means no spawning. Plan sessions omit initiative and delegation: programmatically in hook mode, by the routing instructions in rules mode.
 
 ## Upgrade from astra-prompts
 
@@ -96,15 +119,20 @@ printf '%s' '少点套话' | python3 scripts/astra.py route
 python3 scripts/audit.py /path/to/project/AGENTS.md /path/to/project/.agents/skills
 ```
 
-`router` previews the exact semantic entrypoint without a model call. `route` is explicitly a **legacy keyword diagnostic**, not the semantic selector. `compose` returns separate unchanged `prompt` and `guidance` fields. For custom hosts, place the router in an appropriate persistent instruction or submission middleware and let the host read selected modules. No non-Codex hook adapter is claimed here.
+`router` previews the exact semantic entrypoint without a model call. `route` is explicitly a **legacy keyword diagnostic**, not the semantic selector. `compose` returns separate unchanged `prompt` and `guidance` fields. For custom hosts, use `--host generic --mode rules --rules-file PATH` for a file the host already loads, or export a portable manual pack. No non-Codex hook adapter is claimed here.
 
 Auditing is optional and read-only. Candidate rules, duplicates, and coverage gaps need contextual review. An audit does not authorize deleting skills, rewriting AGENTS.md, or editing a knowledge base. Keep reports containing local paths/excerpts local unless the user asks to share them.
 
-## Remove
+## Remove or switch mode
+
+Run from the installed skill folder; retain the same host, scope, and any explicit path used during setup:
 
 ```bash
-python3 scripts/setup_hook.py --hooks /path/to/project/.codex/hooks.json --remove
-python3 scripts/setup_hook.py --hooks /path/to/project/.codex/hooks.json --remove --apply
+python3 scripts/initialize.py --host codex --project /path/to/project --mode rules --remove
+python3 scripts/initialize.py --host codex --project /path/to/project --mode rules --remove --apply
+python3 scripts/initialize.py --hooks /path/to/project/.codex/hooks.json --remove --apply
 ```
 
-Removal preserves unrelated edits; backups are written beside changed hook files. Remove registration before moving the skill. Start a fresh conversation to exclude old injected context; removing a hook cannot erase an existing conversation.
+Replace codex with claude-code or cursor for those rule adapters. For a custom target, also supply `--rules-file PATH`. First remove the old mode, then initialize the new one. Known Welcome hook/rule conflicts stop setup rather than silently stacking two registrations. Check additional configuration layers yourself; only the named target is managed. Removing a hook does not revoke or change trust storage.
+
+Removal preserves surrounding instructions and later edits. Backups remain beside modified files; remove registration before moving the skill. Start a fresh conversation to exclude old context. A portable export has no automatic registration to remove; stop attaching it and start a fresh chat.
