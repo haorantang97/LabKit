@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="640" viewBox="0 0 1280 640" role="img" aria-label="LabKit / 日常工具箱">
+<defs><linearGradient id="bg" x2="1" y2="1"><stop stop-color="#13121e"/><stop offset="1" stop-color="#241d38"/></linearGradient></defs>
+<rect width="1280" height="640" fill="url(#bg)"/>
+<g font-family="-apple-system,'Segoe UI',Helvetica,Arial,'PingFang SC','Microsoft YaHei',sans-serif">
+<text x="84" y="98" fill="#a78bfa" font-size="27" font-weight="700" letter-spacing="2">LABKIT · 日常工具箱</text>
+<text x="84" y="198" fill="#e8eaf2" font-size="56" font-weight="700">让 AI Agent 更有章法地</text>
+<text x="84" y="274" fill="#e8eaf2" font-size="56" font-weight="700">完成日常工作</text>
+<text x="84" y="352" fill="#c3c7d4" font-size="25">任务指引 · Skill 创建与发布 · 长对话对账 · 导师陪读</text>
+<text x="84" y="579" fill="#8a8fa3" font-size="24">github.com/haorantang97/LabKit</text>
+</g>
+<g transform="translate(976,322)">
+<rect x="0" y="112" width="144" height="42" rx="10" fill="#3a3f4d"/>
+<rect x="17" y="56" width="144" height="42" rx="10" fill="#4d4470"/>
+<rect x="34" y="0" width="144" height="42" rx="10" fill="#a78bfa"/>
+<path d="M178 21h26M161 77h59M144 133h60" stroke="#6b7085" stroke-width="3"/>
+<circle cx="213" cy="21" r="8" fill="#a78bfa"/><circle cx="228" cy="77" r="8" fill="#e8a33d"/><circle cx="213" cy="133" r="8" fill="#a78bfa"/>
+</g></svg>

@@ -1,117 +1,38 @@
 ---
 name: skill-skill
-description: "Use this skill when the user has a working AI rule or skill file and wants to package and publish it as a GitHub repository end to end. Trigger when the user says 'I have a skill, help me publish it', 'turn my prompt into a GitHub repo', 'publish my Cursor rule', 'put this skill on GitHub end to end', 'walk me through publishing this', or 'I have a working SKILL.md and don't know what to do next'. Do NOT trigger when the user only wants to write a new skill from scratch, or when a live repo only needs a single follow-up action such as directory submission."
+description: "Create, revise, validate, package, or publish AI skills and rule files. Use as the main entry for the user's skill-authoring workflow, including creating a new SKILL.md, improving an existing rule, and preparing a skill repository. Choose only the requested stage; ordinary product code or content work is outside this skill."
 license: PolyForm-Noncommercial-1.0.0
 ---
 
-## Quick Start
+# Skill authoring and publishing
 
-Ask the user for one thing: the path to their existing rule file. Use PolyForm Noncommercial License 1.0.0 as the default for the whole original skill repository; only ask about licensing when the user explicitly requests a different license. This is one public skill bundle. Its pipeline modules live under `modules/` and are internal implementation details; read the relevant module when a step is needed, then continue through the bundle in order.
+Use this as the main workflow for the user's own skills. Keep the requested result, existing decisions and current authorization in view. Select the relevant mode; do not run the entire publishing pipeline for local creation, edits, reviews or installation.
 
-```
-polish-rule-content      →  cleaned SKILL.md / .cursorrules / AGENTS.md
-write-readme             →  README.md
-scaffold-repo-files      →  LICENSE, CONTRIBUTING.md, .github/
-create-visual-assets     →  assets/banner.svg, banner-dark.svg, badges
-translate-readme         →  README.zh-CN.md + language switcher (optional)
-publish-to-github        →  live GitHub repo
-submit-to-directories    →  awesome-list PRs (optional)
-```
+| Request | Read and do |
+|---|---|
+| Create a new skill | Read [authoring guidance](references/authoring.md). Define the capability and create only useful instructions and resources. |
+| Revise an existing skill or rule | Read [polish-rule-content](modules/polish-rule-content/SKILL.md). Preserve working behavior; change only what the request or evidence supports. |
+| Review or propose a plan | Inspect and explain the relevant differences. Keep installed files unchanged unless editing was also requested. |
+| Validate or install a skill | Read [authoring guidance](references/authoring.md). Use current available official validation or installation tools; separately verify installation and host activation. |
+| Package, renovate or publish a repository | Read [publishing workflow](references/publishing.md) and [repository presentation standard](references/repository-presentation.md); load producing modules only when needed. |
+| One packaging step | Read the matching module below and complete that step. Do not automatically continue to publishing or promotion. |
 
-The "published" milestone is `publish-to-github`. Anything after that is promotion.
+For creation and revision, apply the maintained authoring guidance directly. Official Codex skill-creator supplies host-specific structure, metadata conventions, initialization and validation tools when available. Read its current relevant instructions before relying on those tools. Keep the official skill installed; do not duplicate or freeze its scripts inside this bundle. This division does not change the host instruction hierarchy.
 
----
+Use a supplied path or infer it from the task. Ask only when missing information materially affects the result. An authorized narrow edit does not require a second generic rewrite confirmation. A request for a plan or diagnosis remains a plan or diagnosis.
 
-## polish-rule-content
+The packaging modules are shared implementation resources, resolved relative to this skill directory:
 
-Rewrites the user's existing file with a five-segment description, Quick Start section, Common Mistakes section, and the AI-fingerprint checklist applied.
+- [Polish skill content](modules/polish-rule-content/SKILL.md)
+- [Write a README](modules/write-readme/SKILL.md)
+- [Prepare repository files](modules/scaffold-repo-files/SKILL.md)
+- [Create visual assets](modules/create-visual-assets/SKILL.md)
+- [Translate a README](modules/translate-readme/SKILL.md)
+- [Publish to GitHub](modules/publish-to-github/SKILL.md)
+- [Submit to directories](modules/submit-to-directories/SKILL.md)
 
-A weak description here propagates into the README and the awesome-list entry, so finish this step before moving on.
+Preserve the user's existing publishing conventions: PolyForm Noncommercial is the default for their new original repositories; preserve existing and third-party licenses. The publication workflow checks repository identity, rendered visuals, catalogue accuracy, complete language editions and truthful validation status; banner existence and placeholder scans alone do not establish completion. These apply to publication, not to creating or testing a local skill. User-specified exceptions and existing authorization remain valid.
 
----
+Do not create a GitHub repository, push, send messages or submit directory PRs solely because a local skill is ready. Complete authorized local preparation and follow the actual request's external-action scope.
 
-## write-readme
-
-Input: the polished rule file plus the repo name and one-line value statement. Output: `README.md` with banner placeholder, badge row, install commands, what-it-does section, content list, and footer.
-
-The README's one-liner becomes the GitHub repo description later, and the awesome-list entry after that. Lock it here.
-
----
-
-## scaffold-repo-files
-
-Input: repo type (single-skill / collection / awesome-list) and the default PolyForm Noncommercial 1.0.0 license unless the user explicitly chose an override. Output: `LICENSE`, `CONTRIBUTING.md`, `.github/PULL_REQUEST_TEMPLATE.md`, and the directory layout.
-
----
-
-## create-visual-assets
-
-Input: repo name and tagline from the README. Output: `assets/banner.svg`, `assets/banner-dark.svg`, the `<picture>` embed snippet, and the badge markdown row.
-
-On its first run in a project this sub-skill asks one style question: whether the user has an image-style skill to load, wants to describe a style, or takes the default (white background, black text). The answer is saved to `assets/STYLE.md` and never asked again. Let it ask; do not answer on the user's behalf.
-
-Drop the embed snippet and badge row into the README placeholders. After this step the README has no unfilled `{PLACEHOLDER}` tokens.
-
----
-
-## translate-readme (optional)
-
-Input: the finalized README.md and a target language. Output: `README.{lang}.md` plus the language switcher line in both files.
-
-Runs after `create-visual-assets` so the translation captures the final README, and before `publish-to-github` so both language files land in the initial commit. Skip when the repo targets a single-language audience.
-
----
-
-## publish-to-github
-
-Input: a completed local folder with all files prepared above. Output: a live GitHub repo with topics set and metadata configured.
-
-Run the pre-flight checklist before any git command. If anything is missing, return to the relevant earlier step.
-
----
-
-## submit-to-directories (optional)
-
-Input: the live repo URL. Output: PRs to one or more awesome-lists matching the rule format.
-
-Submit to one directory first. Wait for the merge, then submit to the next.
-
----
-
-## Hard gates
-
-Two checks block `publish-to-github`. No inference lifts them; only an explicit user statement in the current conversation does.
-
-1. **Banner gate.** `assets/banner.svg` and `assets/banner-dark.svg` exist and the README embeds them. The user not mentioning visuals is not an opt-out; run `create-visual-assets` with the default style. Only "I don't want a banner" said outright waives this.
-2. **Placeholder gate.** Zero `{PLACEHOLDER}` tokens in README.md and any translated README.
-
-If either gate fails, route back to the producing step before touching git.
-
----
-
-## When to skip steps
-
-- Rule file already clean → skip `polish-rule-content`
-- User already wrote the README → skip `write-readme`
-- Going to be a private gist, not a repo → skip `scaffold-repo-files`, `publish-to-github`, `submit-to-directories`
-- User has no visual preference → `create-visual-assets` still runs, with the default style
-- Repo targets a single-language audience → skip `translate-readme`
-- User does not want awesome-list visibility → skip `submit-to-directories`
-
-If the repo has additional steps beyond these (forked variant, custom pipeline), insert them in the order that matches the dependency: anything that produces a file consumed by `write-readme` runs before it; anything that needs the live repo URL runs after `publish-to-github`.
-
----
-
-## Common Mistakes
-
-**Treating this skill as a single rewrite pass.**
-This skill is an orchestrator. It does not write any file itself; it routes to the sub-skills. If the agent starts editing the rule file directly instead of calling `polish-rule-content`, the user loses the per-step verification.
-
-**Running `publish-to-github` before `create-visual-assets` finishes.**
-A README with `{REPO_NAME}` placeholders pushed to GitHub looks unfinished. The visual assets and badge row have to be in place first so the README has no unfilled tokens.
-
-**Translating before the README is final.**
-`translate-readme` runs last among the content steps. A translation made from a draft has to be redone after every README edit.
-
-**Calling several sub-skills in a single tool call.**
-Each sub-skill has its own information-gathering step. Call them sequentially, let each one ask its own questions, and only move forward when its output is finalized.
+Finish with the resulting files, meaningful checks performed and any remaining runtime verification. File validation, installation, host discovery, Hook trust and observed activation are separate results.

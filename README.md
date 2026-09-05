@@ -1,80 +1,114 @@
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="assets/banner-dark.svg">
-    <source media="(prefers-color-scheme: light)" srcset="assets/banner.svg">
-    <img width="700" alt="LabKit" src="assets/banner.svg">
-  </picture>
-</p>
+<div align="center">
 
-# LabKit
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/banner-dark.svg">
+  <img src="assets/banner.svg" alt="LabKit — Reusable skills for everyday agent work" width="860">
+</picture>
 
-**English** | [中文](README.zh-CN.md)
+**English** · [中文](README.zh-CN.md)
 
-[![License](https://img.shields.io/badge/license-PolyForm%20Noncommercial%201.0.0-blue.svg?style=flat-square)](LICENSE)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](CONTRIBUTING.md)
-[![Last Updated](https://img.shields.io/badge/updated-Sep%202026-blue.svg?style=flat-square)](https://github.com/haorantang97/LabKit/commits/main)
+[![Super Astra tests](https://github.com/haorantang97/LabKit/actions/workflows/super-astra.yml/badge.svg)](https://github.com/haorantang97/LabKit/actions/workflows/super-astra.yml) [![License](https://img.shields.io/badge/license-PolyForm_NC_1.0.0-b45309?style=flat-square)](LICENSE) [![Skills](https://img.shields.io/badge/skills-4-7c3aed?style=flat-square)](#choose-a-skill) [![Contribute](https://img.shields.io/badge/contributions-welcome-6b4fbb?style=flat-square)](CONTRIBUTING.md)
 
-> Reusable agent skills for publishing, everyday work, and configurable Astra behavior.
+[Choose a skill](#choose-a-skill) · [Get started](#get-started) · [Examples](#in-practice) · [Status](#validation-status) · [FAQ](#faq)
 
-**New: [Super Astra](skills/super-astra/README.md)** packages five official GPT-6 Astra prompt modules with individual switches and ordinary-task semantic routing. First-use guidance presents module/hook status and asks about module changes, an optional Skills conflict check and routing preferences. [Initialization guide](skills/super-astra/references/onboarding.md). [Host guide](skills/super-astra/references/hosts.md). [中文介绍](skills/super-astra/README.zh-CN.md)
+</div>
 
-## Install
+**Give your agent a useful way to work, one skill at a time.**
+
+LabKit is Lab 305's collection of reusable agent skills. Guide an ordinary task, turn a working skill into a well-presented repository, keep unresolved points visible in a long conversation, or build a reading plan that responds to your progress. Each tool has its own entrypoint; install the ones you need.
+
+## Choose a skill
+
+| When you want to… | Use | What it produces |
+| --- | --- | --- |
+| Apply relevant guidance before an agent starts work | **[Super Astra](skills/super-astra/README.md)** | Task-based selection of configurable Astra prompt modules, with client-specific setup |
+| Create, refine or publish an AI skill | **[skill-skill](skills/skill-skill/SKILL.md)** | A scoped skill workflow; for publication, a complete repository with its own identity and documentation |
+| Find points that disappeared in a long conversation | **[open-loops](skills/open-loops/SKILL.md)** | An auditable list of unanswered questions, unacknowledged suggestions and decisions made on your behalf |
+| Read a booklist with daily guidance | **[reading-plan-mentor](skills/reading-plan-mentor/SKILL.md)** | A paced reading plan, a sample guide and continuity that adapts to actual progress |
+
+```mermaid
+flowchart TB
+    L["LabKit · choose by task"]
+    L --> A["Super Astra<br/>Guide the work"]
+    L --> S["skill-skill<br/>Create and publish"]
+    L --> O["open-loops<br/>Track unresolved points"]
+    L --> R["reading-plan-mentor<br/>Plan and keep reading"]
+```
+
+These are four independent tools. The diagram is a selection map: using one does not automatically run the others. Publishing steps inside `skill-skill` and prompt modules inside Super Astra belong to their respective tools.
+
+## Get started
+
+In a local agent that can access GitHub and install skills, ask:
+
+> Install the complete skill-skill folder from haorantang97/LabKit for my current client. Preserve any existing customizations and confirm which files were installed.
+
+Replace `skill-skill` with `open-loops` or `reading-plan-mentor` to choose another tool. **Super Astra also needs initialization**; use the prompt and client-specific instructions in its [installation guide](skills/super-astra/README.md#install-and-initialize).
+
+To inspect the collection yourself:
 
 ```bash
 git clone https://github.com/haorantang97/LabKit.git
 cd LabKit
 ```
 
-LabKit exposes four top-level skills. `skill-skill` is one complete publishing toolkit; its pipeline modules live under `skills/skill-skill/modules/` and are not separate top-level skills. Astra's behavior modules are also internal to one skill.
+Install the complete selected folder under `skills/`, including its references, scripts and assets, in your client's skill directory. A lone `SKILL.md` can leave required resources behind. Each tool's linked entrypoint explains its workflow and dependencies.
 
-Each top-level skill has a `SKILL.md` entrypoint. Install the **complete folder**, including any scripts and references. For Super Astra in a local Codex project:
+Super Astra includes an installer that previews changes before applying them. Follow its [host guide](skills/super-astra/references/hosts.md) for the current client. Hook registration, trust and observed loading are separate steps; installation does not change the model selected in your client.
 
-```bash
-python3 skills/super-astra/scripts/install.py --host codex --surface desktop --project /path/to/project --apply
+## In practice
+
+**Make a skill ready for other people.** Give `skill-skill` a working rule and the intended audience. It can refine the skill, explain its use, build a matching visual identity and prepare the repository for the publication work you requested. A local edit stays a local edit; repository preparation follows the [presentation standard](skills/skill-skill/references/repository-presentation.md).
+
+**Recover the missing decisions.** In a long project conversation, ask `open-loops` to account for unresolved points. It distinguishes a question the agent missed, a suggestion you never acknowledged, and a choice made on your behalf. You can then decide what to answer, defer or drop.
+
+**Turn a booklist into a habit.** Give `reading-plan-mentor` your books and available daily time. It checks whether the books support a useful shared theme, builds a realistic pace and shows a sample daily guide. Recurring delivery starts after you approve the plan and delivery setup.
+
+**Choose guidance for the current task.** Super Astra lets the current model select relevant modules for initiative, instruction-following, writing, delegation and testing. Availability does not mean every module runs on every task. Its [module guide](skills/super-astra/README.md#select-by-task-intent) explains the routing and limits.
+
+## Validation status
+
+| Tool | Evidence available | What still depends on your setup |
+| --- | --- | --- |
+| Super Astra | [Automated script and file-adapter tests](skills/super-astra/references/evaluation.md); dedicated CI badge above | Actual client loading, Hook trust, model availability and module selection |
+| skill-skill | Skill format validation and repository presentation checks | Generated output quality, target-agent behavior and the result of any requested publication |
+| open-loops | Packaged workflow instructions and supporting resources | Access to the relevant conversation and faithful execution by the host agent |
+| reading-plan-mentor | Packaged workflow with references for pacing, continuity and delivery | Book-source accuracy, scheduling and an authorized delivery channel |
+
+The CI badge covers **Super Astra's tests**, not an end-to-end certification of all four tools. Workflow instructions alone do not provide a scheduler, an email connection or client-level guarantees.
+
+## Repository layout
+
+```text
+LabKit/
+├── README.md · README.zh-CN.md
+├── assets/                         # Collection identity and theme variants
+├── skills/
+│   ├── super-astra/                 # Prompts, setup tools, references and tests
+│   ├── skill-skill/                 # Skill authoring and publication entrypoint
+│   │   ├── modules/                # Internal publishing steps
+│   │   └── references/             # Authoring and presentation standards
+│   ├── open-loops/                  # Long-conversation audit
+│   └── reading-plan-mentor/         # Reading workflow and references
+└── .github/workflows/               # Scoped automated checks
 ```
 
-Use `--user` instead of `--project` for user-wide installation. For Codex macOS/Linux this example registers a Hook, then requires `/hooks` trust and actual-client verification; add `--mode rules` for the user-selected fallback. Check existing installations before copying to preserve customizations. For other hosts, follow their skill installation instructions and retain referenced files; copying `SKILL.md` over `AGENTS.md` loses resources and can overwrite project rules. Super Astra also provides Hermes/OpenClaw rule adapters and additional Claude Code/Cursor format adapters; model availability is separate. See its [host guide](skills/super-astra/references/hosts.md).
+## FAQ
 
-The four top-level skills are independent. Install only the ones you want.
+**Do I have to install everything?** No. Pick a single top-level tool. Preserve its complete folder so internal references resolve.
 
-## What it does
+**Is LabKit a single agent or a single giant skill?** It is a collection. Each public tool has its own scope; internal publishing steps and prompt blocks do not become extra public tools.
 
-LabKit is a small collection of four skills. `skill-skill` is the publishing toolkit; `open-loops` and `reading-plan-mentor` are daily-use tools. `super-astra` combines attributed official prompt blocks with modular routing and optional setup tools.
+**Does Super Astra work in every agent client?** It provides several host adapters, with distinct validation limits. Its official prompt blocks target Astra; an adapter does not establish model availability or equivalent behavior elsewhere. See the [host guide](skills/super-astra/references/hosts.md).
 
-## Skills
+**Where are the old open-loops and reading-plan-mentor repositories?** The [open-loops repository](https://github.com/haorantang97/open-loops) and [reading-plan-mentor repository](https://github.com/haorantang97/reading-plan-mentor) are archived for history. Their current collection entries are here in LabKit.
 
-- **[super-astra](skills/super-astra/README.md)** — Routes ordinary tasks through selected official guidance; includes modular prompts, host-aware initialization, and optional configuration audit
-
-- **[skill-skill](skills/skill-skill/SKILL.md)** — Packages a working AI rule or skill and guides it through publication as a GitHub repository
-
-- **[open-loops](skills/open-loops/SKILL.md)** — Audits long conversations for unanswered, unacknowledged, or assistant-decided information points
-- **[reading-plan-mentor](skills/reading-plan-mentor/SKILL.md)** — Turns a book list into a paced, long-term reading plan with daily guidance and continuity
-
-These two skills are also maintained in their standalone repositories: [open-loops](https://github.com/haorantang97/open-loops) and [reading-plan-mentor](https://github.com/haorantang97/reading-plan-mentor).
-
-## File format
-
-```
-skills/{name}/SKILL.md
-```
-
-YAML front matter (`name`, `description`, `license`) followed by markdown:
-
-```yaml
----
-name: skill-name
-description: "Use when the skill's triggering conditions match the user's request."
-license: PolyForm-Noncommercial-1.0.0
----
-
-## Quick Start
-...
-```
+**How does this relate to Personal-Ontology and LabArt?** [Personal-Ontology](https://github.com/haorantang97/Personal-Ontology) contains the personal knowledge system and its surrounding tools. [LabArt](https://github.com/haorantang97/LabArt) holds visual and artistic skills. LabKit is the everyday agent toolbox.
 
 ## Contributing
 
-See [CONTRIBUTING.md](CONTRIBUTING.md).
+See [CONTRIBUTING.md](CONTRIBUTING.md). Keep both README editions aligned, document the actual validation scope, and preserve one public entry per independent tool.
 
 ## License
 
-PolyForm Noncommercial License 1.0.0. See [LICENSE](LICENSE).
+[PolyForm Noncommercial License 1.0.0](LICENSE). Preserve any source attribution included with individual components.

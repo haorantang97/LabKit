@@ -1,58 +1,30 @@
 # Contributing
 
-**English** | [中文](CONTRIBUTING.zh-CN.md)
+**English** · [中文](CONTRIBUTING.zh-CN.md)
 
-This repo collects four top-level skills. Publishing and behavior toolkits may contain internal modules, but those modules are not separate top-level entries. PRs that fit this scope are welcome.
+LabKit collects independent tools for skill authoring, publishing, everyday work and agent guidance. Internal modules belong to their parent tool and are not separate catalogue entries.
 
-## Entry Format
+## Prepare a change
 
-Each top-level skill in this repo follows the same structure:
+Keep each complete skill under `skills/{name}/`, with a `SKILL.md` entrypoint and the scripts, references or assets it actually needs. Preserve working behavior, attribution and existing licenses. Use the maintained [authoring guidance](skills/skill-skill/references/authoring.md) for new or revised instructions.
 
-```
-skills/{top-level-skill-name}/
-  └── SKILL.md
-```
+Describe when the skill applies and what it produces. Choose useful structure for its workflow; a fixed five-part description or mandatory heading set is not required. Give validation evidence appropriate to the change and distinguish file checks from observed agent behavior.
 
-Internal modules for `skill-skill` belong under `skills/skill-skill/modules/`.
+## Repository presentation
 
-`SKILL.md` is plain markdown with a YAML front matter holding `name`, `description`, and `license`.
+Follow the [presentation standard](skills/skill-skill/references/repository-presentation.md) for repository-facing changes. The hero names LabKit; child tools retain their own names. Keep public counts consistent with real top-level entries and preserve a working path from the catalogue to each tool.
 
-## Requirements
+Change README.md and README.zh-CN.md together. Keep commands, counts, capabilities, dependencies and validation claims aligned; translate navigation and diagram labels. Inspect both theme assets and the assembled page for visual changes. Use assets/STYLE.md to preserve the chosen direction.
 
-Submissions must:
+## Submit
 
-- Serve a distinct publishing, daily-work, or agent-behavior need that existing skills do not already handle
-- Use the five-segment description method (main trigger, positive enumeration, colloquial triggers, edge case expansion, negative samples)
-- Include a Quick Start section and a Common Mistakes section with at least two items
-- Pass the de-AI checklist in `skills/skill-skill/modules/polish-rule-content/SKILL.md`
-- Be tested against at least one agent before submission
+1. Work on a branch and keep the change focused.
+2. Update the affected instructions, references and human documentation.
+3. Run relevant checks and review the diff for unrelated files.
+4. Open a PR explaining the concrete change, validation and remaining limitations.
 
-## Quality Gate
+Use descriptive titles such as `Fix open-loops: preserve deferred decisions` or `Improve repository identity and navigation`. Avoid unsupported compatibility claims, unrelated version changes and duplicated tools without a clear reason.
 
-> [!NOTE]
-> Skills that overlap an existing skill's scope, lack negative samples, or use vague constraints ("be careful", "follow best practices") will be closed without review.
+## License
 
-## PR Title Format
-
-Good:
-- `Add {skill-name}: {one-line description}`
-- `Fix {skill-name}: {what changed and why}`
-
-Not good:
-- `Update README`
-- `Add my skill`
-
-## What Gets Rejected
-
-- Skills that duplicate an existing skill's scope without clear differentiation
-- Skills not tested against the target agent before submission
-- Bumping version numbers in commits that touch unrelated files
-
-## Process
-
-1. Fork this repository
-2. Add a new standalone skill under `skills/{skill-name}/SKILL.md`, or an internal publishing module under `skills/skill-skill/modules/{module-name}/SKILL.md`
-3. Update the README's "Skills" section with a link to the new file
-4. Open a PR with the title format above
-
-For changes to existing skills, describe what the change fixes and confirm you tested it.
+See [LICENSE](LICENSE). Preserve third-party attribution and component-specific exceptions.

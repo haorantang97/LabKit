@@ -1,58 +1,30 @@
-# 贡献指南
+# 参与贡献
 
-[English](CONTRIBUTING.md) | **中文**
+[English](CONTRIBUTING.md) · **中文**
 
-这个仓库收四个顶层 skill。发布和行为工具箱内部可以有模块，但这些模块不作为独立的顶层入口展示。符合这个范围的 PR 都欢迎。
+LabKit 收录 Skill 编写、发布、日常工作与 Agent 行为指引相关的独立工具。内部模块属于对应工具，不单独计入首页目录。
 
-## 文件格式
+## 准备改动
 
-每个顶层 skill 都按这个结构：
+每个完整 Skill 放在 `skills/{name}/` 下，保留 `SKILL.md` 入口，以及实际需要的脚本、参考资料和资产。保留有效行为、来源声明与既有许可证。创建或修改指令时，使用当前的[编写指导](skills/skill-skill/references/authoring.md)。
 
-```
-skills/{top-level-skill-name}/
-  └── SKILL.md
-```
+说明 Skill 在什么情况下使用、产出什么。根据流程选择有用的结构，不强制五段式描述或固定标题集合。提供与改动相称的验证依据，并区分文件检查与实际 Agent 行为。
 
-`skill-skill` 的内部模块放在 `skills/skill-skill/modules/` 下。
+## 仓库展示
 
-`SKILL.md` 是带 YAML front matter 的 markdown，含 `name`、`description`、`license` 三个字段，再加正文。
+仓库门面的改动遵循[展示标准](skills/skill-skill/references/repository-presentation.md)。首页 Hero 使用 LabKit 品牌，子工具保留各自名称。公开数量与真实顶层入口一致，每个目录项都能打开对应工具。
 
-## 要求
+同一次改动同步 README.md 与 README.zh-CN.md。命令、数量、能力、依赖与验证表述保持一致，导航和图示标签分别翻译。视觉改动需检查明暗两套资产与完整页面。延续 assets/STYLE.md 记录的设计方向。
 
-提交的 skill 必须：
+## 提交
 
-- 解决一个现有 skill 没覆盖的发布、日常工作或 Agent 行为需求
-- description 用五段式（主触发、正向枚举、口语化触发词、边界扩展、负样本）
-- 含 Quick Start 节，含至少两条 Common Mistakes
-- 通过 `skills/skill-skill/modules/polish-rule-content/SKILL.md` 里的去 AI 味清单
-- 至少在一个 agent 上测过再提
+1. 在分支上工作，保持改动范围明确。
+2. 更新受影响的指令、引用与读者文档。
+3. 执行相关检查，审阅差异，排除无关文件。
+4. 发起 PR，说明具体变化、验证结果和剩余限制。
 
-## 质量门槛
+标题说明真实改动，例如 `Fix open-loops: preserve deferred decisions` 或 `Improve repository identity and navigation`。避免无依据的兼容性声明、无关版本变更，以及没有明确理由的重复工具。
 
-> [!NOTE]
-> 跟现有 skill 范围重叠、没有负样本、或者只用模糊约束（"小心点"、"按最佳实践来"）的 skill，会不经讨论关闭。
+## 许可证
 
-## PR 标题格式
-
-可以：
-- `Add {skill-name}: {一句话描述}`
-- `Fix {skill-name}: {改了什么、为什么}`
-
-不行：
-- `Update README`
-- `Add my skill`
-
-## 什么样的会被拒
-
-- 跟现有 skill 范围重叠、又没有明确差异化
-- 提交前没在任何 agent 上跑过
-- 改版本号的 commit 里塞了无关改动
-
-## 流程
-
-1. Fork 这个仓库
-2. 新的独立 skill 放到 `skills/{skill-name}/SKILL.md`；发布工具的内部模块放到 `skills/skill-skill/modules/{module-name}/SKILL.md`
-3. 在 README 的 "Skills" 节加一条链接
-4. 按上面的标题格式开 PR
-
-改现有 skill 的，说清楚改了什么、修了什么问题、在哪个 agent 上验过。
+见 [LICENSE](LICENSE)。保留第三方来源声明及组件级许可例外。
