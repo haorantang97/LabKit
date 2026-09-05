@@ -72,7 +72,7 @@ def snapshot(selected, config, owner, user, settings=None):
         try:
             path = Path(rule["file"])
             text = path.read_text(encoding="utf-8") if path.exists() else ""
-            rule["registration"] = "present" if setup_rules.BEGIN in text else "absent"
+            rule["registration"] = "present" if setup_rules.has_managed_rule(text) else "absent"
         except (OSError, UnicodeError):
             rule["registration"] = "unreadable"
     return {

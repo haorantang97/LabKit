@@ -35,7 +35,7 @@ python3 /installed/super-astra/scripts/initialize.py --host codex --surface desk
 python3 /installed/super-astra/scripts/initialize.py --host codex --surface desktop --project /path/to/project --apply
 ```
 
-Before applying setup, use the same host/scope with `--onboarding` for read-only module and hook facts, including when an existing Welcome hook would otherwise block rules setup. This option does not audit other Skills and cannot be combined with `--apply`, `--remove`, or `--export`. Follow [onboarding.md](onboarding.md) to ask the remaining choices. Direct installation commands perform file setup and emit the onboarding facts; they do not conduct the conversation or mean the optional review was completed.
+Before applying setup, use the same host/scope with `--onboarding` for read-only module and hook facts, including when an existing Super Astra hook would otherwise block rules setup. This option does not audit other Skills and cannot be combined with `--apply`, `--remove`, or `--export`. Follow [onboarding.md](onboarding.md) to ask the remaining choices. Direct installation commands perform file setup and emit the onboarding facts; they do not conduct the conversation or mean the optional review was completed.
 
 Without `--apply`, rules/hook changes are shown as a diff and not written. Standard installed directories allow scope inference; source checkouts and custom layouts need explicit scope or target. Use `--user` to select the active Codex profile's AGENTS.md when CODEX_HOME is nondefault. Rule writes preserve surrounding bytes, back up previous contents, and update only one marked block. Damaged markers, symlinks and shadowed Codex targets produce an actionable error.
 
@@ -69,8 +69,8 @@ This entry contains local paths. It is for a client that can read the installed 
 For chat/cloud clients without local file access:
 
 ```bash
-python3 scripts/initialize.py --host generic --surface cloud --mode manual --export /path/to/welcome-prompt-pack.md
-python3 scripts/initialize.py --host generic --surface cloud --mode manual --export /path/to/welcome-prompt-pack.md --apply
+python3 scripts/initialize.py --host generic --surface cloud --mode manual --export /path/to/super-astra-prompt-pack.md
+python3 scripts/initialize.py --host generic --surface cloud --mode manual --export /path/to/super-astra-prompt-pack.md --apply
 ```
 
 Attach that self-contained Markdown pack to the actual conversation and ask the model to use relevant sections while completing tasks. The export includes all enabled module bodies (more context than dynamic loading), no machine-specific file paths, and no automatic persistence promise. Re-export after config edits. Installing the pack does not provide missing tools or change the model. An existing export is not overwritten.
@@ -110,11 +110,11 @@ Each `modules/<id>/` contains `module.json`, `prompt.md`, and `guard.md`. Edit `
 
 Delegation is available in new installs because ordinary tasks may benefit from it. The guard still requires independent bounded work, useful coordination tradeoffs, available tools, and authorization. A no-agent request means no spawning. Plan sessions omit initiative and delegation: programmatically in hook mode, by the routing instructions in rules mode.
 
-## Upgrade from welcome-to-agi or astra-prompts
+## Upgrade an existing installation
 
 For the current rename, follow [rename.md](rename.md). Existing installations are not renamed automatically; retain their working paths until an authorized migration preserves customizations and updates registrations.
 
-The new name is `super-astra`. Preserve customized configuration and modules, and remove the old discoverable entry after backing it up outside skill discovery directories. Do not install two competing copies. `setup_hook.py` recognizes the old `LabKit Astra Prompts v1` registration and replaces it with one current handler in the same JSON file. If the hook lives in another source, migrate that source explicitly too. Review/trust the updated definition again.
+The new name is `super-astra`. Preserve customized configuration and modules, and remove the old discoverable entry after backing it up outside skill discovery directories. Do not install two competing copies. `setup_hook.py` recognizes legacy registrations listed in the [upgrade guide](rename.md) and replaces it with one current handler in the same JSON file. If the hook lives in another source, migrate that source explicitly too. Review/trust the updated definition again.
 
 The new default enables delegation as a candidate; retaining an older explicit disabled setting is supported. Select `routing: semantic` to get ordinary-task routing. Official prompt bodies are unchanged.
 
@@ -143,6 +143,6 @@ python3 scripts/initialize.py --host codex --project /path/to/project --mode rul
 python3 scripts/initialize.py --hooks /path/to/project/.codex/hooks.json --remove --apply
 ```
 
-Replace codex with claude-code or cursor for those rule adapters. For a custom target, also supply `--rules-file PATH`. First remove the old mode, then initialize the new one. Known Welcome hook/rule conflicts stop setup rather than silently stacking two registrations. Check additional configuration layers yourself; only the named target is managed. Removing a hook does not revoke or change trust storage.
+Replace codex with claude-code or cursor for those rule adapters. For a custom target, also supply `--rules-file PATH`. First remove the old mode, then initialize the new one. Known Super Astra hook/rule conflicts stop setup rather than silently stacking two registrations. Check additional configuration layers yourself; only the named target is managed. Removing a hook does not revoke or change trust storage.
 
 Removal preserves surrounding instructions and later edits. Backups remain beside modified files; remove registration before moving the skill. Start a fresh conversation to exclude old context. A portable export has no automatic registration to remove; stop attaching it and start a fresh chat.

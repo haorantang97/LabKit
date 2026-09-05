@@ -1,7 +1,5 @@
 # Super Astra
 
-Previously **Welcome to AGI** (`welcome-to-agi`). Existing users: [rename and migration guide](references/rename.md).
-
 **English** | [中文](README.zh-CN.md)
 
 Route ordinary tasks through relevant official Astra guidance. The current agent model selects modules before working; users do not need to complain first. No embedding service or extra model API is required.
@@ -74,7 +72,7 @@ Each module has `module.json` (including semantic `when`), `prompt.md` (official
 - `astra.py compose`: output selected guidance separately from the original prompt.
 - `audit.py`: read-only scan of agreed configuration paths, offered during onboarding and run only if chosen.
 
-[Setup, migration from astra-prompts, configuration, and removal](references/setup.md).
+[Setup, upgrades, configuration, and removal](references/setup.md).
 
 ## Validation and provenance
 

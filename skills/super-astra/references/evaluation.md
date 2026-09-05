@@ -10,9 +10,13 @@ The suite checks ordinary-message catalog delivery without keyword gating; disab
 
 ## Host adapter update (2026-09-05)
 
+### Public naming cleanup
+
+53 automated tests pass locally. Public READMEs, Skill instructions, setup examples and new generated output use Super Astra. New rule/router markers and rule backup filenames use the current name. Compatibility readers still detect older registrations; rule refresh replaces a legacy block in place and removal supports either version. Tests cover byte preservation, backups, repeat setup, legacy inspection, blocking a second entrypoint, mixed/damaged markers, and new output naming. Legacy identifiers remain only in migration documentation and compatibility code/tests. Official prompt snapshots are unchanged. This is a repository update; existing user installations and native-client verification are unchanged.
+
 ### Super Astra rename
 
-49 automated tests pass locally. The public name, skill ID, installation directory, UI metadata, documentation and CI are updated to Super Astra / super-astra. Rename checks preserve unrelated hooks, replace the old Welcome v2 label once, recognize old Cursor headers, and refuse duplicate installation beside a legacy copy. Stable internal router/rule markers and official prompt snapshots are preserved. Existing native installations are not moved or re-trusted merely by publishing this rename; see [migration](rename.md).
+49 automated tests passed at this stage. The public name, skill ID, installation directory, UI metadata, documentation and CI were updated to Super Astra / super-astra. Rename checks preserve unrelated hooks, replace the legacy hook label once, recognize old Cursor headers, and refuse duplicate installation beside a legacy copy. At this stage, internal router/rule markers and official prompt snapshots were preserved; the subsequent naming cleanup above updates emitted markers while retaining legacy recognition. Existing native installations are not moved or re-trusted merely by publishing this rename; see [migration](rename.md).
 
 ### Hermes and OpenClaw file adapters
 
@@ -22,7 +26,7 @@ The suite checks ordinary-message catalog delivery without keyword gating; disab
 
 Codex macOS/Linux auto mode now selects Hook registration, with runtime capability, trust and delivery explicitly pending. Existing rules are not silently migrated, and missing trust never triggers an automatic fallback. Other supported local hosts retain rules mode; cloud/unknown hosts retain manual mode. The 45-test suite covers the changed default, explicit rule adapters and preservation of existing rules when auto setup encounters a conflict.
 
-A separate authorized live check used the desktop-bundled Codex CLI 0.153.0. The official `/hooks` UI accepted trust for the single Welcome handler; `hooks/list` subsequently reported `enabled=true`, `trustStatus=trusted`, no warnings and no errors. A normal short Chinese announcement-writing task received one native developer-context router message of 4,367 characters containing all five module entries. No manual prompt injection or trust-bypass flag was used. The task completed without observed module-body reads; this verifies native CLI delivery, not guaranteed module selection. The active desktop conversation still requires a subsequent user submission to verify its own delivery.
+A separate authorized live check used the desktop-bundled Codex CLI 0.153.0. The official `/hooks` UI accepted trust for the single legacy handler; `hooks/list` subsequently reported `enabled=true`, `trustStatus=trusted`, no warnings and no errors. A normal short Chinese announcement-writing task received one native developer-context router message of 4,367 characters containing all five module entries. No manual prompt injection or trust-bypass flag was used. The task completed without observed module-body reads; this verifies native CLI delivery, not guaranteed module selection. The active desktop conversation still requires a subsequent user submission to verify its own delivery.
 
 ### Guided onboarding update
 

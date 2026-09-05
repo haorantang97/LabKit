@@ -74,7 +74,7 @@ Codex Hook 使用 CLI 的 `/hooks` 管理信任。先检查实际运行时版本
 - **Claude Code 规则没加载：** 确认使用 Code 环境、项目位置及文件读取权限。普通聊天附件不等于 Code 的 CLAUDE.md。[官方项目指令](https://code.claude.com/docs/en/memory)
 - **Cursor 没加载：** 使用 `.mdc` 扩展名并确认 `alwaysApply: true`；普通 `.md` 文件放进规则目录不等于有效项目规则。[官方 Rules](https://prod.cursor.com/docs/rules)
 - **文件读不到：** 修正实际运行环境中的路径，或使用 portable manual pack。不要靠本地安装成功猜远端支持。
-- **重复入口：** 在同一作用范围内选一种模式。安装器会阻止它发现的旧 Welcome hook 与默认规则重复；其他层、其他 profile、自定义路径仍需查看当前加载来源。规则遇到当轮 hook catalog 会复用，避免再路由一次。
+- **重复入口：** 在同一作用范围内选一种模式。安装器会阻止它发现的已有的 Super Astra hook 与默认规则重复；其他层、其他 profile、自定义路径仍需查看当前加载来源。规则遇到当轮 hook catalog 会复用，避免再路由一次。
 - **撤销：** 使用 [setup.md](setup.md) 的 `--remove`。只移除带本项目标记的段落，保留其余指令；备份在原文件旁。Cursor 撤销后保留空规则头和用户后来写的内容，不删除整个文件。
 
 ## Extend / 增减适配器

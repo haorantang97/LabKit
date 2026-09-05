@@ -26,11 +26,72 @@ class HostTests(unittest.TestCase):
         self.assertEqual(len(items), 2)
         self.assertIn(other, items)
         self.assertEqual(sum(h.get("statusMessage") == "LabKit Super Astra v1" for h in items), 1)
-        legacy = setup_rules.LEGACY_CURSOR_HEADER + setup_rules.BEGIN + "old body\n" + setup_rules.END
+        legacy = setup_rules.LEGACY_CURSOR_HEADER + setup_rules.LEGACY_BEGIN + "old body\n" + setup_rules.LEGACY_END
         refreshed = setup_rules.transform(legacy, "new body\n", "cursor")
         self.assertTrue(refreshed.startswith(setup_rules.CURSOR_HEADER))
         self.assertEqual(refreshed.count(setup_rules.BEGIN), 1)
         self.assertEqual(setup_rules.transform(legacy, "", "cursor", remove=True), setup_rules.LEGACY_CURSOR_HEADER)
+
+    def test_legacy_rule_upgrade_preserves_surroundings_backup_and_removal(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "AGENTS.md"
+            prefix, suffix = "# Existing\r\n保留规则", "\r\nUser addition\r\n"
+            original = (prefix + setup_rules.LEGACY_BEGIN + "old body\n" + setup_rules.LEGACY_END + suffix).encode()
+            path.write_bytes(original)
+            with redirect_stdout(StringIO()):
+                setup_rules.manage(path, ROOT / "config.json", apply=True)
+            migrated = path.read_bytes()
+            self.assertTrue(migrated.startswith(prefix.encode()))
+            self.assertTrue(migrated.endswith(suffix.encode()))
+            self.assertEqual(migrated.count(setup_rules.BEGIN.encode()), 1)
+            self.assertNotIn(setup_rules.LEGACY_BEGIN.encode(), migrated)
+            self.assertEqual(next(path.parent.glob("*.super-astra-*.bak")).read_bytes(), original)
+            with redirect_stdout(StringIO()):
+                setup_rules.manage(path, ROOT / "config.json", apply=True)
+            self.assertEqual(path.read_bytes(), migrated)
+            with redirect_stdout(StringIO()):
+                setup_rules.manage(path, ROOT / "config.json", apply=True, remove=True)
+            self.assertEqual(path.read_bytes(), (prefix + suffix).encode())
+            self.assertEqual(setup_rules.transform(original.decode(), "", remove=True), prefix + suffix)
+
+    def test_mixed_or_damaged_marker_versions_are_rejected(self):
+        current = setup_rules.BEGIN + "current\n" + setup_rules.END
+        legacy = setup_rules.LEGACY_BEGIN + "legacy\n" + setup_rules.LEGACY_END
+        for content in (current + legacy, setup_rules.BEGIN + setup_rules.LEGACY_END,
+                        setup_rules.LEGACY_BEGIN + setup_rules.END,
+                        current + setup_rules.LEGACY_BEGIN.strip(),
+                        setup_rules.END + "reversed" + setup_rules.BEGIN):
+            with self.subTest(content=content):
+                self.assertTrue(setup_rules.has_managed_rule(content))
+                for remove in (False, True):
+                    with self.assertRaises(ValueError):
+                        setup_rules.transform(content, "new body\n", remove=remove)
+
+    def test_legacy_rule_is_visible_and_blocks_second_hook_entry(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            project = Path(tmp)
+            path = project / "AGENTS.md"
+            original = setup_rules.LEGACY_BEGIN + "old body\n" + setup_rules.LEGACY_END
+            path.write_text(original)
+            args = ("--host", "codex", "--project", project, "--mode", "hook")
+            inspected = self.run_script("initialize.py", *args, "--onboarding")
+            self.assertEqual(inspected.returncode, 0, inspected.stderr)
+            self.assertEqual(json.loads(inspected.stdout)["onboarding"]["rules"]["registration"], "present")
+            result = self.run_script("initialize.py", *args, "--apply")
+            self.assertNotEqual(result.returncode, 0)
+            self.assertFalse((project / ".codex/hooks.json").exists())
+            self.assertEqual(path.read_text(), original)
+
+    def test_new_outputs_use_current_brand(self):
+        import astra
+        config = ROOT / "config.json"
+        outputs = [setup_rules.transform("", setup_rules.entry(config)),
+                   setup_rules.transform("", setup_rules.entry(config), "cursor"),
+                   setup_rules.manual_pack(config),
+                   astra.router_context(astra.load_config(config)),
+                   json.dumps(setup_hook.handler(config))]
+        for output in outputs:
+            self.assertNotRegex(output.lower(), r"welcome[ _-]*to[ _-]*agi|astra-prompts")
 
     def test_rename_does_not_install_beside_legacy_copy(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -80,7 +141,7 @@ class HostTests(unittest.TestCase):
     def test_three_project_installations_use_actual_installed_paths(self):
         for host, rule in (("codex", "AGENTS.md"), ("claude-code", "CLAUDE.md"),
                            ("cursor", ".cursor/rules/super-astra.mdc")):
-            with self.subTest(host=host), tempfile.TemporaryDirectory(prefix="welcome 空格 ") as tmp:
+            with self.subTest(host=host), tempfile.TemporaryDirectory(prefix="super-astra 空格 ") as tmp:
                 project = Path(tmp).resolve() / "project with spaces"
                 args = ("--host", host, "--surface", "desktop", "--project", project, "--mode", "rules")
                 preview = self.run_script("install.py", *args)

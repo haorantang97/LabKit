@@ -7,8 +7,12 @@ from pathlib import Path
 from astra import ROOT, ROUTER_MARKER, load_config, load_module
 from setup_hook import write_atomic
 
-BEGIN = "\n<!-- BEGIN LABKIT_WELCOME_TO_AGI_RULE_V1 -->\n"
-END = "<!-- END LABKIT_WELCOME_TO_AGI_RULE_V1 -->\n"
+BEGIN = "\n<!-- BEGIN LABKIT_SUPER_ASTRA_RULE_V1 -->\n"
+END = "<!-- END LABKIT_SUPER_ASTRA_RULE_V1 -->\n"
+# Read old registrations for migration/removal; always emit the current markers.
+LEGACY_BEGIN = "\n<!-- BEGIN LABKIT_WELCOME_TO_AGI_RULE_V1 -->\n"
+LEGACY_END = "<!-- END LABKIT_WELCOME_TO_AGI_RULE_V1 -->\n"
+MARKER_PAIRS = ((BEGIN, END), (LEGACY_BEGIN, LEGACY_END))
 CURSOR_HEADER = '---\ndescription: Super Astra task routing\nalwaysApply: true\n---\n'
 LEGACY_CURSOR_HEADER = '---\ndescription: Welcome to AGI task routing\nalwaysApply: true\n---\n'
 
@@ -17,7 +21,8 @@ def entry(config, root=ROOT):
     # Keep metadata live: disabling/adding a module must not require reinstalling a rule.
     return (
         "Super Astra: before each ordinary task, assess useful guidance without waiting for a keyword. "
-        f"If this turn already has {ROUTER_MARKER}, use that catalog and do not route twice. "
+        f"If this turn already has {ROUTER_MARKER} or an earlier version of this skill's router catalog, "
+        "use that catalog and do not route twice. "
         "Otherwise read the current config file " + json.dumps(str(config.resolve()), ensure_ascii=False) +
         " and each enabled module's module.json under " + json.dumps(str(root / "modules"), ensure_ascii=False) +
         ". Follow " + json.dumps(str(root / "references/router.md"), ensure_ascii=False) +
@@ -32,22 +37,35 @@ def entry(config, root=ROOT):
     )
 
 
+def has_managed_rule(text):
+    # Include damaged markers so hook setup cannot stack over an ambiguous rule.
+    return any(marker.strip().removesuffix(" -->") in text
+               for pair in MARKER_PAIRS for marker in pair)
+
+
 def transform(original, body, fmt="markdown", remove=False):
-    starts, ends = original.count(BEGIN), original.count(END)
-    # Catch damaged or duplicated markers rather than stacking another rule.
-    if (original.count("<!-- BEGIN LABKIT_WELCOME_TO_AGI_RULE_V1") != starts or
-            original.count("<!-- END LABKIT_WELCOME_TO_AGI_RULE_V1") != ends or
-            starts != ends or starts > 1):
+    found = []
+    for begin, end in MARKER_PAIRS:
+        starts, ends = original.count(begin), original.count(end)
+        # Catch damaged, mismatched or duplicated markers across both versions.
+        if (original.count(begin.strip().removesuffix(" -->")) != starts or
+                original.count(end.strip().removesuffix(" -->")) != ends or
+                starts != ends or starts > 1):
+            raise ValueError("ambiguous managed rule markers; inspect the file")
+        if starts:
+            found.append((begin, end))
+    if len(found) > 1:
         raise ValueError("ambiguous managed rule markers; inspect the file")
-    if starts:
+    if found:
         if fmt == "cursor" and not remove and not original.startswith((CURSOR_HEADER, LEGACY_CURSOR_HEADER)):
             raise ValueError("Cursor rule header changed; inspect Always Apply settings before updating")
         if fmt == "cursor" and not remove and original.startswith(LEGACY_CURSOR_HEADER):
             original = CURSOR_HEADER + original[len(LEGACY_CURSOR_HEADER):]
-        start, end = original.index(BEGIN), original.index(END)
+        begin_marker, end_marker = found[0]
+        start, end = original.index(begin_marker), original.index(end_marker)
         if end < start:
             raise ValueError("reversed managed rule markers")
-        end += len(END)
+        end += len(end_marker)
         replacement = "" if remove else BEGIN + body + END
         return original[:start] + replacement + original[end:]
     if remove:
@@ -79,7 +97,7 @@ def save(path, original, after):
         raise ValueError("target changed during setup; rerun preview")
     path.parent.mkdir(parents=True, exist_ok=True)
     if existed:
-        backup = path.with_name(path.name + ".welcome-" + hashlib.sha256(original).hexdigest()[:16] + ".bak")
+        backup = path.with_name(path.name + ".super-astra-" + hashlib.sha256(original).hexdigest()[:16] + ".bak")
         if backup.is_symlink() or (backup.exists() and backup.read_bytes() != original):
             raise ValueError("backup collision")
         if not backup.exists():

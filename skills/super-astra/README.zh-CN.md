@@ -1,7 +1,5 @@
 # Super Astra
 
-原名 **Welcome to AGI**（`welcome-to-agi`）。已有安装请参考[更名迁移说明](references/rename.md)，保留自定义配置并更新原有入口。
-
 [English](README.md) | **中文**
 
 普通任务提交后，由当前 Agent 判断需要哪些指导，再读取对应的官方 Astra 提示词并执行任务。无需先抱怨，也无需额外模型 API 或向量库。
