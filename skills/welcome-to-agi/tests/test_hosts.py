@@ -25,12 +25,15 @@ class HostTests(unittest.TestCase):
         self.assertEqual(hosts.detect_host({"CODEX_THREAD_ID": "fixture"})[0], "codex")
         self.assertEqual(hosts.detect_host({"CODEX_THREAD_ID": "fixture", "CLAUDECODE": "1"})[0], "generic")
 
-    def test_desktop_defaults_rules_and_cloud_defaults_manual(self):
+    def test_codex_prefers_hook_other_local_hosts_rules_and_cloud_manual(self):
         owner = Path("/fixture")
         for host in ("codex", "claude-code", "cursor"):
             local = hosts.plan(host, "desktop", "auto", owner, environ={})
-            self.assertEqual(local["mode"], "rules")
-            self.assertIsNone(local["hooks_file"])
+            self.assertEqual(local["mode"], "hook" if host == "codex" else "rules")
+            if host == "codex":
+                self.assertEqual(local["hook_capability"], "adapter_available_runtime_not_verified")
+            else:
+                self.assertIsNone(local["hooks_file"])
             self.assertEqual(hosts.plan(host, "cloud", "auto", owner, environ={})["mode"], "manual")
         with self.assertRaises(ValueError):
             hosts.plan("codex", "cloud", "hook", owner)
@@ -39,7 +42,7 @@ class HostTests(unittest.TestCase):
 
     def test_profile_and_unknown_fallback_paths(self):
         owner = Path("/fixture")
-        codex = hosts.plan("codex", "desktop", "auto", owner, True, environ={"CODEX_HOME": "/alternate"})
+        codex = hosts.plan("codex", "desktop", "rules", owner, True, environ={"CODEX_HOME": "/alternate"})
         self.assertEqual(codex["rules_file"], "/alternate/AGENTS.md")
         self.assertEqual(hosts.plan("cursor", "desktop", "auto", owner, True)["mode"], "manual")
         self.assertEqual(hosts.plan("generic", "unknown", "auto", owner)["mode"], "manual")
@@ -51,7 +54,7 @@ class HostTests(unittest.TestCase):
                            ("cursor", ".cursor/rules/welcome-to-agi.mdc")):
             with self.subTest(host=host), tempfile.TemporaryDirectory(prefix="welcome 空格 ") as tmp:
                 project = Path(tmp).resolve() / "project with spaces"
-                args = ("--host", host, "--surface", "desktop", "--project", project)
+                args = ("--host", host, "--surface", "desktop", "--project", project, "--mode", "rules")
                 preview = self.run_script("install.py", *args)
                 self.assertEqual(preview.returncode, 0, preview.stderr)
                 self.assertFalse(project.exists())
@@ -158,6 +161,11 @@ class HostTests(unittest.TestCase):
             self.assertEqual(run("--mode", "hook", "--remove", "--apply").returncode, 0)
             result = run("--mode", "rules", "--apply")
             self.assertEqual(result.returncode, 0, result.stderr)
+            rules_before = (project / "AGENTS.md").read_bytes()
+            # Auto now recommends a hook, but must not silently migrate an existing rule.
+            self.assertNotEqual(run("--apply").returncode, 0)
+            self.assertEqual((project / "AGENTS.md").read_bytes(), rules_before)
+            self.assertEqual(json.loads((project / ".codex/hooks.json").read_text())["hooks"], {})
             self.assertNotEqual(run("--mode", "hook", "--apply").returncode, 0)
             # Broken config must not prevent uninstalling the rule or hook.
             (installed / "config.json").write_text("{broken")

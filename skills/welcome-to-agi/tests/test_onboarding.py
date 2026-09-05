@@ -102,7 +102,8 @@ class OnboardingTests(unittest.TestCase):
             config = json.loads((installed / "config.json").read_text())
             self.assertFalse(config["modules"]["delegation"]["enabled"])
             self.assertTrue(config["modules"]["delegation"]["guard"])
-            self.assertTrue((project / "AGENTS.md").exists())
+            self.assertFalse((project / "AGENTS.md").exists())
+            self.assertTrue((project / ".codex/hooks.json").exists())
             router = subprocess.run([sys.executable, str(installed / "scripts/astra.py"), "router"],
                                     capture_output=True, text=True)
             self.assertEqual(router.returncode, 0, router.stderr)

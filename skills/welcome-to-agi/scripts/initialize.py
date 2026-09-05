@@ -119,6 +119,7 @@ def main():
             state.update(status(target, config, validate=not args.remove))
             state["next_step"] = ("Start a fresh task in the actual client; registration is removed." if args.remove else
                 "Review/trust via Codex CLI /hooks in the SAME runtime/profile, then verify in the actual desktop/CLI client. "
+                "If blocked, retain pending status and explain the exact user step; ask before switching to rules. "
                 "Shared config is not proof of desktop delivery; see references/hosts.md.")
         elif selected["mode"] == "rules":
             target = Path(selected["rules_file"])

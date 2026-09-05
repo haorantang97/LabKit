@@ -10,6 +10,12 @@ The suite checks ordinary-message catalog delivery without keyword gating; disab
 
 ## Host adapter update (2026-09-05)
 
+### Hook-first setup and native CLI verification
+
+Codex macOS/Linux auto mode now selects Hook registration, with runtime capability, trust and delivery explicitly pending. Existing rules are not silently migrated, and missing trust never triggers an automatic fallback. Other supported local hosts retain rules mode; cloud/unknown hosts retain manual mode. The 45-test suite covers the changed default, explicit rule adapters and preservation of existing rules when auto setup encounters a conflict.
+
+A separate authorized live check used the desktop-bundled Codex CLI 0.153.0. The official `/hooks` UI accepted trust for the single Welcome handler; `hooks/list` subsequently reported `enabled=true`, `trustStatus=trusted`, no warnings and no errors. A normal short Chinese announcement-writing task received one native developer-context router message of 4,367 characters containing all five module entries. No manual prompt injection or trust-bypass flag was used. The task completed without observed module-body reads; this verifies native CLI delivery, not guaranteed module selection. The active desktop conversation still requires a subsequent user submission to verify its own delivery.
+
 ### Guided onboarding update
 
 45 automated tests pass locally, including six onboarding cases. They verify that read-only inspection works before a legacy-hook migration, never executes the inspected commands, preserves existing module choices, reports malformed/unsupported hook sources without claiming they are off, rejects mutating inspection flags, and installs user-selected module switches before registration without changing the source. Disabled module files may be removed without breaking inspection.

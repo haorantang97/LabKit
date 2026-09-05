@@ -48,7 +48,10 @@ def plan(host, surface, mode, owner, user=False, rules_file=None, hooks=None, en
         raise ValueError("--hooks selects hook mode; omit it for rules/manual mode")
     if mode == "auto":
         # A CLI-shaped command is not evidence that the user uses a terminal UI.
-        mode = "hook" if hooks else ("rules" if rule_path and surface != "cloud" else "manual")
+        mode = ("hook" if hooks else "manual" if surface == "cloud" else
+                "rules" if rules_file else
+                "hook" if host == "codex" and profile["hook_adapter"] and os.name != "nt" else
+                "rules" if rule_path else "manual")
     if surface == "cloud" and mode != "manual":
         raise ValueError("cloud surface cannot use this machine's registration; install inside the actual runtime or export a manual pack")
     if mode == "hook" and (host != "codex" or not profile["hook_adapter"] or os.name == "nt"):
@@ -58,6 +61,8 @@ def plan(host, surface, mode, owner, user=False, rules_file=None, hooks=None, en
     if rules_file and mode != "rules":
         raise ValueError("--rules-file requires rules mode")
     return {"host": host, "host_evidence": evidence, "surface": surface, "mode": mode,
+            "hook_capability": "adapter_available_runtime_not_verified" if mode == "hook" else "not_probed",
+            "fallback_policy": "Ask before changing the selected mode; missing trust is pending setup, not unsupported hooks.",
             "rules_file": str(rule_path) if mode == "rules" else None,
             "hooks_file": str(hook_path) if mode == "hook" else None,
             "rule_format": profile["format"],

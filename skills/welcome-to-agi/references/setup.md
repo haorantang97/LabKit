@@ -13,7 +13,7 @@ python3 skills/welcome-to-agi/scripts/install.py --host codex --surface desktop 
 python3 skills/welcome-to-agi/scripts/install.py --host codex --surface desktop --project /path/to/project --apply
 ```
 
-The first command previews paths; the second installs and initializes. Auto mode prefers **rules** for known local hosts. This is a change from the old unconditional hook default. Use `--user` instead of `--project PATH` for user scope. No other skills or instructions are cleaned.
+The first command previews paths; the second installs and initializes. Auto mode selects **hook registration for Codex on macOS/Linux**, with runtime capability, trust and delivery still to verify. Other known local hosts use rules. Pass `--mode rules` when the user selects that fallback; missing trust never triggers an automatic switch. Use `--user` instead of `--project PATH` for user scope. No other skills or instructions are cleaned.
 
 After the first-use choices, add `--disable-module ID` for each module the user wants disabled in a new install. The installer applies these switches before registering routing, without editing the source package. An invalid ID fails before copying files. Existing installations retain their config and use the adjustment flow in [onboarding.md](onboarding.md).
 
@@ -45,9 +45,9 @@ For ordinary tasks without setup authorization, offer initialization once while 
 
 | Mode | Selection | Result |
 |---|---|---|
-| `auto` | Rules for a known local host/scope; otherwise manual | No assumption that a desktop user uses CLI |
+| `auto` | Codex macOS/Linux: hook registration; other known local hosts: rules; cloud/unknown: manual | Hook capability, trust and delivery still need verification |
 | `rules` | Codex, Claude Code, Cursor project; or explicit custom file | Persistent entry, model-driven per-task assessment |
-| `hook` | Explicit Codex selection, macOS/Linux | UserPromptSubmit entry, separate trust required |
+| `hook` | Codex default or explicit selection, macOS/Linux | UserPromptSubmit entry, separate trust required |
 | `manual` / `--skill-only` | Any host | No registration; explicit use or portable export |
 
 For an agent with a known always-loaded file but no built-in adapter:
@@ -73,7 +73,7 @@ python3 scripts/initialize.py --host generic --surface cloud --mode manual --exp
 
 Attach that self-contained Markdown pack to the actual conversation and ask the model to use relevant sections while completing tasks. The export includes all enabled module bodies (more context than dynamic loading), no machine-specific file paths, and no automatic persistence promise. Re-export after config edits. Installing the pack does not provide missing tools or change the model. An existing export is not overwritten.
 
-## Optional Codex hook
+## Codex hook and trust handoff
 
 ```bash
 python3 scripts/initialize.py --host codex --mode hook --project /path/to/project --apply
@@ -82,6 +82,8 @@ python3 scripts/initialize.py --hooks /path/to/project/.codex/hooks.json --apply
 ```
 
 Use Codex CLI `/hooks` to review/trust the exact definition in the SAME runtime/profile as the actual client. Shared agent configuration is documented, but CLI registration/trust alone does not establish desktop delivery. Desktop users can use rules without this step. Project hooks also need project trust; changed definitions may require review again. Never edit trust storage or bypass review.
+
+If review cannot be completed automatically, leave registration pending and explain the exact `/hooks` step for that runtime/profile. Do not infer incompatibility from `untrusted`, use a trust-bypass flag, or switch to rules without the user choosing it.
 
 The hook handles valid UserPromptSubmit events for configured models, supplies a short catalog, and leaves semantic selection to the current model. It does not copy user text into developer context, call another classifier, read transcripts, or launch agents. Unknown models skip. Errors fail open with no guidance so the original task can continue.
 

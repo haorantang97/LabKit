@@ -4,7 +4,7 @@
 
 桌面端可以直接对 Agent 说：
 
-> 安装 LabKit 的 welcome-to-agi，并完成初始化。我使用的是【客户端名称】，用于【当前项目／所有本地项目】。优先使用常驻规则；请替我执行安装步骤，保留原有配置，并说明还需要在这个客户端里验证什么。
+> 安装 LabKit 的 welcome-to-agi，并完成初始化。我使用的是【客户端名称】，用于【当前项目／所有本地项目】。请优先检查 Hook 能力并引导完成信任和验证；请替我执行安装步骤，保留原有配置，并说明还需要在这个客户端里验证什么。
 
 Agent 能执行本地命令时，由它运行安装器。用户只需要补充无法识别的客户端和作用范围，以及完成宿主要求的人机确认。安装器不操作 GUI；如果 Agent 只有聊天能力，使用下方手动包。下载文件本身不会自动运行初始化。
 
@@ -12,13 +12,13 @@ Agent 能执行本地命令时，由它运行安装器。用户只需要补充�
 
 | 客户端／环境 | 默认接入 | 写入位置 | 还需确认 |
 |---|---|---|---|
-| 本地 Codex 桌面端、CLI、IDE | 常驻规则 | 项目 `AGENTS.md`；用户 `$CODEX_HOME/AGENTS.md`（默认 `~/.codex`） | 当前会话实际加载该文件，模块路径可读 |
+| 本地 Codex 桌面端、CLI、IDE（macOS/Linux） | 优先检查并注册 Hook | 活跃配置层旁的 `hooks.json` | 当前宿主支持、信任及实际客户端投递；未验证时保留待办 |
 | Claude Code Desktop、CLI | 常驻规则 | 项目 `CLAUDE.md`；用户 `~/.claude/CLAUDE.md` | 当前 Code 项目及权限；不代表普通 Claude 聊天或 Cowork 已适配 |
 | Cursor 项目 Agent | Always Apply 项目规则 | `.cursor/rules/welcome-to-agi.mdc` | 当前项目的规则面板与 Agent 会话 |
 | Cursor 用户级 | 手动模式 | 不猜测或改写应用内部设置库 | 可将生成的入口粘贴到 User Rules；需验证本机路径可读 |
 | 其他可读文件的本地 Agent | 显式指定常驻规则文件 | `--host generic --mode rules --rules-file PATH` | 该客户端确实自动加载此文件；本工具不替它添加加载能力 |
 | 普通桌面聊天、网页、云端或无法读本地文件 | 手动提示词包 | `--mode manual --export PATH` | 把文件附到会话；自动跨对话生效不受保证 |
-| Codex，可用且用户选择 hooks | 提交事件 hook | 活跃配置层旁的 `hooks.json` | 宿主支持、信任和实际客户端投递 |
+| Codex，用户选择兼容方案 | 常驻规则 | 项目 `AGENTS.md`；用户 `$CODEX_HOME/AGENTS.md` | 当前会话实际加载该文件，模块路径可读 |
 
 代码已实现这些文件生成／编辑路径，使用临时项目验证。**尚未逐一完成 Codex Desktop、Claude Code Desktop、Cursor 原生界面实测**；表格不表示所有版本都已验证可用。脚本检查使用 macOS/Linux、Python 3.10+；Windows 原生运行尚未验证，hook 安装器明确拒绝 Windows。
 
@@ -58,9 +58,9 @@ Claude Code Desktop 与 CLI 共享引擎和 CLAUDE.md 项目上下文；这不�
 
 只在诊断阶段记录客户端、版本、运行位置、实际指令来源、模块读取和结果。日常使用无需输出路由报告。`native_delivery: not_verified` 是程序无法观察客户端投递的事实；它不会依据用户填写的开关自动变成已验证。
 
-## Hook 可选流程
+## Hook 信任与验证流程
 
-只有选择 Codex hooks 时才使用 CLI 的 `/hooks` 管理信任。必须针对实际桌面 agent 所在机器和 profile；不要在无关终端环境里信任后声称桌面已生效。信任后仍按上面的普通任务流程，在实际客户端确认投递。若该客户端／版本不提供可用 hooks，改用 rules，保留用户原有权限策略。[官方 hooks](https://learn.chatgpt.com/docs/hooks)
+Codex Hook 使用 CLI 的 `/hooks` 管理信任。先检查实际运行时版本与 Hook 列表；存在注册不代表受信任或已经触发。必须针对实际桌面 agent 所在机器和 profile；不要在无关终端环境里信任后声称桌面已生效。信任后仍按上面的普通任务流程，在实际客户端确认投递。若客户端确实不支持 Hook，可建议 rules，由用户选择是否切换。若仅缺少信任或 Agent 无法操作界面，保留待完成状态，说明具体步骤，不移除 Hook、不自动改写为 rules。完成信任后提交普通任务，分别核对 Hook 事件、目录投递和模块读取；CLI 验证不能冒充桌面端验证。[官方 hooks](https://learn.chatgpt.com/docs/hooks)
 
 ## 排查与撤销
 

@@ -5,7 +5,7 @@
 Route ordinary tasks through relevant official Astra guidance. The current agent model selects modules before working; users do not need to complain first. No embedding service or extra model API is required.
 
 ```text
-ordinary prompt -> persistent rule or optional hook -> current model selects
+ordinary prompt -> hook or persistent rule -> current model selects
                 -> reads selected prompts/guards -> completes the task
 ```
 
@@ -15,13 +15,13 @@ In a desktop agent, ask:
 
 > Install LabKit's welcome-to-agi for my current client and project. Complete initialization, preserve existing instructions, and explain what remains to verify in this client.
 
-The agent can run the installer for you. It chooses a persistent rule for supported local hosts; **you do not need CLI hook setup for rules mode**. Copying files alone cannot execute initialization, so a downloader should follow SKILL.md.
+The agent can run the installer for you. It checks the actual client and recommends Hook for supported Codex runtimes; **rules remain available when selected**. Missing hook trust is a pending step, not a reason to switch automatically. Copying files alone cannot execute initialization, so a downloader should follow SKILL.md.
 
 First-use guidance lists the five module switches and current hook registration facts, then asks which modules to turn off, whether to check existing Skills and instruction conflicts, and whether to adjust routing. All five modules, including delegation, start enabled in a new install; existing preferences survive upgrades. Enabled modules are selected only when useful, and delegation does not enable a host's multi-agent feature. The audit runs only if chosen. [Initialization conversation](references/onboarding.md).
 
 | Client | Implemented entrypoint |
 |---|---|
-| Local Codex desktop / CLI / IDE | Scoped AGENTS.md block; optional Codex hook |
+| Local Codex desktop / CLI / IDE | Codex Hook with trust review; optional scoped AGENTS.md block |
 | Claude Code Desktop / CLI | Scoped CLAUDE.md block |
 | Cursor project Agent | Always Apply .mdc rule |
 | Other local file-reading agents | Explicit host-loaded rule file |
@@ -36,7 +36,7 @@ python3 skills/welcome-to-agi/scripts/install.py --host codex --surface desktop 
 python3 skills/welcome-to-agi/scripts/install.py --host codex --surface desktop --project /path/to/project --apply
 ```
 
-Use `--host claude-code` or `--host cursor` for those clients. `--user` selects user scope instead of `--project PATH`; Cursor user scope exports manually instead of editing the app settings database. Unknown hosts fall back to clearly labeled manual mode. `--mode hook` explicitly opts into the Codex adapter and its separate trust review. `--skill-only` means manual mode.
+Use `--host claude-code` or `--host cursor` for those clients. `--user` selects user scope instead of `--project PATH`; Cursor user scope exports manually instead of editing the app settings database. Unknown hosts fall back to clearly labeled manual mode. Codex on macOS/Linux defaults to Hook registration and its separate trust review; `--mode rules` selects the persistent-rule fallback. `--skill-only` means manual mode.
 
 ## Select by task intent
 

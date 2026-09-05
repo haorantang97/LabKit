@@ -64,7 +64,10 @@ def snapshot(selected, config, owner, user, settings=None):
         path = Path(selected["hooks_file"]) if selected["hooks_file"] else Path(
             hosts.plan("codex", selected["surface"], "hook", owner, user)["hooks_file"])
         hooks = hook_inventory(path, config)
-    rule = {"file": selected["rules_file"], "registration": "not_inspected"}
+    rule_file = selected["rules_file"]
+    if not rule_file and selected["host"] == "codex" and selected["surface"] != "cloud":
+        rule_file = hosts.plan("codex", selected["surface"], "rules", owner, user)["rules_file"]
+    rule = {"file": rule_file, "registration": "not_inspected"}
     if rule["file"]:
         try:
             path = Path(rule["file"])
