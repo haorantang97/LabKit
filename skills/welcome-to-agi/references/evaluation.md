@@ -10,6 +10,14 @@ The suite checks ordinary-message catalog delivery without keyword gating; disab
 
 ## Host adapter update (2026-09-05)
 
+### Guided onboarding update
+
+45 automated tests pass locally, including six onboarding cases. They verify that read-only inspection works before a legacy-hook migration, never executes the inspected commands, preserves existing module choices, reports malformed/unsupported hook sources without claiming they are off, rejects mutating inspection flags, and installs user-selected module switches before registration without changing the source. Disabled module files may be removed without breaking inspection.
+
+These are script tests in disposable directories. The user will test the revised installation conversation themselves; no real user Skills audit, configuration adjustment, native hook activation, or independent agent trial was run for this update. The expected conversation is documented in [onboarding.md](onboarding.md).
+
+### Previous file-adapter update
+
 39 automated tests pass locally. Added coverage includes real installer subprocesses for Codex, Claude Code and Cursor project profiles; preview without writes; generated references to the installed folder (including Unicode/spaced paths); repeated initialization; exact preservation of surrounding CRLF/UTF-8 instructions; backups and scoped removal after later user edits; override/symlink/marker conflicts; changed Cursor activation metadata; unknown/conflicting host detection; CODEX_HOME paths; cloud/manual fallback; hook/rule migration; removal with broken config; and portable/manual UI exports.
 
 These tests execute file adapters in temporary projects, not the named desktop applications. Codex Desktop, Claude Code Desktop and Cursor native loading and ordinary-task execution remain **not verified** for this update. Use the [actual-client checks](hosts.md#在实际使用的客户端验证) and record source loading, module reads and deliverables before making a native compatibility claim. There is no extra model evaluation in this update; the v2 trial below remains historical evidence for the shared routing instructions.
@@ -30,11 +38,13 @@ The trial found stale v1 setup/evaluation descriptions (keyword gating, delegati
 
 ## First-use cases
 
-- Installed through the integrated installer: report host/surface and selected mode; complete files and the chosen registration. Rules lead to actual-client loading checks; hooks add the separate trust step; manual explicitly reports no automatic entrypoint.
+- Installed through the integrated installer: present module switches and hook facts, ask the unresolved module/audit/routing choices, then complete authorized file setup. Report any unanswered choice as pending. Rules lead to actual-client loading checks; hooks add the separate trust step; manual explicitly reports no automatic entrypoint.
 - Manually copied and explicitly invoked: the skill inspects initialization status and guides setup instead of only saying “available next turn.”
 - Normal task without persistent-setup authorization: complete it in manual mode while offering the setup choice once.
 - User chooses skill-only or declines: honor that choice, do not repeatedly ask within the conversation.
-- Registered hook provides the router marker or a persistent rule is already loaded: follow its routing entry without repeating onboarding.
+- Registered hook provides the router marker or a persistent rule is already loaded: ordinary tasks follow its entry without repeating onboarding. Explicit installation, upgrade or setup-adjustment requests still use the first-use conversation.
+- Audit accepted: run only the agreed scope and explain findings in context; audit declined: skip and record that choice. Do not start by scanning the user's Skills.
+- New install keeps all five modules available, including delegation, unless the user names exclusions. An existing disabled module stays disabled on upgrade.
 
 ## Native Codex smoke test after trust
 

@@ -11,6 +11,7 @@ import sys
 from astra import ROOT, load_config, router_context
 import hosts
 import setup_rules
+import onboarding
 
 
 def main():
@@ -21,6 +22,8 @@ def main():
     hosts.add_arguments(parser)
     parser.add_argument("--apply", action="store_true")
     parser.add_argument("--skill-only", action="store_true", help="alias for --mode manual")
+    parser.add_argument("--disable-module", action="append", default=[], metavar="ID",
+                        help="new installation only: disable a chosen module before registering routing; repeat for several")
     args = parser.parse_args()
     owner = Path.home() if args.user else args.project.expanduser().resolve()
     try:
@@ -38,15 +41,22 @@ def main():
         if destination.is_symlink():
             raise ValueError("destination is a symlink")
         settings = load_config(ROOT / "config.json")
+        for name in args.disable_module:
+            if name not in settings["modules"]:
+                raise ValueError("unknown module: " + name)
+            settings["modules"][name]["enabled"] = False
         router_context(settings)
         if selected["mode"] == "rules":
             setup_rules.prepare(Path(selected["rules_file"]), destination / "config.json", selected["rule_format"])
         print(json.dumps(dict(selected, destination=str(destination),
-                              action="apply" if args.apply else "preview"), indent=2))
+                              action="apply" if args.apply else "preview",
+                              onboarding=onboarding.snapshot(selected, ROOT / "config.json", owner, args.user, settings)), indent=2))
         if not args.apply:
             print("Preview only. Repeat with --apply to install and initialize.")
             return 0
         shutil.copytree(ROOT, destination, ignore=shutil.ignore_patterns("__pycache__", "*.pyc", "*.bak"))
+        if args.disable_module:
+            (destination / "config.json").write_text(json.dumps(settings, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
         command = [sys.executable, str(destination / "scripts/initialize.py"),
                    "--host", selected["host"], "--surface", args.surface, "--mode", selected["mode"],
                    "--export-format", args.export_format, "--apply"]

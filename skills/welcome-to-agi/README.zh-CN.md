@@ -16,6 +16,8 @@
 
 **无 hooks 也能接入，不必先去终端操作。** 有本地执行能力的 Agent 可以代为安装。仅复制文件无法触发初始化，下载器需继续按 SKILL.md 操作。
 
+首次引导会列出五项模块开关与当前 Hook 注册情况，集中询问：要关闭哪些模块、是否检查现有 Skills 和指令冲突、是否调整接入方式。新安装默认全部开启，包含多 Agent 协作；升级保留已有选择。模块按任务需要选用，多 Agent 模块也不会替你开启宿主的多 Agent 功能。检查由用户选择后执行。[完整初始化引导](references/onboarding.md)。
+
 | 客户端 | 已实现的接入方式 |
 |---|---|
 | 本地 Codex 桌面端／CLI／IDE | AGENTS.md 规则块；另可选择 hooks |
@@ -61,11 +63,12 @@ python3 skills/welcome-to-agi/scripts/install.py --host codex --surface desktop 
 ## 初始化与工具
 
 - `install.py`：安装完整 skill，并衔接初始化。
-- `initialize.py`：按客户端初始化规则／hook、检查状态、撤销注册及导出手动包。
+- `initialize.py`：初始化规则／hook、撤销注册、导出手动包；`--onboarding` 只读列出模块与 Hook 状态。
+- `onboarding.py`：独立的初始化状态读取组件，不扫描其他 Skills，也不执行 Hook。
 - `adapters/hosts.json`：独立的宿主适配配置，便于增减改造。
 - `astra.py router`：预览每次提交时补充的判断入口。
 - `astra.py compose`：单独生成选中模块，保留原 prompt。
-- `audit.py`：可选的一次性只读配置审计，不自动清理其他技能。
+- `audit.py`：初始化时主动询问的一次性只读检查，用户选择后检查约定范围，不自动清理其他技能。
 
 [详细安装、旧版改名迁移、配置与撤销](references/setup.md)
 

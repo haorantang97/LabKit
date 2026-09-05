@@ -16,7 +16,7 @@
 
 > Reusable agent skills for publishing, everyday work, and configurable Astra behavior.
 
-**New: [Welcome to AGI](skills/welcome-to-agi/README.md)** packages five official GPT-6 Astra prompt modules with individual switches, ordinary-task semantic routing, desktop setup via persistent rules, optional Codex hooks, and manual exports. [Host guide](skills/welcome-to-agi/references/hosts.md). [中文介绍](skills/welcome-to-agi/README.zh-CN.md)
+**New: [Welcome to AGI](skills/welcome-to-agi/README.md)** packages five official GPT-6 Astra prompt modules with individual switches and ordinary-task semantic routing. First-use guidance presents module/hook status and asks about module changes, an optional Skills conflict check and routing preferences. [Initialization guide](skills/welcome-to-agi/references/onboarding.md). [Host guide](skills/welcome-to-agi/references/hosts.md). [中文介绍](skills/welcome-to-agi/README.zh-CN.md)
 
 ## Install
 

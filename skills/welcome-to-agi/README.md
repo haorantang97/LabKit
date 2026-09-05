@@ -17,6 +17,8 @@ In a desktop agent, ask:
 
 The agent can run the installer for you. It chooses a persistent rule for supported local hosts; **you do not need CLI hook setup for rules mode**. Copying files alone cannot execute initialization, so a downloader should follow SKILL.md.
 
+First-use guidance lists the five module switches and current hook registration facts, then asks which modules to turn off, whether to check existing Skills and instruction conflicts, and whether to adjust routing. All five modules, including delegation, start enabled in a new install; existing preferences survive upgrades. Enabled modules are selected only when useful, and delegation does not enable a host's multi-agent feature. The audit runs only if chosen. [Initialization conversation](references/onboarding.md).
+
 | Client | Implemented entrypoint |
 |---|---|
 | Local Codex desktop / CLI / IDE | Scoped AGENTS.md block; optional Codex hook |
@@ -59,11 +61,12 @@ Each module has `module.json` (including semantic `when`), `prompt.md` (official
 ## Included tools
 
 - `install.py`: complete-folder installation followed by initialization.
-- `initialize.py`: rules/hook setup, status, scoped removal, and manual exports for an installed copy.
+- `initialize.py`: rules/hook setup, scoped removal, manual exports, and `--onboarding` read-only module/hook facts.
+- `onboarding.py`: separate inventory component for the initialization conversation; no Skill scan or hook execution.
 - `adapters/hosts.json`: independently editable host profiles.
 - `astra.py router`: preview the actual semantic entrypoint.
 - `astra.py compose`: output selected guidance separately from the original prompt.
-- `audit.py`: optional read-only scan of explicit configuration paths.
+- `audit.py`: read-only scan of agreed configuration paths, offered during onboarding and run only if chosen.
 
 [Setup, migration from astra-prompts, configuration, and removal](references/setup.md).
 

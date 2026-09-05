@@ -16,7 +16,7 @@
 
 > 可复用的 Agent 工具：发布 skill、处理日常任务、按需调整 Astra 行为。
 
-**新增：[Welcome to AGI](skills/welcome-to-agi/README.zh-CN.md)**。把五类官方提示词拆成可独立开关的模块，对普通任务做语义路由，支持桌面端常驻规则、可选 Codex hooks 和手动提示词包。[客户端引导](skills/welcome-to-agi/references/hosts.md)。[English](skills/welcome-to-agi/README.md)
+**新增：[Welcome to AGI](skills/welcome-to-agi/README.zh-CN.md)**。五类官方提示词独立开关，对普通任务按需加载。首次引导列出模块与 Hook 状态，询问模块取舍、是否检查 Skills 冲突以及接入方式。[初始化引导](skills/welcome-to-agi/references/onboarding.md)。[客户端引导](skills/welcome-to-agi/references/hosts.md)。[English](skills/welcome-to-agi/README.md)
 
 ## 安装
 

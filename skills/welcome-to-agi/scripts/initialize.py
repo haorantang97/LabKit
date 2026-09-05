@@ -11,6 +11,7 @@ from astra import ROOT, load_config, router_context
 from setup_hook import handler, OWNED_LABELS
 import hosts
 import setup_rules
+import onboarding
 
 
 def installed_scope(root=ROOT):
@@ -74,9 +75,12 @@ def main():
     scope.add_argument("--project", type=Path)
     parser.add_argument("--config", type=Path, default=ROOT / "config.json")
     parser.add_argument("--apply", action="store_true")
+    parser.add_argument("--onboarding", action="store_true", help="read-only module and hook inventory for the first-use conversation; no audit or registration")
     parser.add_argument("--remove", action="store_true", help="remove only the selected adapter's registration")
     args = parser.parse_args()
     try:
+        if args.onboarding and (args.apply or args.remove or args.export):
+            raise ValueError("--onboarding is read-only; omit --apply, --remove and --export")
         owner, user = installed_scope()
         if args.user:
             owner, user = Path.home(), True
@@ -91,6 +95,10 @@ def main():
             raise ValueError("--export requires manual mode without --remove")
         config = args.config.expanduser().resolve()
         settings = load_config(config) if not args.remove else {"modules": {}}
+        if args.onboarding:
+            print(json.dumps(dict(selected, onboarding=onboarding.snapshot(selected, config, owner, user)),
+                             ensure_ascii=False, indent=2))
+            return 0
         if not args.remove:
             router_context(settings)
         state = dict(selected, skill_installed=(ROOT / "SKILL.md").is_file(),
@@ -143,6 +151,8 @@ def main():
                 if args.apply:
                     setup_rules.save(target, b"", pack.encode("utf-8"))
                     state["export_written"] = True
+        if not args.remove:
+            state["onboarding"] = onboarding.snapshot(selected, config, owner, user)
         print(json.dumps(state, ensure_ascii=False, indent=2))
         return 0
     except (OSError, ValueError, TypeError, KeyError) as error:

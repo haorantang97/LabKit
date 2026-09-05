@@ -1,6 +1,6 @@
 # Installation and first-use initialization
 
-The default experience is install + choose an appropriate entrypoint. Copying files alone cannot execute a callback: an agent downloading this package must read SKILL.md and complete authorized initialization. See [the desktop and host guide](hosts.md) before choosing paths.
+The default experience is a [first-use conversation](onboarding.md), installation and the chosen entrypoint. Present module switches and hook facts; ask about module changes, an optional Skills/instruction audit and routing changes together. Copying files alone cannot execute a callback: an agent downloading this package must read SKILL.md and guide initialization. See [the desktop and host guide](hosts.md) before choosing paths.
 
 ## Desktop-first setup
 
@@ -14,6 +14,8 @@ python3 skills/welcome-to-agi/scripts/install.py --host codex --surface desktop 
 ```
 
 The first command previews paths; the second installs and initializes. Auto mode prefers **rules** for known local hosts. This is a change from the old unconditional hook default. Use `--user` instead of `--project PATH` for user scope. No other skills or instructions are cleaned.
+
+After the first-use choices, add `--disable-module ID` for each module the user wants disabled in a new install. The installer applies these switches before registering routing, without editing the source package. An invalid ID fails before copying files. Existing installations retain their config and use the adjustment flow in [onboarding.md](onboarding.md).
 
 Other project hosts use the same entrypoint:
 
@@ -32,6 +34,8 @@ Run from the actual installed copy with the host and scope:
 python3 /installed/welcome-to-agi/scripts/initialize.py --host codex --surface desktop --project /path/to/project
 python3 /installed/welcome-to-agi/scripts/initialize.py --host codex --surface desktop --project /path/to/project --apply
 ```
+
+Before applying setup, use the same host/scope with `--onboarding` for read-only module and hook facts, including when an existing Welcome hook would otherwise block rules setup. This option does not audit other Skills and cannot be combined with `--apply`, `--remove`, or `--export`. Follow [onboarding.md](onboarding.md) to ask the remaining choices. Direct installation commands perform file setup and emit the onboarding facts; they do not conduct the conversation or mean the optional review was completed.
 
 Without `--apply`, rules/hook changes are shown as a diff and not written. Standard installed directories allow scope inference; source checkouts and custom layouts need explicit scope or target. Use `--user` to select the active Codex profile's AGENTS.md when CODEX_HOME is nondefault. Rule writes preserve surrounding bytes, back up previous contents, and update only one marked block. Damaged markers, symlinks and shadowed Codex targets produce an actionable error.
 
@@ -83,7 +87,7 @@ The hook handles valid UserPromptSubmit events for configured models, supplies a
 
 ## Status and actual-client verification
 
-Status distinguishes `host`/`host_evidence`, `surface`, selected `mode`, exact target, `skill_installed`, `adapter_probe`, `rules_registered`/`hook_registered`, `host_trust` and `native_delivery`. Trust is not applicable for rules/manual; hook trust remains unverified. `native_delivery` remains `not_verified` because local file checks cannot observe your client.
+Status distinguishes `host`/`host_evidence`, `surface`, selected `mode`, exact target, `skill_installed`, `adapter_probe`, `rules_registered`/`hook_registered`, `host_trust` and `native_delivery`. The `onboarding` object also lists each module's switch/guard, observed hook registrations, inspection coverage and the optional audit still to discuss. Trust is not applicable to the selected rules/manual adapter; any existing hooks' trust remains separately unverified. `native_delivery` remains `not_verified` because local file checks cannot observe your client.
 
 Follow [hosts.md](hosts.md#在实际使用的客户端验证): start a fresh conversation in the real desktop/CLI client, inspect loaded sources, submit an ordinary task without naming this skill, and observe module reads and the delivered result. A passing script test is not a native host test. Scope, active profile, remote runtime, context limits and overrides can affect loading.
 
@@ -121,7 +125,7 @@ python3 scripts/audit.py /path/to/project/AGENTS.md /path/to/project/.agents/ski
 
 `router` previews the exact semantic entrypoint without a model call. `route` is explicitly a **legacy keyword diagnostic**, not the semantic selector. `compose` returns separate unchanged `prompt` and `guidance` fields. For custom hosts, use `--host generic --mode rules --rules-file PATH` for a file the host already loads, or export a portable manual pack. No non-Codex hook adapter is claimed here.
 
-Auditing is optional and read-only. Candidate rules, duplicates, and coverage gaps need contextual review. An audit does not authorize deleting skills, rewriting AGENTS.md, or editing a knowledge base. Keep reports containing local paths/excerpts local unless the user asks to share them.
+Auditing is an optional choice explicitly offered during onboarding, not a silently omitted step. Run it only after the user chooses the check and scope (or already requested it). Candidate rules, duplicates, and coverage gaps need contextual review. An audit does not authorize deleting skills, rewriting AGENTS.md, or editing a knowledge base. Keep reports containing local paths/excerpts local unless the user asks to share them. Report a declined check as skipped by choice, an unanswered choice as pending, and an executed scan with its actual coverage.
 
 ## Remove or switch mode
 
