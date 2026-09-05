@@ -1,10 +1,10 @@
 # First-use conversation
 
-Use this flow for installation, upgrades, initialization and setup adjustments. Existing rule/hook markers do not skip an explicit setup request. Ordinary tasks do not repeat this flow. The conversation is conducted by the installing agent; scripts return facts and do not prompt on stdin. Merely downloading files cannot start a conversation.
+Use this flow for installation, initialization and setup adjustments. Existing rule/hook markers do not skip an explicit setup request. Ordinary tasks do not repeat this flow. The conversation is conducted by the installing agent; scripts return facts and do not prompt on stdin. Merely downloading files cannot start a conversation.
 
 ## Present the current choices
 
-Identify the actual client, local/cloud runtime and user/project scope using [hosts.md](hosts.md). Read the installed config when upgrading; preserve disabled modules and custom guards. New installations ship with all five modules enabled, including delegation. Do not reset an existing user's choices to the defaults.
+Identify the actual client, local/cloud runtime and user/project scope using [hosts.md](hosts.md). Read the installed config when adjusting setup; preserve disabled modules and custom guards. New installations ship with all five modules enabled, including delegation. Do not reset an existing user's choices to the defaults.
 
 Confirm the actual model separately: these prompts target Astra, while a host adapter only delivers files/instructions. Do not present Claude Code/Cursor format support as Astra model availability. For Hermes/OpenClaw, read [hermes-openclaw.md](hermes-openclaw.md) and identify the actual backend project/workspace and profile before choosing paths. Installation does not change their provider, credentials, model or Gateway settings.
 
@@ -14,7 +14,7 @@ From the package or installed folder, get a read-only summary using the intended
 python3 scripts/initialize.py --host codex --surface desktop --user --onboarding
 ```
 
-Use `--project PATH` for project scope and the actual host for other clients. This reads module settings and the selected registration files; it does not audit other Skills, register anything, execute hooks, or change trust. It also works before a conflicting Super Astra hook is migrated. In a source checkout the config describes the proposed package, not an existing installation; inspect the existing installed copy before proposing an upgrade.
+Use `--project PATH` for project scope and the actual host for other clients. This reads module settings and the selected registration files; it does not audit other Skills, register anything, execute hooks, or change trust. It also works when an existing Super Astra hook would block a switch to rules. In a source checkout the config describes the proposed package, not an existing installation; inspect the installed copy before changing its settings.
 
 Show a compact list in the user's language, using the actual enabled/disabled states:
 
@@ -28,7 +28,7 @@ Show a compact list in the user's language, using the actual enabled/disabled st
 
 Explain once: all five are enabled for new installs, but each task selects only useful modules. Enabling delegation allows its guidance to be selected; it neither launches agents for every task nor turns on a host's multi-agent capability. Host restrictions and explicit no-agent instructions still apply.
 
-Show the proposed/current routing mode and target, plus the hook inventory. Distinguish **registered**, **enabled at runtime**, **trusted**, and **observed delivery**. File inspection only establishes registration. Unknown is not off. A `different` Super Astra definition is not evidence of incompatibility or failure; identify the actual difference before suggesting migration. List unrelated hooks as belonging to other tools, not as cleanup targets. The built-in inventory covers one Codex hooks file only; additional user/project/plugin/managed sources and other hosts need the actual client's diagnostics when available. Report that coverage without claiming all hooks are off.
+Show the proposed/current routing mode and target, plus the hook inventory. Distinguish **registered**, **enabled at runtime**, **trusted**, and **observed delivery**. File inspection only establishes registration. Unknown is not off. A `different` Super Astra definition is not evidence of incompatibility or failure; identify the actual difference before suggesting a registration change. List unrelated hooks as belonging to other tools, not as cleanup targets. The built-in inventory covers one Codex hooks file only; additional user/project/plugin/managed sources and other hosts need the actual client's diagnostics when available. Report that coverage without claiming all hooks are off.
 
 ## Ask once, then follow the answers
 

@@ -26,7 +26,7 @@ Agent 能执行本地命令时，由它运行安装器。用户只需要补充�
 | 普通桌面聊天、网页、云端或无法读本地文件 | 手动提示词包 | `--mode manual --export PATH` | 把文件附到会话；自动跨对话生效不受保证 |
 | Codex，用户选择兼容方案 | 常驻规则 | 项目 `AGENTS.md`；用户 `$CODEX_HOME/AGENTS.md` | 当前会话实际加载该文件，模块路径可读 |
 
-代码已实现这些文件生成／编辑路径，使用临时项目验证。**Hermes、OpenClaw、Claude Code、Cursor 的原生会话仍未实测；Codex CLI 已验证 Hook 投递，桌面端仍待观察**；表格不表示所有版本都已验证可用。脚本检查使用 macOS/Linux、Python 3.10+；Windows 原生运行尚未验证，hook 安装器明确拒绝 Windows。
+代码已实现这些文件生成／编辑路径，使用临时项目验证。**当前版本的原生客户端加载、Hook 投递和模块读取仍需在实际使用环境中验证**；表格不表示所有版本都已验证可用。脚本检查使用 macOS/Linux、Python 3.10+；Windows 原生运行尚未验证，hook 安装器明确拒绝 Windows。
 
 `--host auto` 仅检查 `CODEX_THREAD_ID`、`CLAUDECODE=1` 的运行环境线索；这些也可能从父进程继承。线索冲突或缺失就选择 generic/manual，不扫描已安装软件来猜客户端。Agent 应根据真实会话选择 `--host` 和 `--surface`；有终端工具不代表用户在使用 CLI。
 

@@ -36,9 +36,6 @@ def main():
         if args.export and (args.export.expanduser().exists() or args.export.expanduser().is_symlink()):
             raise ValueError("export destination exists; choose a new file")
         destination = owner / selected["skill_dir"] / "super-astra"
-        for legacy_name in ("welcome-to-agi", "astra-prompts"):
-            if (destination.parent / legacy_name).exists():
-                raise ValueError("legacy installation found: " + legacy_name + "; follow references/rename.md before installing a second copy")
         if destination.exists():
             raise ValueError("destination exists; initialize that installed copy or review an update without overwriting customizations")
         if destination.is_symlink():

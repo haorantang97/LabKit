@@ -8,7 +8,7 @@ import subprocess
 import sys
 
 from astra import ROOT, load_config, router_context
-from setup_hook import handler, OWNED_LABELS
+from setup_hook import handler, LABEL
 import hosts
 import setup_rules
 import onboarding
@@ -56,7 +56,7 @@ def status(path, config, validate=True):
         for item in group["hooks"]:
             if not isinstance(item, dict):
                 raise ValueError("invalid handler")
-            if item.get("statusMessage") in OWNED_LABELS:
+            if item.get("statusMessage") == LABEL:
                 count += 1
                 if item == expected:
                     current += 1
@@ -123,7 +123,7 @@ def main():
                 "Shared config is not proof of desktop delivery; see references/hosts.md.")
         elif selected["mode"] == "rules":
             target = Path(selected["rules_file"])
-            # Avoid creating a second entrypoint during a legacy hook migration.
+            # Require removal of the current hook before registering a rule.
             hook_path = Path(hosts.plan("codex", args.surface, "hook", owner, user)["hooks_file"]) if selected["host"] == "codex" and os.name != "nt" else None
             if hook_path and hook_path.exists() and not args.remove:
                 old = status(hook_path, config)

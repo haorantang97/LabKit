@@ -24,7 +24,7 @@ def add_arguments(parser):
     parser.add_argument("--surface", choices=("desktop", "cli", "ide", "unknown", "cloud"), default="unknown")
     parser.add_argument("--mode", choices=("auto", "rules", "hook", "manual"), default="auto")
     parser.add_argument("--rules-file", type=Path, help="explicit host-loaded instruction file")
-    parser.add_argument("--hooks", type=Path, help="explicit Codex hooks.json; legacy shorthand for hook mode")
+    parser.add_argument("--hooks", type=Path, help="explicit Codex hooks.json; selects hook mode")
     parser.add_argument("--export", type=Path, help="write a portable manual prompt pack to this file")
     parser.add_argument("--export-format", choices=("pack", "entry"), default="pack",
                         help="pack is portable; entry is a short local-file rule for UI-only settings")

@@ -204,16 +204,6 @@ class HookTests(unittest.TestCase):
 
 
 class SetupTests(unittest.TestCase):
-    def test_legacy_hook_is_replaced_without_duplication(self):
-        legacy = {"type": "command", "command": "python3 /fixture/astra-prompts/scripts/astra.py hook", "statusMessage": "LabKit Astra Prompts v1"}
-        other = {"type": "command", "command": "echo other"}
-        doc = {"hooks": {"UserPromptSubmit": [{"hooks": [legacy, other]}]}}
-        result = setup_hook.update(doc, ROOT / "config.json")
-        handlers = [h for g in result["hooks"]["UserPromptSubmit"] for h in g["hooks"]]
-        self.assertEqual(len(handlers), 2)
-        self.assertIn(other, handlers)
-        self.assertEqual(sum(h.get("statusMessage") == setup_hook.LABEL for h in handlers), 1)
-
     def test_initialization_status_distinguishes_registration_and_trust(self):
         with tempfile.TemporaryDirectory() as tmp:
             path = Path(tmp) / "hooks.json"

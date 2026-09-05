@@ -17,14 +17,13 @@ class OnboardingTests(unittest.TestCase):
         return subprocess.run([sys.executable, str(ROOT / "scripts" / name), *map(str, args)],
                               capture_output=True, text=True)
 
-    def test_inventory_before_legacy_migration_never_executes_or_changes_hooks(self):
+    def test_inventory_never_executes_or_changes_hook_definitions(self):
         with tempfile.TemporaryDirectory() as tmp:
             project = Path(tmp)
             hook = project / ".codex/hooks.json"
             hook.parent.mkdir()
             sentinel = project / "hook-executed"
             item = setup_hook.handler(ROOT / "config.json")
-            item["statusMessage"] = "LabKit Astra Prompts v1"
             item["command"] = "touch " + str(sentinel)
             hook.write_text(json.dumps({"hooks": {"UserPromptSubmit": [{"hooks": [item]}]}}))
             original = hook.read_bytes()

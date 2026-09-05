@@ -19,7 +19,7 @@ In a desktop agent, ask:
 
 The agent can run the installer for you. It checks the actual client and recommends Hook for supported Codex runtimes; **rules remain available when selected**. Missing hook trust is a pending step, not a reason to switch automatically. Copying files alone cannot execute initialization, so a downloader should follow SKILL.md.
 
-First-use guidance lists the five module switches and current hook registration facts, then asks which modules to turn off, whether to check existing Skills and instruction conflicts, and whether to adjust routing. All five modules, including delegation, start enabled in a new install; existing preferences survive upgrades. Enabled modules are selected only when useful, and delegation does not enable a host's multi-agent feature. The audit runs only if chosen. [Initialization conversation](references/onboarding.md).
+First-use guidance lists the five module switches and current hook registration facts, then asks which modules to turn off, whether to check existing Skills and instruction conflicts, and whether to adjust routing. All five modules, including delegation, start enabled in a new install; reopening setup preserves existing preferences. Enabled modules are selected only when useful, and delegation does not enable a host's multi-agent feature. The audit runs only if chosen. [Initialization conversation](references/onboarding.md).
 
 | Client | Implemented entrypoint |
 |---|---|
@@ -60,7 +60,7 @@ All five are available by default in new installs; availability does not mean se
 
 ## Modular configuration
 
-Each module has `module.json` (including semantic `when`), `prompt.md` (official blocks), and `guard.md` (separate LabKit conditions). Toggle modules in `config.json`. Add/remove modules without changing the engine. `routing: keyword` retains the older optional regex mode; semantic routing is the default.
+Each module has `module.json` (including semantic `when`), `prompt.md` (official blocks), and `guard.md` (separate LabKit conditions). Toggle modules in `config.json`. Add/remove modules without changing the engine. `routing: keyword` provides optional regex matching; semantic routing is the default.
 
 ## Included tools
 
@@ -72,10 +72,10 @@ Each module has `module.json` (including semantic `when`), `prompt.md` (official
 - `astra.py compose`: output selected guidance separately from the original prompt.
 - `audit.py`: read-only scan of agreed configuration paths, offered during onboarding and run only if chosen.
 
-[Setup, upgrades, configuration, and removal](references/setup.md).
+[Setup, configuration, and removal](references/setup.md).
 
 ## Validation and provenance
 
-[Evaluation](references/evaluation.md) separates deterministic script checks, actual model-selection trials, and native host delivery. Codex hooks filter `gpt-6-astra` by default. Rules can deliver the guidance to other models, which must judge its applicability; this does not switch models or add tools. File adapter tests pass, but native desktop loading has not been verified across these clients.
+[Evaluation](references/evaluation.md) documents automated coverage and the checks needed for native host delivery and module selection. Codex hooks filter `gpt-6-astra` by default. Rules can deliver the guidance to other models, which must judge its applicability; this does not switch models or add tools. File adapter tests pass, but native desktop loading has not been verified across these clients.
 
 The five prompt blocks are from [OpenAI's Astra guide](https://developers.openai.com/api/docs/guides/latest-model#prompting-best-practices), checked 2026-09-05. Routing and onboarding are LabKit additions. See [sources](references/sources.md) and the [PolyForm Noncommercial license](../../LICENSE).

@@ -24,7 +24,7 @@ python3 skills/super-astra/scripts/install.py --host claude-code --surface deskt
 python3 skills/super-astra/scripts/install.py --host cursor --surface desktop --project /path/to/project --apply
 ```
 
-Codex and Cursor packages go into `.agents/skills/super-astra`; Claude Code uses `.claude/skills/super-astra`. Cursor integration relies on the generated rule's explicit paths, not a claim about skill autodiscovery. Existing skill destinations are never overwritten; initialize that copy or review an upgrade preserving its config. Unknown clients default to manual, visibly reporting that automatic routing is absent. `--host auto` uses limited runtime hints, not installed binary discovery; pass the actual host whenever known.
+Codex and Cursor packages go into `.agents/skills/super-astra`; Claude Code uses `.claude/skills/super-astra`. Cursor integration relies on the generated rule's explicit paths, not a claim about skill autodiscovery. Existing skill destinations are never overwritten; initialize that copy to preserve its config. Unknown clients default to manual, visibly reporting that automatic routing is absent. `--host auto` uses limited runtime hints, not installed binary discovery; pass the actual host whenever known.
 
 ## Already downloaded / first invocation
 
@@ -79,7 +79,7 @@ Attach that self-contained Markdown pack to the actual conversation and ask the 
 
 ```bash
 python3 scripts/initialize.py --host codex --mode hook --project /path/to/project --apply
-# Equivalent explicit target (backward compatible):
+# Equivalent explicit target:
 python3 scripts/initialize.py --hooks /path/to/project/.codex/hooks.json --apply
 ```
 
@@ -99,7 +99,7 @@ Follow [hosts.md](hosts.md#在实际使用的客户端验证): start a fresh con
 
 `config.json`:
 
-- `routing`: `semantic` by default; `keyword` retains the older narrow phrase-matching mode.
+- `routing`: `semantic` by default; `keyword` selects narrow phrase matching.
 - `modules.<id>.enabled`: whether the module appears in the available catalog. All five are available by default for new installations; this does not select them all.
 - `modules.<id>.guard`: whether the separate LabKit conditions must also be read.
 - `models`: exact model slugs accepted by the Codex hook, default `gpt-6-astra`. Unknown/missing models skip; add other slugs only after deciding that Astra guidance is appropriate for them.
@@ -109,14 +109,6 @@ Follow [hosts.md](hosts.md#在实际使用的客户端验证): start a fresh con
 Each `modules/<id>/` contains `module.json`, `prompt.md`, and `guard.md`. Edit `when` for semantic routing; `patterns` and `exclude` only affect keyword mode. Add the module to `config.json` or remove its entry to extend/shrink the skill without editing engine code. Original official prompts and custom conditions remain separate.
 
 Delegation is available in new installs because ordinary tasks may benefit from it. The guard still requires independent bounded work, useful coordination tradeoffs, available tools, and authorization. A no-agent request means no spawning. Plan sessions omit initiative and delegation: programmatically in hook mode, by the routing instructions in rules mode.
-
-## Upgrade an existing installation
-
-For the current rename, follow [rename.md](rename.md). Existing installations are not renamed automatically; retain their working paths until an authorized migration preserves customizations and updates registrations.
-
-The new name is `super-astra`. Preserve customized configuration and modules, and remove the old discoverable entry after backing it up outside skill discovery directories. Do not install two competing copies. `setup_hook.py` recognizes legacy registrations listed in the [upgrade guide](rename.md) and replaces it with one current handler in the same JSON file. If the hook lives in another source, migrate that source explicitly too. Review/trust the updated definition again.
-
-The new default enables delegation as a candidate; retaining an older explicit disabled setting is supported. Select `routing: semantic` to get ordinary-task routing. Official prompt bodies are unchanged.
 
 ## Standalone tools and optional audit
 
@@ -129,7 +121,7 @@ printf '%s' '少点套话' | python3 scripts/astra.py route
 python3 scripts/audit.py /path/to/project/AGENTS.md /path/to/project/.agents/skills
 ```
 
-`router` previews the exact semantic entrypoint without a model call. `route` is explicitly a **legacy keyword diagnostic**, not the semantic selector. `compose` returns separate unchanged `prompt` and `guidance` fields. For custom hosts, use `--host generic --mode rules --rules-file PATH` for a file the host already loads, or export a portable manual pack. No non-Codex hook adapter is claimed here.
+`router` previews the exact semantic entrypoint without a model call. `route` is explicitly a **keyword diagnostic**, not the semantic selector. `compose` returns separate unchanged `prompt` and `guidance` fields. For custom hosts, use `--host generic --mode rules --rules-file PATH` for a file the host already loads, or export a portable manual pack. No non-Codex hook adapter is claimed here.
 
 Auditing is an optional choice explicitly offered during onboarding, not a silently omitted step. Run it only after the user chooses the check and scope (or already requested it). Candidate rules, duplicates, and coverage gaps need contextual review. An audit does not authorize deleting skills, rewriting AGENTS.md, or editing a knowledge base. Keep reports containing local paths/excerpts local unless the user asks to share them. Report a declined check as skipped by choice, an unanswered choice as pending, and an executed scan with its actual coverage.
 

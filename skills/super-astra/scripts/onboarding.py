@@ -5,7 +5,7 @@ from pathlib import Path
 
 from astra import load_config, load_module
 import hosts
-from setup_hook import handler, OWNED_LABELS
+from setup_hook import handler, LABEL
 import setup_rules
 
 
@@ -30,7 +30,7 @@ def hook_inventory(path, config):
                 for item in group["hooks"]:
                     if not isinstance(item, dict):
                         raise ValueError("invalid handler")
-                    owned = item.get("statusMessage") in OWNED_LABELS
+                    owned = item.get("statusMessage") == LABEL
                     result["handlers"].append({
                         "event": event, "type": item.get("type"),
                         "owner": "super-astra" if owned else "other",
@@ -77,7 +77,7 @@ def snapshot(selected, config, owner, user, settings=None):
             rule["registration"] = "unreadable"
     return {
         "read_only": True, "modules": modules, "config_file": str(config),
-        "module_policy": "New installs enable all modules; upgrades preserve existing choices. Enabled means available for selection, not forced use or host multi-agent enablement.",
+        "module_policy": "New installs enable all modules; setup adjustments preserve existing choices. Enabled means available for selection, not forced use or host multi-agent enablement.",
         "rules": rule, "hooks": hooks,
         "audit": {"status": "not_run", "choice": "ask_user",
                   "scope": "Agree on instruction files and skill directories before running audit.py."},

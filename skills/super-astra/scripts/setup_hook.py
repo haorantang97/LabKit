@@ -14,7 +14,6 @@ import tempfile
 from astra import ROOT, load_config
 
 LABEL = "LabKit Super Astra v1"
-OWNED_LABELS = {LABEL, "LabKit Astra Prompts v1", "LabKit Welcome to AGI v1", "LabKit Welcome to AGI v2"}
 
 
 def handler(config):
@@ -46,7 +45,7 @@ def update(document, config, remove=False):
             raise ValueError("invalid matcher group")
         if not all(isinstance(h, dict) for h in group["hooks"]):
             raise ValueError("invalid hook handler")
-        owned = [h for h in group["hooks"] if h.get("statusMessage") in OWNED_LABELS]
+        owned = [h for h in group["hooks"] if h.get("statusMessage") == LABEL]
         if not owned:
             new_groups.append(group)
             continue
@@ -55,7 +54,7 @@ def update(document, config, remove=False):
             command = existing.get("command", "")
             if not isinstance(command, str) or "scripts/astra.py" not in command:
                 raise ValueError("hook label collision; inspect manually")
-        kept = [h for h in group["hooks"] if h.get("statusMessage") not in OWNED_LABELS]
+        kept = [h for h in group["hooks"] if h.get("statusMessage") != LABEL]
         if kept:
             group["hooks"] = kept
             new_groups.append(group)

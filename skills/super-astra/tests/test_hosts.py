@@ -16,50 +16,34 @@ import setup_hook
 
 
 class HostTests(unittest.TestCase):
-    def test_rename_recognizes_old_hook_and_cursor_header(self):
-        old = setup_hook.handler(ROOT / "config.json")
-        old["statusMessage"] = "LabKit Welcome to AGI v2"
-        other = {"type": "command", "command": "echo unrelated"}
-        doc = {"hooks": {"UserPromptSubmit": [{"hooks": [old, other]}]}}
-        updated = setup_hook.update(doc, ROOT / "config.json")
-        items = [h for g in updated["hooks"]["UserPromptSubmit"] for h in g["hooks"]]
-        self.assertEqual(len(items), 2)
-        self.assertIn(other, items)
-        self.assertEqual(sum(h.get("statusMessage") == "LabKit Super Astra v1" for h in items), 1)
-        legacy = setup_rules.LEGACY_CURSOR_HEADER + setup_rules.LEGACY_BEGIN + "old body\n" + setup_rules.LEGACY_END
-        refreshed = setup_rules.transform(legacy, "new body\n", "cursor")
-        self.assertTrue(refreshed.startswith(setup_rules.CURSOR_HEADER))
-        self.assertEqual(refreshed.count(setup_rules.BEGIN), 1)
-        self.assertEqual(setup_rules.transform(legacy, "", "cursor", remove=True), setup_rules.LEGACY_CURSOR_HEADER)
-
-    def test_legacy_rule_upgrade_preserves_surroundings_backup_and_removal(self):
+    def test_rule_refresh_preserves_surroundings_backup_and_removal(self):
         with tempfile.TemporaryDirectory() as tmp:
             path = Path(tmp) / "AGENTS.md"
             prefix, suffix = "# Existing\r\n保留规则", "\r\nUser addition\r\n"
-            original = (prefix + setup_rules.LEGACY_BEGIN + "old body\n" + setup_rules.LEGACY_END + suffix).encode()
+            original = (prefix + setup_rules.BEGIN + "previous settings\n" + setup_rules.END + suffix).encode()
             path.write_bytes(original)
             with redirect_stdout(StringIO()):
                 setup_rules.manage(path, ROOT / "config.json", apply=True)
-            migrated = path.read_bytes()
-            self.assertTrue(migrated.startswith(prefix.encode()))
-            self.assertTrue(migrated.endswith(suffix.encode()))
-            self.assertEqual(migrated.count(setup_rules.BEGIN.encode()), 1)
-            self.assertNotIn(setup_rules.LEGACY_BEGIN.encode(), migrated)
+            refreshed = path.read_bytes()
+            self.assertTrue(refreshed.startswith(prefix.encode()))
+            self.assertTrue(refreshed.endswith(suffix.encode()))
+            self.assertEqual(refreshed.count(setup_rules.BEGIN.encode()), 1)
+            self.assertIn(str(ROOT / "config.json").encode(), refreshed)
+            self.assertNotIn(b"previous settings", refreshed)
             self.assertEqual(next(path.parent.glob("*.super-astra-*.bak")).read_bytes(), original)
             with redirect_stdout(StringIO()):
                 setup_rules.manage(path, ROOT / "config.json", apply=True)
-            self.assertEqual(path.read_bytes(), migrated)
+            self.assertEqual(path.read_bytes(), refreshed)
             with redirect_stdout(StringIO()):
                 setup_rules.manage(path, ROOT / "config.json", apply=True, remove=True)
             self.assertEqual(path.read_bytes(), (prefix + suffix).encode())
             self.assertEqual(setup_rules.transform(original.decode(), "", remove=True), prefix + suffix)
 
-    def test_mixed_or_damaged_marker_versions_are_rejected(self):
+    def test_duplicate_damaged_or_unpaired_markers_are_rejected(self):
         current = setup_rules.BEGIN + "current\n" + setup_rules.END
-        legacy = setup_rules.LEGACY_BEGIN + "legacy\n" + setup_rules.LEGACY_END
-        for content in (current + legacy, setup_rules.BEGIN + setup_rules.LEGACY_END,
-                        setup_rules.LEGACY_BEGIN + setup_rules.END,
-                        current + setup_rules.LEGACY_BEGIN.strip(),
+        for content in (current + current, setup_rules.BEGIN + "missing end",
+                        "missing start" + setup_rules.END,
+                        current + setup_rules.BEGIN.strip(),
                         setup_rules.END + "reversed" + setup_rules.BEGIN):
             with self.subTest(content=content):
                 self.assertTrue(setup_rules.has_managed_rule(content))
@@ -67,11 +51,11 @@ class HostTests(unittest.TestCase):
                     with self.assertRaises(ValueError):
                         setup_rules.transform(content, "new body\n", remove=remove)
 
-    def test_legacy_rule_is_visible_and_blocks_second_hook_entry(self):
+    def test_rule_is_visible_and_blocks_second_hook_entry(self):
         with tempfile.TemporaryDirectory() as tmp:
             project = Path(tmp)
             path = project / "AGENTS.md"
-            original = setup_rules.LEGACY_BEGIN + "old body\n" + setup_rules.LEGACY_END
+            original = setup_rules.BEGIN + "current instructions\n" + setup_rules.END
             path.write_text(original)
             args = ("--host", "codex", "--project", project, "--mode", "hook")
             inspected = self.run_script("initialize.py", *args, "--onboarding")
@@ -85,24 +69,13 @@ class HostTests(unittest.TestCase):
     def test_new_outputs_use_current_brand(self):
         import astra
         config = ROOT / "config.json"
-        outputs = [setup_rules.transform("", setup_rules.entry(config)),
-                   setup_rules.transform("", setup_rules.entry(config), "cursor"),
-                   setup_rules.manual_pack(config),
-                   astra.router_context(astra.load_config(config)),
-                   json.dumps(setup_hook.handler(config))]
-        for output in outputs:
-            self.assertNotRegex(output.lower(), r"welcome[ _-]*to[ _-]*agi|astra-prompts")
-
-    def test_rename_does_not_install_beside_legacy_copy(self):
-        with tempfile.TemporaryDirectory() as tmp:
-            project = Path(tmp)
-            old = project / ".agents/skills/welcome-to-agi"
-            old.mkdir(parents=True)
-            (old / "config.json").write_text("user customizations")
-            result = self.run_script("install.py", "--host", "codex", "--project", project, "--apply")
-            self.assertNotEqual(result.returncode, 0)
-            self.assertFalse((old.parent / "super-astra").exists())
-            self.assertEqual((old / "config.json").read_text(), "user customizations")
+        outputs = [(setup_rules.transform("", setup_rules.entry(config)), "Super Astra"),
+                   (setup_rules.transform("", setup_rules.entry(config), "cursor"), "Super Astra"),
+                   (setup_rules.manual_pack(config), "Super Astra"),
+                   (astra.router_context(astra.load_config(config)), "LABKIT_SUPER_ASTRA_ROUTER_V1"),
+                   (json.dumps(setup_hook.handler(config)), "LabKit Super Astra v1")]
+        for output, expected in outputs:
+            self.assertIn(expected, output)
 
     def run_script(self, script, *args, env=None):
         return subprocess.run([sys.executable, str(ROOT / "scripts" / script), *map(str, args)],
@@ -195,7 +168,7 @@ class HostTests(unittest.TestCase):
                 setup_rules.prepare(path, ROOT / "config.json")
             self.assertFalse(path.exists())
             path = path.with_name("RULES.md")
-            path.write_text("<!-- BEGIN LABKIT_WELCOME_TO_AGI_RULE_V1 -->")
+            path.write_text(setup_rules.BEGIN.strip())
             with self.assertRaises(ValueError):
                 setup_rules.prepare(path, ROOT / "config.json")
             alias = path.with_name("ALIAS.md")
@@ -251,7 +224,7 @@ class HostTests(unittest.TestCase):
             result = run("--mode", "rules", "--apply")
             self.assertEqual(result.returncode, 0, result.stderr)
             rules_before = (project / "AGENTS.md").read_bytes()
-            # Auto now recommends a hook, but must not silently migrate an existing rule.
+            # Auto selects a hook, but must not leave an existing rule active beside it.
             self.assertNotEqual(run("--apply").returncode, 0)
             self.assertEqual((project / "AGENTS.md").read_bytes(), rules_before)
             self.assertEqual(json.loads((project / ".codex/hooks.json").read_text())["hooks"], {})
