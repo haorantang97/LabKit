@@ -14,7 +14,7 @@ Design a visual motif that explains the repository: a collection uses its own na
 
 Produce light and dark SVGs for vector compositions. Preserve established asset paths where practical; otherwise update every consumer. Use a viewBox, accessible title/description, deliberate spacing and readable text. Choose dimensions for the composition and inspect scaling rather than enforcing a fixed template size. For photos or complex raster artwork, use the relevant image-generation/editing capability.
 
-Embed theme variants through picture/source plus img fallback, with descriptive alt text and a sensible display width. Store assets in the repository. Record the motif, colors, type choices, references and dimensions in assets/STYLE.md.
+Embed theme variants through picture/source plus img fallback, with descriptive alt text and a sensible display width. Store presentation assets at the repository level, outside the installable skill. Record the motif, colors, type choices, references and dimensions in the repository's assets/STYLE.md; keep any saved generation prompts with those presentation files. Follow the [installation boundary](../../references/publishing.md#installation-boundary) when arranging them.
 
 When social sharing is in scope, create a dedicated 1280 × 640 PNG with the same identity and a legible title at thumbnail size. Verify separately whether GitHub's social-preview setting actually uses it.
 

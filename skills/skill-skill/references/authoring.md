@@ -17,7 +17,7 @@ Keep discovery concise and specific. Required frontmatter is name and descriptio
 - Keep shared purpose, real constraints and useful routing in SKILL.md.
 - Use references for substantial detail relevant only to particular modes, and link them at the point of use.
 - Use scripts for repeated or fragile deterministic operations; verify changed scripts by running them safely.
-- Use assets for files that belong in the generated output.
+- Use assets for files that belong in the generated output. Repository covers and their design or generation records belong outside the installed skill; classify files by their role in the workflow, not their extension or directory name.
 - Do not create empty resource directories, placeholder examples, a README, a changelog or an extra router without a task reason. Publishing a repository can provide that reason; a small local skill often does not.
 
 There is no universal minimum description length, mandatory five-part trigger, numeric constraint quota, fixed test count or minimum size before moving detail into references. Choose specificity and structure for the actual risk and workflow.
@@ -35,7 +35,7 @@ python3 <official-skill-creator>/scripts/quick_validate.py <skill-folder>
 
 Use the initializer for a new skill when it helps; do not reinitialize an existing skill. Request only resource folders the task needs. For agents/openai.yaml, read the current official metadata reference. A generator can replace the whole YAML file: preserve policy, dependencies and unrelated fields when editing existing metadata. Preserve automatic discovery unless the user requested a different invocation policy.
 
-For installation, use the current official skill-installer when applicable. Install the intended version, preserve customizations and verify files reached the correct runtime. Registration is not evidence of host loading, Hook trust or actual delivery.
+For installation, use the current official skill-installer when applicable. Install the intended version, preserve customizations and inspect the resulting files in the correct runtime. For packaging or installation changes, follow the [installation boundary and verification guidance](publishing.md#installation-boundary). Registration is not evidence of host loading, Hook trust or actual delivery.
 
 Keep official system skills and helper scripts intact and updateable. Do not ship copies of host scripts or assume this machine's absolute paths are portable. If official guidance changes, compare the relevant change with this guide before applying it; user conventions and host constraints still govern the task.
 

@@ -16,7 +16,7 @@ For a collection, map user tasks to named entrypoints and tangible outputs. Coun
 
 Give a concrete usage example, meaningful limitations and validation scope. Include the most useful selection/setup FAQs for a substantial page. Links to contribution guidance and actual licenses should resolve. Preserve component-license exceptions and attribution.
 
-Only document installation methods supported by current files and host guidance. Explain complete-folder installation when references/scripts/assets are needed. Do not claim that copying a file activates a hook, sets a model, installs external services or verifies host behavior.
+Only document installation methods supported by current files and host guidance. Follow the [installation boundary](../../references/publishing.md#installation-boundary): complete-folder installation means the selected skill directory and its dependencies. Point commands at that directory, keeping repository presentation outside the install. Match update instructions to the installed form; a copied folder is not a Git checkout. Do not claim that copying a file activates a hook, sets a model, installs external services or verifies host behavior.
 
 Keep existing language choices. For bilingual repositories, produce complete equivalent editions, synchronize commands and facts, and adapt anchors and diagram labels to each language. A short summary is not a full translation. Fix obsolete names and stale migration/status claims while renovating.
 
