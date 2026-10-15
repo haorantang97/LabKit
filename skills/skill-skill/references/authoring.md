@@ -1,7 +1,5 @@
 # Authoring and validation
 
-This guide adapts the local official Codex skill-creator guidance into skill-skill's workflow. It adds creation and validation to the existing publishing capability. It is maintained guidance, not a verbatim official manual or a higher-priority instruction source.
-
 Read this for creating a skill, changing its behavior or structure, validating it, or selecting an official helper. Packaging-only work may use the existing modules directly.
 
 ## Start with the capability
@@ -46,9 +44,3 @@ Run the official validator when available. Structural checks do not establish th
 For a substantial revision, use realistic cases from the capability. Include a narrow task that should stay narrow and an out-of-scope request when misrouting is a concern. Use independent evaluation only when complexity or risk justifies it and host and user permit delegation. Do not turn every small edit into a mandatory evaluation pipeline.
 
 Testing a local authoring workflow must not publish a repository, send a message, delete user data or grant Hook trust. Those steps require corresponding task authorization. Distinguish structural validation, a reasoned walkthrough, an executed example and actual client behavior in the receipt.
-
-## Source and maintenance
-
-Adapted on 2026-09-05 from the installed official skill-creator/SKILL.md, its references/openai_yaml.md and the official skill-installer instructions. Source hashes are in official-source-snapshot.json; they identify the guidance read for this integration and are not permanent pins or evidence of future currency.
-
-The user's packaging conventions remain in publishing.md. Official guidance informs creation, scope, progressive disclosure and validation; it does not silently erase explicit publishing choices.

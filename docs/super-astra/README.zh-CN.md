@@ -18,19 +18,19 @@
 
 **支持 Hook 的 Codex 环境优先引导 Hook；常驻规则作为用户可选的兼容方案。** 缺少信任时会保留待办并引导完成，不会自动切换成 AGENTS.md。 有本地执行能力的 Agent 可以代为安装。仅复制文件无法触发初始化，下载器需继续按 SKILL.md 操作。
 
-首次引导会列出五项模块开关与当前 Hook 注册情况，集中询问：要关闭哪些模块、是否检查现有 Skills 和指令冲突、是否调整接入方式。新安装默认全部开启，包含多 Agent 协作；重新打开设置时保留已有选择。模块按任务需要选用，多 Agent 模块也不会替你开启宿主的多 Agent 功能。检查由用户选择后执行。[完整初始化引导](references/onboarding.md)。
+首次引导会列出五项模块开关与当前 Hook 注册情况，集中询问：要关闭哪些模块、是否检查现有 Skills 和指令冲突、是否调整接入方式。新安装默认全部开启，包含多 Agent 协作；重新打开设置时保留已有选择。模块按任务需要选用，多 Agent 模块也不会替你开启宿主的多 Agent 功能。检查由用户选择后执行。[完整初始化引导](../../skills/super-astra/references/onboarding.md)。
 
 | 客户端 | 已实现的接入方式 |
 |---|---|
 | 本地 Codex 桌面端／CLI／IDE | Hook 加信任验证；可选择 AGENTS.md 规则块 |
-| Hermes 项目 | 已有项目上下文文件，或 AGENTS.md；[专门引导](references/hermes-openclaw.md) |
-| OpenClaw Agent 工作区 | 工作区 AGENTS.md 与 skills/；[专门引导](references/hermes-openclaw.md) |
+| Hermes 项目 | 已有项目上下文文件，或 AGENTS.md；[专门引导](../../skills/super-astra/references/hermes-openclaw.md) |
+| OpenClaw Agent 工作区 | 工作区 AGENTS.md 与 skills/；[专门引导](../../skills/super-astra/references/hermes-openclaw.md) |
 | Claude Code（附加格式适配） | CLAUDE.md 规则块；模型适用性另行判断 |
 | Cursor（附加格式适配） | Always Apply 项目规则；模型适用性另行判断 |
 | 其他可读取本地文件的 Agent | 指定宿主已自动加载的规则文件 |
 | 只有设置界面／普通聊天／云环境 | 导出简短规则入口，或完整手动提示词包 |
 
-[各客户端详细引导、限制与实际生效检查](references/hosts.md)
+[各客户端详细引导、限制与实际生效检查](../../skills/super-astra/references/hosts.md)
 
 需要命令行时，先预览再安装。Python 3.10+，脚本已在 macOS/Linux 验证：
 
@@ -74,12 +74,12 @@ python3 skills/super-astra/scripts/install.py --host codex --surface desktop --p
 - `astra.py compose`：单独生成选中模块，保留原 prompt。
 - `audit.py`：初始化时主动询问的一次性只读检查，用户选择后检查约定范围，不自动清理其他技能。
 
-[详细安装、配置与撤销](references/setup.md)
+[详细安装、配置与撤销](../../skills/super-astra/references/setup.md)
 
 ## 验证与边界
 
 默认按宿主选择 Hook、常驻规则或手动方式。Codex hook 用 `gpt-6-astra` 过滤事件；常驻规则在其他模型中使用时需判断适用性，不会切换模型或增加工具能力。
 
-[验证说明](references/evaluation.md)列出自动测试范围，以及原生 Hook 投递和模块选择需要进行的检查。已验证文件适配器的安装、更新、撤销和导出；尚未逐一完成各桌面客户端原生加载与执行实测。规则已写入不等于客户端已经加载。
+[验证说明](evaluation.md)列出自动测试范围，以及原生 Hook 投递和模块选择需要进行的检查。已验证文件适配器的安装、更新、撤销和导出；尚未逐一完成各桌面客户端原生加载与执行实测。规则已写入不等于客户端已经加载。
 
-官方提示词来自 [OpenAI Astra 指南](https://developers.openai.com/api/docs/guides/latest-model#prompting-best-practices)，核验于 2026-09-05。模块路由和初始化是 LabKit 的设计，详见[来源](references/sources.md)。原创代码沿用 [PolyForm Noncommercial 许可](../../LICENSE)。
+官方提示词来自 [OpenAI Astra 指南](https://developers.openai.com/api/docs/guides/latest-model#prompting-best-practices)，核验于 2026-09-05。模块路由和初始化是 LabKit 的设计，详见[来源](../../skills/super-astra/references/sources.md)。原创代码沿用 [PolyForm Noncommercial 许可](../../LICENSE)。

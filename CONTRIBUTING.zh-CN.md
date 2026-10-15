@@ -8,6 +8,8 @@ LabKit 收录 Skill 编写、发布、日常工作与 Agent 行为指引相关�
 
 每个完整 Skill 放在 `skills/{name}/` 下，保留 `SKILL.md` 入口，以及实际需要的脚本、参考资料和资产。保留有效行为、来源声明与既有许可证。创建或修改指令时，使用当前的[编写指导](skills/skill-skill/references/authoring.md)。
 
+读者指南和维护记录放在 `docs/`，开发测试放在 `tests/`，仓库展示资产放在根目录 `assets/`。`skills/` 下的各子目录就是安装单元。修改 Super Astra 时遵循[验证说明](docs/super-astra/evaluation.md)；skill-skill 的来源记录维护在[对应指南](docs/skill-skill/source-maintenance.md)。
+
 说明 Skill 在什么情况下使用、产出什么。根据流程选择有用的结构，不强制五段式描述或固定标题集合。提供与改动相称的验证依据，并区分文件检查与实际 Agent 行为。
 
 ## 仓库展示

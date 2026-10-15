@@ -8,7 +8,7 @@ import unittest
 from contextlib import redirect_stdout
 from io import StringIO
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2] / "skills/super-astra"
 sys.path.insert(0, str(ROOT / "scripts"))
 import hosts
 import setup_rules

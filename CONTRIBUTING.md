@@ -8,6 +8,8 @@ LabKit collects independent tools for skill authoring, publishing, everyday work
 
 Keep each complete skill under `skills/{name}/`, with a `SKILL.md` entrypoint and the scripts, references or assets it actually needs. Preserve working behavior, attribution and existing licenses. Use the maintained [authoring guidance](skills/skill-skill/references/authoring.md) for new or revised instructions.
 
+Keep human guides and maintenance records in `docs/`, development tests in `tests/`, and repository artwork in the root `assets/`. The folders under `skills/` are the installation units. For Super Astra changes, follow [evaluation](docs/super-astra/evaluation.md); maintain skill-skill source records in [its maintenance guide](docs/skill-skill/source-maintenance.md).
+
 Describe when the skill applies and what it produces. Choose useful structure for its workflow; a fixed five-part description or mandatory heading set is not required. Give validation evidence appropriate to the change and distinguish file checks from observed agent behavior.
 
 ## Repository presentation

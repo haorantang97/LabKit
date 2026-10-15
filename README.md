@@ -18,7 +18,7 @@ LabKit is Lab 305's collection of reusable agent skills. Guide an ordinary task,
 
 | When you want to… | Use | What it produces |
 | --- | --- | --- |
-| Apply relevant guidance before an agent starts work | **[Super Astra](skills/super-astra/README.md)** | Task-based selection of configurable Astra prompt modules, with client-specific setup |
+| Apply relevant guidance before an agent starts work | **[Super Astra](docs/super-astra/README.md)** | Task-based selection of configurable Astra prompt modules, with client-specific setup |
 | Create, refine or publish an AI skill | **[skill-skill](skills/skill-skill/SKILL.md)** | A scoped skill workflow; for publication, a complete repository with its own identity and documentation |
 | Find points that disappeared in a long conversation | **[open-loops](skills/open-loops/SKILL.md)** | An auditable list of unanswered questions, unacknowledged suggestions and decisions made on your behalf |
 | Read a booklist with daily guidance | **[reading-plan-mentor](skills/reading-plan-mentor/SKILL.md)** | A paced reading plan, a sample guide and continuity that adapts to actual progress |
@@ -38,9 +38,9 @@ These are four independent tools. The diagram is a selection map: using one does
 
 In a local agent that can access GitHub and install skills, ask:
 
-> Install the complete skill-skill folder from haorantang97/LabKit for my current client. Preserve any existing customizations and confirm which files were installed.
+> Install the complete `skills/skill-skill` subdirectory from haorantang97/LabKit for my current client. Preserve any existing customizations and confirm which files were installed.
 
-Replace `skill-skill` with `open-loops` or `reading-plan-mentor` to choose another tool. **Super Astra also needs initialization**; use the prompt and client-specific instructions in its [installation guide](skills/super-astra/README.md#install-and-initialize).
+Use `skills/open-loops` or `skills/reading-plan-mentor` to choose another tool. **Super Astra also needs initialization**; use the prompt and client-specific instructions in its [installation guide](docs/super-astra/README.md#install-and-initialize).
 
 To inspect the collection yourself:
 
@@ -49,7 +49,9 @@ git clone https://github.com/haorantang97/LabKit.git
 cd LabKit
 ```
 
-Install the complete selected folder under `skills/`, including its references, scripts and assets, in your client's skill directory. A lone `SKILL.md` can leave required resources behind. Each tool's linked entrypoint explains its workflow and dependencies.
+Install only the complete selected subdirectory—`skills/skill-skill`, `skills/open-loops`, `skills/reading-plan-mentor` or `skills/super-astra`—in your client's skill directory. Keep its runtime resources together. Repository-level `assets/`, `docs/`, `tests/` and `.github/` stay in the checkout. Each tool's entrypoint explains its workflow and dependencies.
+
+To update, run `git pull --ff-only` in the LabKit checkout, then review and apply changes to the selected installed skill while preserving local customizations. This updates the source checkout only; the Super Astra installer refuses to overwrite an existing destination. After an authorized Super Astra update, initialize that installed copy using its [setup guide](skills/super-astra/references/setup.md).
 
 Super Astra includes an installer that previews changes before applying them. Follow its [host guide](skills/super-astra/references/hosts.md) for the current client. Hook registration, trust and observed loading are separate steps; installation does not change the model selected in your client.
 
@@ -61,13 +63,13 @@ Super Astra includes an installer that previews changes before applying them. Fo
 
 **Turn a booklist into a habit.** Give `reading-plan-mentor` your books and available daily time. It checks whether the books support a useful shared theme, builds a realistic pace and shows a sample daily guide. Recurring delivery starts after you approve the plan and delivery setup.
 
-**Choose guidance for the current task.** Super Astra lets the current model select relevant modules for initiative, instruction-following, writing, delegation and testing. Availability does not mean every module runs on every task. Its [module guide](skills/super-astra/README.md#select-by-task-intent) explains the routing and limits.
+**Choose guidance for the current task.** Super Astra lets the current model select relevant modules for initiative, instruction-following, writing, delegation and testing. Availability does not mean every module runs on every task. Its [module guide](docs/super-astra/README.md#select-by-task-intent) explains the routing and limits.
 
 ## Validation status
 
 | Tool | Evidence available | What still depends on your setup |
 | --- | --- | --- |
-| Super Astra | [Automated script and file-adapter tests](skills/super-astra/references/evaluation.md); dedicated CI badge above | Actual client loading, Hook trust, model availability and module selection |
+| Super Astra | [Automated script and file-adapter tests](docs/super-astra/evaluation.md); dedicated CI badge above | Actual client loading, Hook trust, model availability and module selection |
 | skill-skill | Skill format validation and repository presentation checks | Generated output quality, target-agent behavior and the result of any requested publication |
 | open-loops | Packaged workflow instructions and supporting resources | Access to the relevant conversation and faithful execution by the host agent |
 | reading-plan-mentor | Packaged workflow with references for pacing, continuity and delivery | Book-source accuracy, scheduling and an authorized delivery channel |
@@ -80,8 +82,10 @@ The CI badge covers **Super Astra's tests**, not an end-to-end certification of 
 LabKit/
 ├── README.md · README.zh-CN.md
 ├── assets/                         # Collection identity and theme variants
+├── docs/                           # Human guides and maintenance records
+├── tests/super-astra/               # Development tests and prompt snapshots
 ├── skills/
-│   ├── super-astra/                 # Prompts, setup tools, references and tests
+│   ├── super-astra/                 # Runtime prompts, setup tools and references
 │   ├── skill-skill/                 # Skill authoring and publication entrypoint
 │   │   ├── modules/                # Internal publishing steps
 │   │   └── references/             # Authoring and presentation standards
@@ -98,7 +102,7 @@ LabKit/
 
 **Does Super Astra work in every agent client?** It provides several host adapters, with distinct validation limits. Its official prompt blocks target Astra; an adapter does not establish model availability or equivalent behavior elsewhere. See the [host guide](skills/super-astra/references/hosts.md).
 
-**Where are the old open-loops and reading-plan-mentor repositories?** The [open-loops repository](https://github.com/haorantang97/open-loops) and [reading-plan-mentor repository](https://github.com/haorantang97/reading-plan-mentor) are archived for history. Their current collection entries are here in LabKit.
+**Where do I find open-loops and reading-plan-mentor?** Their maintained entrypoints are [skills/open-loops](skills/open-loops/SKILL.md) and [skills/reading-plan-mentor](skills/reading-plan-mentor/SKILL.md). Install the corresponding subdirectory from this repository.
 
 **How does this relate to Personal-Ontology and LabArt?** [Personal-Ontology](https://github.com/haorantang97/Personal-Ontology) contains the personal knowledge system and its surrounding tools. [LabArt](https://github.com/haorantang97/LabArt) holds visual and artistic skills. LabKit is the everyday agent toolbox.
 
