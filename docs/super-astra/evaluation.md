@@ -3,18 +3,22 @@
 Run from the LabKit root:
 
 ```bash
-python3 -m unittest discover -s skills/super-astra/tests -v
+python3 -m unittest discover -s tests/super-astra -v
 ```
+
+The [prompt snapshot](../../tests/super-astra/fixtures/prompt-snapshot.json) records the verified official prompt hashes. Keep it with the development tests; it is not an installed runtime dependency.
+
+The `latest-model` URL can change models over time. Before updating, verify that the fetched page is still about GPT-6 Astra; do not silently replace prompts with guidance for a different model. Review changed prompt blocks, update hashes and dates, and run the relevant evaluation cases. There is no network fetch during normal use.
 
 ## Automated coverage
 
-The suite checks ordinary-message catalog delivery without keyword gating; disabled and plan-only modules; no user-message promotion; router size/error behavior; official prompt snapshots; optional keyword mode; installation and initialization; configuration audit coverage; and portable manual exports.
+The suite checks ordinary-message catalog delivery without keyword gating; disabled and plan-only modules; no user-message promotion; router size/error behavior; official prompt snapshots; optional keyword mode; installation and initialization, including the exact runtime file set and routing from the installed copy; configuration audit coverage; and portable manual exports.
 
 File-adapter tests use disposable projects for Codex, Claude Code, Cursor, Hermes and OpenClaw. They cover preview without writes, references to the installed folder (including Unicode and spaced paths), repeated initialization, current hook updates, preservation of unrelated handlers, exact CRLF/UTF-8 instruction bytes, backups and scoped removal after later user edits. They also check damaged or duplicate rule markers, symlinks, shadowed targets, changed Cursor activation metadata, host detection, profile paths and conflicts between hook and rule modes.
 
 Onboarding tests verify that inspection never executes registered commands, preserves module choices, reports malformed or unsupported hook sources without claiming they are off, rejects mutating inspection flags, and applies selected module switches before registration without changing the source package.
 
-These tests exercise scripts and file adapters. They do not establish native client loading, hook trust, model availability or reliable module selection. Use the [actual-client checks](hosts.md#在实际使用的客户端验证) and record source loading, module reads and deliverables before making a native compatibility claim. See [Hermes/OpenClaw guidance](hermes-openclaw.md) for their workspace and catalog boundaries.
+These tests exercise scripts and file adapters. They do not establish native client loading, hook trust, model availability or reliable module selection. Use the [actual-client checks](../../skills/super-astra/references/hosts.md#在实际使用的客户端验证) and record source loading, module reads and deliverables before making a native compatibility claim. See [Hermes/OpenClaw guidance](../../skills/super-astra/references/hermes-openclaw.md) for their workspace and catalog boundaries.
 
 ## First-use cases
 
@@ -26,7 +30,7 @@ These tests exercise scripts and file adapters. They do not establish native cli
 - Audit accepted: run only the agreed scope and explain findings in context; audit declined: skip and record that choice. Do not start by scanning the user's Skills.
 - New install keeps all five modules available, including delegation, unless the user names exclusions. Reopening setup preserves disabled modules.
 
-The expected conversation is documented in [onboarding.md](onboarding.md).
+The expected conversation is documented in [onboarding.md](../../skills/super-astra/references/onboarding.md).
 
 ## Native Codex smoke test after trust
 

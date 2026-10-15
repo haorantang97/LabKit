@@ -7,7 +7,7 @@ import sys
 import tempfile
 import unittest
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2] / "skills/super-astra"
 sys.path.insert(0, str(ROOT / "scripts"))
 import astra
 import audit
@@ -22,7 +22,7 @@ class RoutingTests(unittest.TestCase):
         self.config["modules"]["delegation"]["enabled"] = False
 
     def test_official_blocks_match_recorded_snapshot(self):
-        snapshot = json.loads((ROOT / "references/prompt-snapshot.json").read_text())
+        snapshot = json.loads((Path(__file__).resolve().parent / "fixtures/prompt-snapshot.json").read_text())
         for relative, expected in snapshot["sha256"].items():
             self.assertEqual(hashlib.sha256((ROOT / relative).read_bytes()).hexdigest(), expected)
 
@@ -226,7 +226,27 @@ class SetupTests(unittest.TestCase):
             result = subprocess.run(command + ["--apply"], capture_output=True, text=True)
             self.assertEqual(result.returncode, 0, result.stderr)
             installed = project / ".agents/skills/super-astra"
-            self.assertTrue((installed / "SKILL.md").exists())
+            expected = {
+                "SKILL.md", "LICENSE", "config.json", "agents/openai.yaml", "adapters/hosts.json",
+                "references/hermes-openclaw.md", "references/hosts.md", "references/onboarding.md",
+                "references/router.md", "references/setup.md", "references/sources.md",
+                "scripts/astra.py", "scripts/audit.py", "scripts/hosts.py", "scripts/initialize.py",
+                "scripts/install.py", "scripts/onboarding.py", "scripts/setup_hook.py", "scripts/setup_rules.py",
+            }
+            for module in ("delegation", "initiative", "instruction-following", "testing", "writing-style"):
+                expected.update(f"modules/{module}/{name}" for name in ("module.json", "prompt.md", "guard.md"))
+            # The installed contract includes runtime resources and its license, never checkout documentation or tests.
+            actual = {p.relative_to(installed).as_posix() for p in installed.rglob("*")
+                      if p.is_file() and "__pycache__" not in p.parts and p.suffix != ".pyc"}
+            self.assertEqual(actual, expected)
+            for relative in expected:
+                self.assertEqual((installed / relative).read_bytes(), (ROOT / relative).read_bytes(), relative)
+            router = subprocess.run([sys.executable, str(installed / "scripts/astra.py"), "router"],
+                                    capture_output=True, text=True)
+            self.assertEqual(router.returncode, 0, router.stderr)
+            guidance = json.loads(router.stdout)["guidance"]
+            self.assertIn(str(installed / "modules/initiative/prompt.md"), guidance)
+            self.assertNotIn(str(ROOT), guidance)
             self.assertTrue((project / ".codex/hooks.json").exists())
             self.assertIn('"hook_registered": true', result.stdout)
             self.assertIn('"native_delivery": "not_verified"', result.stdout)

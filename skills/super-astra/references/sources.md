@@ -4,13 +4,11 @@ Checked on **2026-09-05**. This is a community package in LabKit, not an OpenAI 
 
 ## Prompt provenance
 
-[Using GPT-6 Astra: Prompting best practices](https://developers.openai.com/api/docs/guides/latest-model#prompting-best-practices) is the source of the five behavior modules. Each `modules/*/prompt.md` preserves that subsection's `text` code blocks verbatim, joined by a blank line. Explanatory article prose is not copied. Each `module.json` records the exact subsection and verification date. [prompt-snapshot.json](prompt-snapshot.json) records SHA-256 hashes so an update can be reviewed explicitly.
-
-The `latest-model` URL can change models over time. Before updating, verify that the fetched page is still about GPT-6 Astra; do not silently replace prompts with guidance for a different model. Review changed prompt blocks, update hashes and dates, and run the relevant evaluation cases. There is no network fetch during normal use.
+[Using GPT-6 Astra: Prompting best practices](https://developers.openai.com/api/docs/guides/latest-model#prompting-best-practices) is the source of the five behavior modules. Each `modules/*/prompt.md` preserves that subsection's `text` code blocks verbatim, joined by a blank line. Explanatory article prose is not copied. Each `module.json` records the exact subsection and verification date.
 
 **LabKit additions**, not official recommendations: ordinary-task semantic routing, bounded delegation, per-module guards, model filtering, output budgets, the optional installer and candidate scanner. The official delegation prompt encourages more delegation; it does not claim to reduce agent calls. All five modules are available in new installations; the model selects only useful ones. The original official blocks remain separate from our adaptations so users can compare or remove the adaptations.
 
-LabKit's license applies to its original code and adaptations. OpenAI remains the source of the attributed prompt excerpts; the repository license does not assert ownership or independently relicense third-party material.
+[LabKit's license](../LICENSE) applies to its original code and adaptations. OpenAI remains the source of the attributed prompt excerpts; the repository license does not assert ownership or independently relicense third-party material.
 
 ## Host evidence
 
