@@ -18,9 +18,12 @@ Create them in that order.
 
 ## Phase 1: Determine repo type and license
 
+Resolve the [installation boundary](../../references/publishing.md#installation-boundary) before choosing the layout.
+
 **Repo type determines directory structure:**
-- **Single-skill**: rule file at root, flat layout
+- **Single-skill**: a self-contained `skills/{name}/` installation directory, with repository presentation outside it
 - **Multi-skill collection**: `skills/{name}/SKILL.md` or `plugins/{name}/SKILL.md`
+- **Host-specific rule file**: preserve the host's required path and document installation of that file and its dependencies
 - **Awesome-list**: no rule files, only README + CONTRIBUTING
 
 **License default:**
@@ -158,7 +161,7 @@ Fill `{YEAR}` with the current year. Fill `{AUTHOR NAME}` with the user's name o
 
 Adjust based on repo type. Remove sections that don't apply.
 
-```markdown
+````markdown
 # Contributing
 
 ## Entry Format
@@ -199,7 +202,7 @@ Submissions must:
 1. Fork this repository
 2. Add your entry in the correct category, alphabetically
 3. Open a PR with the title format above
-```
+````
 
 **For single-skill repos** (shorter version):
 ```markdown
@@ -253,16 +256,20 @@ jobs:
 **Single-skill repo:**
 ```
 {repo-name}/
-├── SKILL.md          (or .cursorrules / .windsurfrules / AGENTS.md)
 ├── README.md
 ├── CONTRIBUTING.md
 ├── LICENSE
+├── skills/
+│   └── {name}/
+│       └── SKILL.md
 ├── assets/
 │   ├── banner.svg
 │   └── banner-dark.svg
 └── .github/
     └── PULL_REQUEST_TEMPLATE.md
 ```
+
+Add host metadata and workflow resources inside `skills/{name}/` only when needed. The installer selects that directory. Repository artwork and its production records remain outside it. Include any license notices required for the installed distribution. For other rule formats, use the host's required layout instead of this folder-based example.
 
 **Multi-skill collection:**
 ```
@@ -346,5 +353,5 @@ An empty PR template is worse than no template; it signals an abandoned intentio
 **Putting all rule files in the root directory for a collection repo.**
 Five rule files at root is manageable. Twenty is chaos. Use `skills/` or `rules/` subdirectories from the start.
 
-**Not creating an assets/ directory.**
-Even without banner images yet, create the `assets/` directory with placeholder files so the README's `<picture>` tag has a valid path.
+**Creating placeholder assets or mixing presentation into the installation directory.**
+Create asset directories only for real files the task needs, and link the README to completed artwork. Keep repository presentation outside installed skills; preserve assets that the skill itself uses to produce its output.

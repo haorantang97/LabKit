@@ -1,6 +1,6 @@
 ---
 name: publish-to-github
-description: "Use this skill when the user is ready to push their local AI skill or rule repository to GitHub for the first time. This includes running git init and the initial commit, creating the GitHub repository via the gh CLI or manual browser steps, setting the repository description and Topics tags, and confirming the push succeeded. Trigger when the user says 'upload to GitHub', 'push this to GitHub', 'create my repo on GitHub', 'how do I publish this', 'make this live', or 'I have all the files ready, now what'. Also trigger when the user has a complete local folder with all files and just needs the final publishing step. Also covers environments with no usable git at all — sandboxed agents, browser-only sessions — via the GitHub API with a fine-grained PAT, browser drag-and-drop upload, agent-driven web editor commits, and a repair mode for repos that already exist. Do NOT trigger if any files still need to be written or edited before publishing — all content must be finalized first. Do NOT trigger for submitting the repo to awesome-lists after publishing (that is submit-to-directories)."
+description: "Publish a prepared AI skill or rule repository to GitHub, or repair an existing publication, using available CLI, API or browser tools. Use when the user asks to upload, push, create a GitHub repository or make it live. Covers repository metadata and verification of the published result. Use the authoring modules for unfinished content and submit-to-directories for community listings."
 license: PolyForm-Noncommercial-1.0.0
 ---
 
@@ -25,7 +25,8 @@ Read [the repository presentation standard](../../references/repository-presenta
 
 - [ ] `README.md` exists with no unfilled `{PLACEHOLDER}` tokens
 - [ ] `LICENSE` file exists
-- [ ] Rule file exists (SKILL.md / .cursorrules / .windsurfrules / AGENTS.md)
+- [ ] Rule file exists at the documented installation path (SKILL.md / .cursorrules / .windsurfrules / AGENTS.md)
+- [ ] The installation unit follows the [package boundary](../../references/publishing.md#installation-boundary); new or changed layouts and installation methods have passed local package and file-inventory checks, using an equivalent local installation if the remote version is not published yet
 - [ ] **Identity and visual gate**: the hero names the repository (not a child skill), appropriate light/dark assets render correctly, and the assembled README has been visually inspected
 - [ ] `.gitignore` exists (see template below)
 - [ ] Repository identity is decided; preserve the existing name and remote
@@ -181,6 +182,7 @@ gh repo view --web    # or open https://github.com/{username}/{repo-name}
 
 Check:
 - [ ] Default-branch content matches the intended change, not merely a pushed feature branch
+- [ ] For a new or changed package layout or installation method, installation from the published version has been verified under the [installation boundary](../../references/publishing.md#installation-boundary)
 - [ ] README renders correctly with no broken images, stale image text, clipping or incorrect catalogue entries
 - [ ] Both theme assets work; inspect using a scoped preview or browser theme emulation without changing the user's global preference
 - [ ] Topics are set

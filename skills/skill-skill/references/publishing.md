@@ -4,6 +4,18 @@ Use for repository packaging, renovation or publication. A local skill edit rema
 
 Read [the repository presentation standard](repository-presentation.md) first. It defines the user's default level of finish, based on the Personal-Ontology benchmark. Inspect the current repository and chosen reference before generating files.
 
+## Installation boundary
+
+Identify the exact directory or artifact the host installs before arranging repository files. A folder-installed skill contains its instructions, host metadata, resources needed by its workflow, and required license notices. Keep repository introductions, cover images, social cards and their design or generation records outside that directory. Classify resources by their use: templates, images or prompts needed to perform the skill's work belong in the package.
+
+For a skill repository with presentation files, use a self-contained `skills/<name>/` installation directory by default; keep repository presentation at the repository level. Preserve other hosts' required rule-file locations. An existing layout may use a separate build artifact or an installer with verified exclusions; do not assume an installer filters out unreferenced files. Documentation must name the actual installation unit, include its dependencies and describe an update method supported by that installation.
+
+For plugins, inspect the marketplace source, plugin manifest, build configuration and installer to determine which files are copied. Keep required manifests, UI icons, runtime code, bundled skills and their dependencies inside that installation unit. Put repository-only artwork, production records and development files outside it, or exclude them through a packaging mechanism verified against the actual artifact. Preserve resource paths and plugin identity when changing the layout.
+
+When creating or changing the package layout or installation method, verify the local installation unit and its dependencies before publication. Exercise installation in a temporary destination and inspect the resulting file inventory, including hidden files, for missing dependencies and unrelated repository material. If the documented remote command depends on unpublished content, use an equivalent local installation for this preflight, then run the documented command against the published version after publication. Distinguish local package checks from remote installation verification. Report an unavailable check precisely; format validation alone does not verify package contents.
+
+## Packaging workflow
+
 Choose the producing modules relative to the skill root:
 
 | Work needed | Module |

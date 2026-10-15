@@ -28,7 +28,7 @@ Create a recognizable motif derived from the product's work. Choose typography, 
 
 Use light and dark variants, a responsive viewBox for SVG, accessible labels, and a working image fallback. Use native SVG for text and simple vector graphics. Use an appropriate image skill/tool for raster illustration. Choose dimensions to fit the composition; 700 × 175 is not an invariant. A white rectangle with a renamed title is not the default level of finish.
 
-Save the resolved direction in assets/STYLE.md: reference, repository identity, motif, palette, typography, asset dimensions and language treatment. A supplied reference or existing recorded preference already answers the style question. Ask only when missing information materially affects the result.
+Save the resolved direction in the repository's assets/STYLE.md: reference, repository identity, motif, palette, typography, asset dimensions and language treatment. Keep presentation assets and their production records outside the installable skill, following the [installation boundary](publishing.md#installation-boundary). A supplied reference or existing recorded preference already answers the style question. Ask only when missing information materially affects the result.
 
 When social sharing is part of the renovation, prepare a dedicated 1280 × 640 PNG with the same identity. A social card is its own composition, not a stretched hero. Report generating the asset and configuring GitHub's social preview as separate actions; verify the actual setting before claiming it is active.
 
@@ -47,7 +47,7 @@ Before claiming the page is ready:
 1. Read visible text inside SVGs or raster images; compare hero, alt text, social card, root title, About description and package identity. Search for obsolete names and templates without removing legitimate child-skill references.
 2. Render both hero themes, inspect wide and narrow layouts, and inspect the assembled README. Check clipping, overlap, contrast, wrapping and diagram readability. File existence or valid XML alone does not establish visual quality.
 3. Check local links, language-switch targets, in-page anchors, asset paths and top-level catalogue completeness. Check both language editions against the same facts and commands.
-4. Run relevant existing checks. Do not manufacture test counts or write tests that merely assert marketing phrases. Capture concrete defects and fix them.
+4. Run relevant existing checks. When package layout or installation instructions change, exercise the documented installation and inspect the resulting files according to the [installation boundary](publishing.md#installation-boundary). Do not manufacture test counts or write tests that merely assert marketing phrases. Capture concrete defects and fix them.
 5. Review the diff and live remote state. Publish only within the user's authorization and repository workflow. After publication, verify the actual default-branch content and image rendering; a branch push or draft PR is not a live-homepage update.
 
 If visual inspection or a remote setting is unavailable, identify that exact missing check. Never mark the whole renovation complete on a placeholder scan alone.
